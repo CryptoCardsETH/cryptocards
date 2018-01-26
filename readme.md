@@ -14,13 +14,26 @@ To get your own copy of CryptoCards running, follow the [Getting Started Instruc
 
 ## Features
 
-- [ ] Accounts
+- [ ] Accounts (AccountController)
 	- [ ] Register
 	- [ ] Login
-	- [ ] Change Profile/Password
 	- [ ] Password Reset
+- [ ] Profiles (ProfileController)
+	- [ ] Change Profile/Password
+	- [ ] View Card Collection
+	- [ ] Friends List
+		- [ ] Add/Remove Friends
+		- [ ] View Friends Collections
 - [ ] Marketplace
+	- [ ] View Cards For Sale
+	- [ ] View Auction Status
+	- [ ] Bid On Cards
+	- [ ] Place Cards For Sale
 - [ ] Battleground
+	- [ ] Create Battlegroups: Groups of cards to battle with
+	- [ ] Send Battlegroups To Battle
+	- [ ] View Battle History/Results
+
 
 ## Contributors
 
