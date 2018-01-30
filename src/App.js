@@ -2,17 +2,17 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Home from './pages/Home';
-import { Container } from 'reactstrap';
+import Nav from './components/Nav';
 
 const App = () => (
   <Router>
     <div>
-      {/*<Nav />*/}
-      <Container>
+      <Nav />
+      <main role="main" className="container">
         <Switch>
           <Route exact path="/" component={Home} />
         </Switch>
-      </Container>
+      </main>
       {/*<Footer />*/}
     </div>
   </Router>
