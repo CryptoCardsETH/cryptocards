@@ -41,3 +41,12 @@ function receiveMe(json) {
     me: json
   };
 }
+
+export const SET_WEB3_AVAILABILITY = 'SET_WEB3_AVAILABILITY';
+export function setWeb3Availability(isAvailable) {
+  return { type: SET_WEB3_AVAILABILITY, isAvailable };
+}
+export const SET_SIGNED_MESSAGE = 'SET_SIGNED_MESSAGE';
+export function setSignedMessage(message) {
+  return { type: SET_SIGNED_MESSAGE, message };
+}
