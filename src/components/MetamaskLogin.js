@@ -7,19 +7,18 @@ import { Button } from 'reactstrap';
 
 import ethUtil from 'ethereumjs-util';
 import sigUtil from 'eth-sig-util';
+import { APP_NAME } from '../config';
 
 class MetamaskLogin extends React.Component {
   signMessage = () => {
     if (window.web3) {
       const web3client = window.web3;
-      let hexEncodedMessage = ethUtil.bufferToHex(
-        new Buffer('cryptocards', 'utf8')
-      );
+      let hexEncodedMessage = ethUtil.bufferToHex(new Buffer(APP_NAME, 'utf8'));
 
       //todo: make sure address exists
       let fromAddress = web3client.eth.accounts[0];
 
-      //sign the message containing 'cryptocards', which will we give to server in exchange for a JWT
+      //sign the message containing a simple string, which will we give to server in exchange for a JWT
       web3client.currentProvider.sendAsync(
         {
           method: 'personal_sign',

@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { APP_NAME } from '../config';
 
 export default class Nav extends React.Component {
   constructor(props) {
@@ -19,36 +20,18 @@ export default class Nav extends React.Component {
     return (
       <div>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-          <a className="navbar-brand" href="#">
-            Fixed navbar
-          </a>
-          <button
-            className="navbar-toggler"
-            type="button"
-            data-toggle="collapse"
-            data-target="#navbarCollapse"
-            aria-controls="navbarCollapse"
-            aria-expanded="false"
-            aria-label="Toggle navigation"
-          >
-            <span className="navbar-toggler-icon" />
-          </button>
+          <a className="navbar-brand">{APP_NAME}</a>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
-                <a className="nav-link" href="#">
-                  Home <span className="sr-only">(current)</span>
-                </a>
+                <NavLink exact to="/" className="nav-link">
+                  Home
+                </NavLink>
               </li>
               <li className="nav-item">
                 <NavLink to="/debug" className="nav-link">
                   Debug
                 </NavLink>
-              </li>
-              <li className="nav-item">
-                <a className="nav-link disabled" href="#">
-                  Disabled
-                </a>
               </li>
             </ul>
           </div>
