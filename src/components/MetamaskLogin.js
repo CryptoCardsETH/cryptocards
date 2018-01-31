@@ -1,7 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setSignedMessage } from '../actions/users';
+import { initializeAuthFlow } from '../actions/users';
 
 import { Button } from 'reactstrap';
 
@@ -29,7 +29,7 @@ class MetamaskLogin extends React.Component {
           if (err) return console.error(err);
           if (result.error) return console.error(result.error);
           console.log(`PERSONAL SIGNED: ${result.result}`);
-          this.props.setSignedMessage(result.result);
+          this.props.initializeAuthFlow(fromAddress, result.result);
 
           //test code to make sure that it was signed right. this is what the backend'll do
           console.log('recovering...');
@@ -72,7 +72,7 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setSignedMessage
+      initializeAuthFlow
     },
     dispatch
   );

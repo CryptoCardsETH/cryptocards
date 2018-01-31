@@ -47,6 +47,18 @@ export function setWeb3Availability(isAvailable) {
   return { type: SET_WEB3_AVAILABILITY, isAvailable };
 }
 export const SET_SIGNED_MESSAGE = 'SET_SIGNED_MESSAGE';
-export function setSignedMessage(message) {
-  return { type: SET_SIGNED_MESSAGE, message };
+function setSignedMessage(address, message) {
+  //TODO: persist to localstorage, and reload from localstorage.
+  return { type: SET_SIGNED_MESSAGE, address, message };
+}
+
+export function initializeAuthFlow(address, signed) {
+  return dispatch => {
+    dispatch(setSignedMessage(address, signed));
+    return apiFetch('auth', {
+      method: 'POST',
+      body: JSON.stringify({ address, signed })
+    }).then(response => response.json());
+    // .then(json => dispatch(receiveMe(json)));
+  };
 }

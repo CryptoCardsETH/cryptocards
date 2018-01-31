@@ -10,7 +10,7 @@ const INITIAL_STATE = {
     email: ''
   },
   isWeb3Available: false,
-  signedMessage: '',
+  signedMessages: {},
   jwt: null
 };
 
@@ -24,7 +24,10 @@ export default function(state = INITIAL_STATE, action) {
     case SET_SIGNED_MESSAGE:
       return {
         ...state,
-        signedMessage: action.message
+        signedMessages: {
+          ...state.signedMessages,
+          [action.address]: action.message
+        }
       };
     case LOGIN_FROM_JWT_SUCCESS:
       return {
