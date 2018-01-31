@@ -1,0 +1,10 @@
+language: node_js
+cache: yarn
+node_js:
+- 6
+install:
+- pip install --user awscli
+- yarn
+script:
+- npm test -- --coverage
+- npm run build
