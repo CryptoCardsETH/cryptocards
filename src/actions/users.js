@@ -57,7 +57,7 @@ export function initializeAuthFlow(address, signed) {
     dispatch(setSignedMessage(address, signed));
     return apiFetch('auth', {
       method: 'POST',
-      body: JSON.stringify({ address, signed })
+      body: JSON.stringify({ address, signed, plaintext: 'CryptoCards' })
     }).then(response => response.json());
     // .then(json => dispatch(receiveMe(json)));
   };
