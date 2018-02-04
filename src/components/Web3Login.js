@@ -14,8 +14,6 @@ class Web3Login extends React.Component {
   //sign the message containing a simple string, which will we give to server in exchange for a JWT
   signMessage = (fromAddress, web3client) => {
     let hexEncodedMessage = ethUtil.bufferToHex(new Buffer(APP_NAME, 'utf8'));
-    console.log('aaaaaa', fromAddress);
-    debugger;
     web3client.currentProvider.sendAsync(
       {
         method: 'personal_sign',
@@ -52,10 +50,13 @@ class Web3Login extends React.Component {
   doLogin = () => {
     if (window.web3) {
       const web3client = new Web3(window.web3.currentProvider);
-      //todo: make sure address exists
-      web3client.eth.getCoinbase().then(fromAddress => {
-        this.signMessage(fromAddress, web3client);
-      });
+      let { accounts_list } = this.props.user;
+      if (accounts_list.length === 0) {
+        console.log('no accounts!');
+      } else {
+        //todo: offer mechanism for picking address if there are multiple?
+        this.signMessage(accounts_list[0], web3client);
+      }
     } else {
       console.log('no web3');
     }

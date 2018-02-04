@@ -10,13 +10,15 @@ import Web3 from 'web3';
 class Web3Initialization extends React.Component {
   componentDidMount() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-    if (window.web3 !== 'undefined') {
+    if (window.web3 !== undefined) {
       this.props.setWeb3Availability(true);
       let web3client = new Web3(window.web3.currentProvider);
+      //get network id
       web3client.eth.net.getId().then(id => {
         console.log('network id:', id);
         this.props.setNetworkId(id);
       });
+      //get accounts
       web3client.eth.getAccounts().then(list => {
         this.props.setAccountsList(list);
       });

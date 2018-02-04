@@ -26,7 +26,10 @@ export function fetchMe() {
     dispatch(requestMe());
     return apiFetch('me')
       .then(response => response.json())
-      .then(json => dispatch(receiveMe(json)));
+      .then(json => {
+        //todo: error checking (i.e. expired token)
+        dispatch(receiveMe(json.data));
+      });
   };
 }
 

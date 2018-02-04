@@ -25,10 +25,6 @@ class DebugPage extends Component {
   };
   render() {
     let { user } = this.props;
-    let web3client = null;
-    // if (window.web3) {
-    //   web3client = new Web3(window.web3.currentProvider);
-    // }
     return (
       <div>
         <h1>Debug</h1>
@@ -39,12 +35,11 @@ class DebugPage extends Component {
         <br />
         <BooleanStatus bool={user.authenticated} /> authenticated
         <br />
-        <b>network:</b>
+        <b>network: </b>
         {this.getCanonicalNetworkName(user.network_id)}
         <pre>
           {JSON.stringify(
             {
-              accounts: user.accounts_list,
               user
             },
             true,

@@ -47,7 +47,6 @@ export default function(state = INITIAL_STATE, action) {
         jwt: action.token
       };
     case RECEIVE_ME:
-      //todo: error checking
       return {
         ...state,
         me: action.me
