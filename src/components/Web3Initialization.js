@@ -7,7 +7,7 @@ import {
   setWeb3Availability
 } from '../actions/users';
 import Web3 from 'web3';
-class MetamaskInitialization extends React.Component {
+class Web3Initialization extends React.Component {
   componentDidMount() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (window.web3 !== 'undefined') {
@@ -47,6 +47,4 @@ const mapDispatchToProps = dispatch => {
   );
 };
 
-export default connect(mapStateToProps, mapDispatchToProps)(
-  MetamaskInitialization
-);
+export default connect(mapStateToProps, mapDispatchToProps)(Web3Initialization);

@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import '../styles/App.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import MetamaskLogin from '../components/MetamaskLogin';
-import Web3 from 'web3';
+import Web3Login from '../components/Web3Login';
 import { BooleanStatus } from '../components/Icons';
 
 class DebugPage extends Component {
@@ -52,7 +51,7 @@ class DebugPage extends Component {
             2
           )}
         </pre>
-        <MetamaskLogin />
+        <Web3Login />
       </div>
     );
   }
