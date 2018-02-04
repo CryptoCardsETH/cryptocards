@@ -2,6 +2,7 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Controller;
 use Exception;
 use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
@@ -54,13 +55,11 @@ class Handler extends ExceptionHandler
     {
         if ($exception instanceof UnauthorizedHttpException) {
             if ($exception->getPrevious() instanceof TokenExpiredException) {
-                return response()->json(['token_expired'], $exception->getStatusCode());
+                response()->error(Controller::RESPONSE_MESSAGE_ERROR_JWT_EXPIRED);
             } else {
-                if ($exception->getPrevious() instanceof TokenInvalidException) {
-                    return response()->json(['token_invalid'], $exception->getStatusCode());
-                }
-                return response()->json(['token_error'], $exception->getStatusCode());
-
+                if ($exception->getPrevious() instanceof TokenInvalidException)
+                    response()->error(Controller::RESPONSE_MESSAGE_ERROR_JWT_INVALID);
+                return response()->error(Controller::RESPONSE_MESSAGE_ERROR_JWT_ERROR);
             }
         }
         return parent::render($request, $exception);

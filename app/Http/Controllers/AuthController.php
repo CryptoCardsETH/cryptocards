@@ -34,19 +34,18 @@ class AuthController extends Controller {
 
         //Check signing
         if(! self::didAddressReallySignMessage($signerAddress,$signedMessage,$plainTextMessage)) {
-            return ['error'=>'Signing mismatch.'];
+            return response()->error(self::RESPONSE_MESSAGE_ERROR_DIGEST_SIGNING_MISMATCH);
         }
 
         //Get user based on address
         $user = User::firstOrCreate(['address'=>$signerAddress]);
-
         $token = auth()->login($user);
 
-        return ['token'=>$token];
+        return response()->success(self::RESPONSE_MESSAGE_SUCCESS, ['token'=>$token]);
     }
     public function me()
     {
-        return response()->json(auth()->user());
+        return response()->success(self::RESPONSE_MESSAGE_SUCCESS,auth()->user());
     }
 
 }
