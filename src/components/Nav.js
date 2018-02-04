@@ -20,7 +20,7 @@ export default class Nav extends React.Component {
     return (
       <div>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
-          <a className="navbar-brand">{APP_NAME}</a>
+          <div className="navbar-brand">{APP_NAME}</div>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav mr-auto">
               <li className="nav-item active">
