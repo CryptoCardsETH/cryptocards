@@ -59,6 +59,15 @@ function setSignedMessage(address, message) {
 export function setSignedMessagesBulk(signedMessages) {
   return { type: SET_SIGNED_MESSAGES, signedMessages };
 }
+export const SET_NETWORK_ID = 'SET_NETWORK_ID';
+export function setNetworkId(network_id) {
+  return { type: SET_NETWORK_ID, network_id };
+}
+
+export const SET_ACCOUNTS_LIST = 'SET_ACCOUNTS_LIST';
+export function setAccountsList(accounts) {
+  return { type: SET_ACCOUNTS_LIST, accounts };
+}
 
 export function initializeAuthFlow(address, signed) {
   return dispatch => {

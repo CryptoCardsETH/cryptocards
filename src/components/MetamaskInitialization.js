@@ -1,18 +1,27 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { setWeb3Availability } from '../actions/users';
-
+import {
+  setAccountsList,
+  setNetworkId,
+  setWeb3Availability
+} from '../actions/users';
+import Web3 from 'web3';
 class MetamaskInitialization extends React.Component {
   componentDidMount() {
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
-    if (window.web3) {
-      // Use the browser's ethereum provider
-      let provider = window.web3.currentProvider;
+    if (window.web3 !== 'undefined') {
       this.props.setWeb3Availability(true);
-      console.log(provider);
+      let web3client = new Web3(window.web3.currentProvider);
+      web3client.eth.net.getId().then(id => {
+        console.log('network id:', id);
+        this.props.setNetworkId(id);
+      });
+      web3client.eth.getAccounts().then(list => {
+        this.props.setAccountsList(list);
+      });
     } else {
-      console.log('No web3? You should consider trying MetaMask!');
+      console.log('No web3!');
       this.props.setWeb3Availability(false);
     }
   }
@@ -30,7 +39,9 @@ function mapStateToProps(state) {
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
-      setWeb3Availability
+      setWeb3Availability,
+      setNetworkId,
+      setAccountsList
     },
     dispatch
   );
