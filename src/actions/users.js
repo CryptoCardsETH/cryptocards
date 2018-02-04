@@ -47,10 +47,17 @@ export const SET_WEB3_AVAILABILITY = 'SET_WEB3_AVAILABILITY';
 export function setWeb3Availability(isAvailable) {
   return { type: SET_WEB3_AVAILABILITY, isAvailable };
 }
-export const SET_SIGNED_MESSAGE = 'SET_SIGNED_MESSAGE';
+export const SET_SIGNED_MESSAGES = 'SET_SIGNED_MESSAGES';
 function setSignedMessage(address, message) {
-  //TODO: persist to localstorage, and reload from localstorage.
-  return { type: SET_SIGNED_MESSAGE, address, message };
+  return (dispatch, getState) => {
+    let { signedMessages } = getState().user;
+    signedMessages[address] = message;
+    persistLocally('signedMessages', signedMessages);
+    return { type: SET_SIGNED_MESSAGES, signedMessages };
+  };
+}
+export function setSignedMessagesBulk(signedMessages) {
+  return { type: SET_SIGNED_MESSAGES, signedMessages };
 }
 
 export function initializeAuthFlow(address, signed) {

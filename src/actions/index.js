@@ -1,6 +1,8 @@
 import { API_BASE_URL } from '../config';
 import Cookies from 'js-cookie';
-export default function apiFetch(endpoint, options = { headers: {} }) {
+export default function apiFetch(endpoint, options = {}) {
+  options.headers = {};
+
   let token = getLocally('jwt');
   if (token) options.headers['Authorization'] = `Bearer ${token}`;
 

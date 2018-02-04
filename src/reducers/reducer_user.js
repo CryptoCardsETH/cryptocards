@@ -1,7 +1,7 @@
 import {
   LOGIN_FROM_JWT_SUCCESS,
   RECEIVE_ME,
-  SET_SIGNED_MESSAGE,
+  SET_SIGNED_MESSAGES,
   SET_WEB3_AVAILABILITY
 } from '../actions/users';
 const INITIAL_STATE = {
@@ -21,13 +21,10 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         isWeb3Available: action.isAvailable
       };
-    case SET_SIGNED_MESSAGE:
+    case SET_SIGNED_MESSAGES:
       return {
         ...state,
-        signedMessages: {
-          ...state.signedMessages,
-          [action.address]: action.message
-        }
+        signedMessages: action.signedMessages
       };
     case LOGIN_FROM_JWT_SUCCESS:
       return {
