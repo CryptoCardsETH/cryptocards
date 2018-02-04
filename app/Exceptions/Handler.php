@@ -2,8 +2,13 @@
 
 namespace App\Exceptions;
 
+use App\Http\Controllers\Controller;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Symfony\Component\HttpKernel\Exception\UnauthorizedHttpException;
+use Tymon\JWTAuth\Exceptions\TokenExpiredException;
+use Tymon\JWTAuth\Exceptions\TokenInvalidException;
 
 class Handler extends ExceptionHandler
 {
@@ -48,6 +53,20 @@ class Handler extends ExceptionHandler
      */
     public function render($request, Exception $exception)
     {
+        if ($exception instanceof UnauthorizedHttpException) {
+            if ($exception->getPrevious() instanceof TokenExpiredException) {
+                response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_EXPIRED);
+            } else {
+                if ($exception->getPrevious() instanceof TokenInvalidException)
+                    response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_INVALID);
+                return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_ERROR);
+            }
+        }
         return parent::render($request, $exception);
+    }
+
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        return response()->json(['error' => 'Unauthenticated.',$exception], 401);
     }
 }
