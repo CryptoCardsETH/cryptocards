@@ -3,15 +3,28 @@ import '../styles/App.css';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import MetamaskLogin from '../components/MetamaskLogin';
+import { BooleanStatus } from '../components/Icons';
+
 class DebugPage extends Component {
   render() {
+    let { user } = this.props;
     return (
       <div>
         <h1>Debug</h1>
-
+        <BooleanStatus bool={user.isWeb3Available} /> web3 available
+        <br />
+        <BooleanStatus
+          bool={user.isWeb3Available && window.web3.eth.accounts.length >= 1}
+        />{' '}
+        at least one eth account
+        <br />
+        <BooleanStatus bool={user.authenticated} /> authenticated
         <pre>
           {JSON.stringify(
-            { accounts: window.web3.eth.accounts, user: this.props.user },
+            {
+              accounts: user.isWeb3Available && window.web3.eth.accounts,
+              user
+            },
             true,
             2
           )}
