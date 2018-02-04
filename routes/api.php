@@ -17,5 +17,5 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'AuthController@me');
 
 Route::get('/', function () {
-    return ["hello!"];
+    return Response::success(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS,'hi');
 });
