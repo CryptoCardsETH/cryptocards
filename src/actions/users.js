@@ -1,8 +1,9 @@
-import apiFetch from './index';
+import apiFetch, { persistLocally } from './index';
 export const LOGIN_FROM_JWT_SUCCESS = 'LOGIN_FROM_JWT_SUCCESS';
 export function loginFromJWT(token) {
   // TODO: save token
   return dispatch => {
+    persistLocally('jwt', token);
     dispatch(saveToken(token));
     setTimeout(() => {
       dispatch(fetchMe());
@@ -58,7 +59,14 @@ export function initializeAuthFlow(address, signed) {
     return apiFetch('auth', {
       method: 'POST',
       body: JSON.stringify({ address, signed, plaintext: 'CryptoCards' })
-    }).then(response => response.json());
-    // .then(json => dispatch(receiveMe(json)));
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          dispatch(loginFromJWT(json.data.token));
+        } else {
+          console.log('oops');
+        }
+      });
   };
 }
