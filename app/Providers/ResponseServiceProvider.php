@@ -14,29 +14,13 @@ class ResponseServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        Response::macro('success', function ($message, $data) {
+        Response::macro('build', function ($responseMessage, $data = null) {
             return Response::json([
-                'success'       => true,
-                'message'       => $message,
-                'data'          => $data,
-            ], Controller::RESPONSE_MESSAGE_HTTP_CODES[$message]);
+                'success'     => $responseMessage[0] === 1,//response message id 1 is success
+                'message'     => $responseMessage[2],
+                'data'        => $data,
+                'response_id' => $responseMessage[0],
+            ], $responseMessage[1]);
         });
-        Response::macro('error', function ($message, $data = null) {
-            return Response::json([
-                'success'       => false,
-                'message'       => $message,
-                'data'          => $data,
-            ], Controller::RESPONSE_MESSAGE_HTTP_CODES[$message]);
-        });
-    }
-
-    /**
-     * Register the application services.
-     *
-     * @return void
-     */
-    public function register()
-    {
-        //
     }
 }

@@ -1,6 +1,7 @@
 <?php
 
-use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Response;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,5 +18,5 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'AuthController@me');
 
 Route::get('/', function () {
-    return Response::success(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS,'hi');
+    return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS,'hi');
 });
