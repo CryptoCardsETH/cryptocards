@@ -25,8 +25,8 @@
     humps "^2.0.1"
 
 "@types/node@*":
-  version "9.4.0"
-  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.0.tgz#b85a0bcf1e1cc84eb4901b7e96966aedc6f078d1"
+  version "9.4.1"
+  resolved "https://registry.yarnpkg.com/@types/node/-/node-9.4.1.tgz#0f636f7837e15d2d73a7f6f3ea0e322eb2a5ab65"
 
 abab@^1.0.3:
   version "1.0.4"
@@ -1064,7 +1064,7 @@ bn.js@4.11.6:
   version "4.11.6"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.6.tgz#53344adb14617a13f6e8dd2ce28905d1c0ba3215"
 
-bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.10.0, bn.js@^4.11.3, bn.js@^4.11.6, bn.js@^4.4.0, bn.js@^4.8.0:
+bn.js@^4.0.0, bn.js@^4.1.0, bn.js@^4.1.1, bn.js@^4.10.0, bn.js@^4.11.0, bn.js@^4.11.3, bn.js@^4.11.6, bn.js@^4.4.0, bn.js@^4.8.0:
   version "4.11.8"
   resolved "https://registry.yarnpkg.com/bn.js/-/bn.js-4.11.8.tgz#2cde09eb5ee341f484746bb0309b3253b1b1442f"
 
@@ -1346,12 +1346,12 @@ caniuse-api@^1.5.2:
     lodash.uniq "^4.5.0"
 
 caniuse-db@^1.0.30000529, caniuse-db@^1.0.30000634, caniuse-db@^1.0.30000639:
-  version "1.0.30000801"
-  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000801.tgz#a1d49def94c4e5aca5ccf1d58812e4668fac19d4"
+  version "1.0.30000804"
+  resolved "https://registry.yarnpkg.com/caniuse-db/-/caniuse-db-1.0.30000804.tgz#84feb42018fc64cf6aff6371e43115f292c00179"
 
 caniuse-lite@^1.0.30000748, caniuse-lite@^1.0.30000792:
-  version "1.0.30000792"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000792.tgz#d0cea981f8118f3961471afbb43c9a1e5bbf0332"
+  version "1.0.30000804"
+  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30000804.tgz#8729a143d65378e8936adbb161f550e9c49fc09d"
 
 capture-stack-trace@^1.0.0:
   version "1.0.0"
@@ -1570,7 +1570,11 @@ commander@2.12.x:
   version "2.12.2"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.12.2.tgz#0f5946c427ed9ec0d91a46bb9def53e54650e555"
 
-commander@^2.11.0, commander@^2.8.1, commander@^2.9.0, commander@~2.13.0:
+commander@^2.11.0, commander@^2.8.1, commander@^2.9.0:
+  version "2.14.1"
+  resolved "https://registry.yarnpkg.com/commander/-/commander-2.14.1.tgz#2235123e37af8ca3c65df45b026dbd357b01b9aa"
+
+commander@~2.13.0:
   version "2.13.0"
   resolved "https://registry.yarnpkg.com/commander/-/commander-2.13.0.tgz#6964bca67685df7c1f1430c584f07d7597885b9c"
 
@@ -2256,8 +2260,8 @@ ee-first@1.1.1:
   resolved "https://registry.yarnpkg.com/ee-first/-/ee-first-1.1.1.tgz#590c61156b0ae2f4f0255732a158b266bc56b21d"
 
 electron-to-chromium@^1.2.7, electron-to-chromium@^1.3.30:
-  version "1.3.32"
-  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.32.tgz#11d0684c0840e003c4be8928f8ac5f35dbc2b4e6"
+  version "1.3.33"
+  resolved "https://registry.yarnpkg.com/electron-to-chromium/-/electron-to-chromium-1.3.33.tgz#bf00703d62a7c65238136578c352d6c5c042a545"
 
 elegant-spinner@^1.0.1:
   version "1.0.1"
@@ -2674,11 +2678,11 @@ ethereumjs-util@^4.3.0:
     rlp "^2.0.0"
     secp256k1 "^3.0.1"
 
-ethereumjs-util@^5.1.1, ethereumjs-util@^5.1.3:
-  version "5.1.3"
-  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-5.1.3.tgz#0c1f6efb1da9c5b6720a65697859fc0be6672df0"
+ethereumjs-util@^5.1.1, ethereumjs-util@^5.1.4:
+  version "5.1.4"
+  resolved "https://registry.yarnpkg.com/ethereumjs-util/-/ethereumjs-util-5.1.4.tgz#d1a4a9be31eaf8b33aad399894f854fdafda2469"
   dependencies:
-    bn.js "^4.8.0"
+    bn.js "^4.11.0"
     create-hash "^1.1.2"
     ethjs-util "^0.1.3"
     keccak "^1.0.2"
@@ -7064,8 +7068,8 @@ string_decoder@~0.10.x:
   resolved "https://registry.yarnpkg.com/string_decoder/-/string_decoder-0.10.31.tgz#62e203bc41766c6c28c9fc84301dab1c5310fa94"
 
 stringify-object@^3.2.0:
-  version "3.2.1"
-  resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-3.2.1.tgz#2720c2eff940854c819f6ee252aaeb581f30624d"
+  version "3.2.2"
+  resolved "https://registry.yarnpkg.com/stringify-object/-/stringify-object-3.2.2.tgz#9853052e5a88fb605a44cd27445aa257ad7ffbcd"
   dependencies:
     get-own-enumerable-property-symbols "^2.0.1"
     is-obj "^1.0.1"
