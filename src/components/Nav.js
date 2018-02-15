@@ -29,6 +29,11 @@ export default class Nav extends React.Component {
                 </NavLink>
               </li>
               <li className="nav-item">
+                <NavLink to="/collection" className="nav-link">
+                  Collection
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/debug" className="nav-link">
                   Debug
                 </NavLink>

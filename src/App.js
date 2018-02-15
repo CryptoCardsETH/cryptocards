@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
+import Collection from './pages/Collection';
 import Home from './pages/Home';
 import Debug from './pages/Debug';
 import Nav from './components/Nav';
@@ -15,6 +16,7 @@ const App = () => (
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/debug" component={Debug} />
+          <Route path="/collection" component={Collection} />
         </Switch>
       </main>
       {/*<Footer />*/}
