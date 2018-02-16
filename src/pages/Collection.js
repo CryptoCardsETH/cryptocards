@@ -1,12 +1,11 @@
 import React, { Component } from 'react';
-import '../styles/App.css';
-import { bindActionCreators } from 'redux';
-import { connect } from 'react-redux';
-import Web3Login from '../components/Web3Login';
-import { BooleanStatus } from '../components/Icons';
+import '../styles/App.css'
+import FontAwesomeIcon from '@fortawesome/react-fontawesome';
+import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 
 class CollectionPage extends Component {
   render() {
+    // fake card data
     let cards = [
       {
         title: 'one',
@@ -41,9 +40,9 @@ class CollectionPage extends Component {
     ];
     return (
       <div>
-        <h1>Card Collection</h1>
+        <h1>My Collection</h1>
 
-        <div class="row">
+        <div className="row">
           {cards.map((card, index) => {
             let style = {
               animationDelay: (index % 3) / 10 + 's'
@@ -51,26 +50,22 @@ class CollectionPage extends Component {
             return (
               <div
                 key={index}
-                class="card col-lg-3 col-md-5 m-2 animated fadeInUp"
+                className="card col-lg-3 col-md-5 m-2 animated fadeInUp"
                 style={style}
               >
-                <div class="overlay-container">
+                <div className="overlay-container">
                   <img
-                    class="card-img-top"
+                    className="card-img-top"
                     src={card.imageUrl}
-                    alt="Card image"
                   />
-                  <div class="overlay">
+                  <div className="overlay">
                     <a href="#" title="More Details">
-                      <i
-                        class="fas fa-external-link-alt details"
-                        alt="More Details"
-                      />
+                      <FontAwesomeIcon icon={faExternalLinkAlt} className="details" size="2x" />
                     </a>
                   </div>
                 </div>
-                <div class="card-body">
-                  <h4 class="card-title text-center">{card.title}</h4>
+                <div className="card-body">
+                  <h4 className="card-title text-center">{card.title}</h4>
                 </div>
               </div>
             );
