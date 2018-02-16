@@ -9,3 +9,5 @@ Project available on [GitHub](https://github.com/CryptoCardsETH/).
 ## Documents
 
 - [Project Charter](../ProjectCharter.pdf)
+- [Battle Mechanics](../BattleMechanics.md)
+- [Card Attributes](../CardAttributes.md)
