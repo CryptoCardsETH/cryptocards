@@ -53,7 +53,7 @@ User Story 14:
 
 ### Core Battle Ideas
 * **Battle Formations**
-	>NOTE: We are also considering an "Aggro" mechanic as an alternative to Battle Formations to add strategy to how a user would assemble a party of cards to battle with. You can read about this feature in the [Card Attributes](../master/ProjectCharter.pdf) document.
+	>NOTE: We are also considering an "Aggro" mechanic as an alternative to Battle Formations to add strategy to how a user would assemble a party of cards to battle with. You can read about this feature in the [Card Attributes](../master/CardAttributes.md) document.
 	* Allow the users to choose between various party setups to arrange their cards in.
 		* Using a 4-card battle as an example, players can choose between:
 			* 2 on front-lines, 2 behind.
