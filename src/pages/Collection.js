@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/App.css'
+import '../styles/App.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 
@@ -57,10 +57,15 @@ class CollectionPage extends Component {
                   <img
                     className="card-img-top"
                     src={card.imageUrl}
+                    alt={card.title}
                   />
                   <div className="overlay">
-                    <a href="#" title="More Details">
-                      <FontAwesomeIcon icon={faExternalLinkAlt} className="details" size="2x" />
+                    <a href="/collection" title="More Details">
+                      <FontAwesomeIcon
+                        icon={faExternalLinkAlt}
+                        className="details"
+                        size="2x"
+                      />
                     </a>
                   </div>
                 </div>
