@@ -2,6 +2,7 @@
 
 This is a live document containing various components we are planning to implement for our Battle mechanics. The ideas are subject to change, as our goals and thought-processes may evolve during the process.
 
+Additionally, please refer to our [Card Attributes](../master/CardAttributes.md) document for information about our current ideas regarding Card stats, strengths/weaknesses, etc.
 
 ## Sprint 1 Brainstorming
 
