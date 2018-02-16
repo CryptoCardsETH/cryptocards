@@ -8,6 +8,6 @@ Project available on [GitHub](https://github.com/CryptoCardsETH/).
 
 ## Documents
 
-- [Project Charter](../ProjectCharter.pdf)
-- [Battle Mechanics](../BattleMechanics.md)
-- [Card Attributes](../CardAttributes.md)
+- [Project Charter](../master/ProjectCharter.pdf)
+- [Battle Mechanics](../master/BattleMechanics.md)
+- [Card Attributes](../master/CardAttributes.md)
