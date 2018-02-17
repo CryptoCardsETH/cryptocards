@@ -15,7 +15,9 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::post('/auth', 'AuthController@auth');
-Route::get('/me', 'AuthController@me');
+
+Route::get('/me', 'ProfileController@me');
+Route::get('/me/cards', 'ProfileController@getMyCards');
 
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS,'hi');

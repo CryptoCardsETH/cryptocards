@@ -1,29 +1,32 @@
 <?php
-/*
-	Profile Controller - github.com/CryptoCardsETH/backend
-	File created by Harris Christiansen (HarrisChristiansen.com)
-*/
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Models\Card;
 
 class ProfileController extends Controller {
-	
-	public function getIndex() {
-		return view('pages.profile.index');
-	}
-	
-	public function getCollection() {
-		return view('pages.profile.collection');
-	}
-	
-	public function getSettings() {
-		return view('pages.profile.settings');
-	}
-	
-	public function getLogout() {
-		return redirect()->route('home')->with('alert', "You have been logged out");
-	}
+
+    public function __construct()
+    {
+        $this->middleware('jwt.auth');
+    }
+
+    /**
+     * Gets the info about the current user.
+     * @return mixed user
+     */
+    public function me()
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS,auth()->user());
+    }
+
+    /**
+     * Gets all the cards that the user is an owner of.
+     * @return mixed cards
+     */
+    public function getMyCards() {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::where("user_id",auth()->user()->id)->get());
+    }
+
 	
 }
