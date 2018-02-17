@@ -6,5 +6,7 @@ install:
 - pip install --user awscli
 - yarn
 script:
-- npm test -- --coverage
-- npm run build
+- yarn test --coverage
+- yarn run build
+after_success:
+- yarn run codecov
