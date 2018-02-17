@@ -43,9 +43,6 @@ class AuthController extends Controller {
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['token'=>$token]);
     }
-    public function me()
-    {
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS,auth()->user());
-    }
+
 
 }
