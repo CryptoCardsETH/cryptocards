@@ -10,6 +10,7 @@ import {
 import Collection from './pages/Collection';
 import Home from './pages/Home';
 import Debug from './pages/Debug';
+import AllCards from './pages/AllCards';
 import LoginPage from './pages/Login';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
@@ -62,7 +63,8 @@ const App = () => (
           <Route exact path="/" component={Home} />
           <Route path="/login" component={LoginPage} />
           <Route path="/debug" component={Debug} />
-          
+          <Route path="/cards" component={AllCards} />
+
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/collection" component={Collection} />
