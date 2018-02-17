@@ -1,48 +1,29 @@
 import React, { Component } from 'react';
 import CardGrid from '../components/CardGrid';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { fetchMyCards } from '../actions/users';
 
 class CollectionPage extends Component {
+  componentDidMount() {
+    this.props.fetchMyCards();
+  }
   render() {
     // fake card data
-    let cards = [
-      {
-        title: 'one',
-        imageUrl:
-          'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/262933.svg'
-      },
-      {
-        title: 'two',
-        imageUrl:
-          'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/262933.svg'
-      },
-      {
-        title: 'three',
-        imageUrl:
-          'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/262933.svg'
-      },
-      {
-        title: 'four',
-        imageUrl:
-          'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/262933.svg'
-      },
-      {
-        title: 'five',
-        imageUrl:
-          'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/262933.svg'
-      },
-      {
-        title: 'six',
-        imageUrl:
-          'https://storage.googleapis.com/ck-kitty-image/0x06012c8cf97bead5deae237070f9587f8e7a266d/262933.svg'
-      }
-    ];
     return (
       <div>
         <h1>My Collection</h1>
-        <CardGrid cards={cards} />
+        <CardGrid cards={this.props.user.cards} />
       </div>
     );
   }
 }
 
-export default CollectionPage;
+function mapStateToProps(state) {
+  return { user: state.user };
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ fetchMyCards }, dispatch);
+};
+export default connect(mapStateToProps, mapDispatchToProps)(CollectionPage);

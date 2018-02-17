@@ -21,8 +21,8 @@ class CardGrid extends Component {
               <div className="overlay-container">
                 <img
                   className="card-img-top"
-                  src={card.imageUrl}
-                  alt={card.title}
+                  src={`http://via.placeholder.com/350?text=card+id+${card.id}`}
+                  alt={card.name}
                 />
                 <div className="overlay">
                   <a href="/collection" title="More Details">
@@ -35,7 +35,7 @@ class CardGrid extends Component {
                 </div>
               </div>
               <div className="card-body">
-                <h4 className="card-title text-center">{card.title}</h4>
+                <h4 className="card-title text-center">{card.name}</h4>
               </div>
             </div>
           );

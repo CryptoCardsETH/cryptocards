@@ -1,6 +1,8 @@
 import {
   LOGIN_FROM_JWT_SUCCESS,
   RECEIVE_ME,
+  RECEIVE_MY_CARDS,
+  REQUEST_MY_CARDS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
   SET_SIGNED_MESSAGES,
@@ -15,7 +17,10 @@ const INITIAL_STATE = {
   signedMessages: {},
   jwt: null,
   network_id: null,
-  accounts_list: []
+  accounts_list: [],
+
+  cards: [],
+  cards_loading: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -50,6 +55,17 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         me: action.me
+      };
+    case REQUEST_MY_CARDS:
+      return {
+        ...state,
+        cards_loading: true
+      };
+    case RECEIVE_MY_CARDS:
+      return {
+        ...state,
+        cards: action.cards,
+        cards_loading: false
       };
     default:
       return state;

@@ -89,3 +89,31 @@ export function initializeAuthFlow(address, signed) {
       });
   };
 }
+
+export const REQUEST_MY_CARDS = 'REQUEST_MY_CARDS';
+export const RECEIVE_MY_CARDS = 'RECEIVE_MY_CARDS';
+
+export function fetchMyCards() {
+  return dispatch => {
+    dispatch(requestMyCards());
+    return apiFetch('me/cards')
+      .then(response => response.json())
+      .then(json => {
+        //todo: error checking (i.e. expired token)
+        dispatch(receiveMyCards(json.data));
+      });
+  };
+}
+
+function requestMyCards() {
+  return {
+    type: REQUEST_MY_CARDS
+  };
+}
+
+function receiveMyCards(cards) {
+  return {
+    type: RECEIVE_MY_CARDS,
+    cards
+  };
+}
