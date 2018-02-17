@@ -19,6 +19,8 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'ProfileController@me');
 Route::get('/me/cards', 'ProfileController@getMyCards');
 
+Route::get('/cards','MarketplaceController@getAllCards');
+
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS,'hi');
 });
