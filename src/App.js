@@ -7,6 +7,7 @@ import {
   withRouter
 } from 'react-router-dom';
 
+import Collection from './pages/Collection';
 import Home from './pages/Home';
 import Debug from './pages/Debug';
 import LoginPage from './pages/Login';
@@ -61,9 +62,10 @@ const App = () => (
           <Route exact path="/" component={Home} />
           <Route path="/login" component={LoginPage} />
           <Route path="/debug" component={Debug} />
-
+          
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
+          <UserRoute path="/collection" component={Collection} />
         </Switch>
       </main>
       {/*<Footer />*/}
