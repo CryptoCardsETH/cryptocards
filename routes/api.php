@@ -17,6 +17,8 @@ use Illuminate\Support\Facades\Route;
 Route::post('/auth', 'AuthController@auth');
 
 Route::get('/me', 'ProfileController@me');
+Route::put('/me', 'ProfileController@updateMe');
+
 Route::get('/me/cards', 'ProfileController@getMyCards');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
