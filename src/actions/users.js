@@ -10,19 +10,23 @@ export function loginFromJWT(token) {
     let timeMs = Math.round(new Date().getTime() / 1000);
     console.log('DECODED', decoded);
 
+    let shouldFetch = true;
     if (expirationDate) {
       if (expirationDate >= timeMs) console.log('expiring soon!');
       else if (expirationDate < timeMs) {
         console.log('expired!!');
         toast.error('Token expired! Please log in again');
+        shouldFetch = false;
         dispatch(logout());
       }
     }
-    persistLocally('jwt', token);
-    dispatch(saveToken(token));
-    setTimeout(() => {
-      dispatch(fetchMe());
-    }, 50);
+    if (shouldFetch) {
+      persistLocally('jwt', token);
+      dispatch(saveToken(token));
+      setTimeout(() => {
+        dispatch(fetchMe());
+      }, 50);
+    }
   };
 }
 
