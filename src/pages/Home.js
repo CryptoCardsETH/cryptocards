@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/App.css';
+import '../styles/App.scss';
 import { Jumbotron } from 'reactstrap';
 import { APP_NAME } from '../config';
 class HomePage extends Component {

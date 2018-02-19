@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/App.css';
+import '../styles/App.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Web3Login from '../components/Web3Login';
