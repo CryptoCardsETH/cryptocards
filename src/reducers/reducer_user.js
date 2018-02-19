@@ -2,6 +2,7 @@ import {
   LOGIN_FROM_JWT_SUCCESS,
   RECEIVE_ME,
   RECEIVE_MY_CARDS,
+  REMOVE_TOKEN,
   REQUEST_MY_CARDS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
@@ -50,6 +51,12 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         authenticated: true,
         jwt: action.token
+      };
+    case REMOVE_TOKEN:
+      return {
+        ...state,
+        authenticated: false,
+        jwt: null
       };
     case RECEIVE_ME:
       return {

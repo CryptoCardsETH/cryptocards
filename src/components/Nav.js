@@ -1,8 +1,11 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { APP_NAME } from '../config';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
+import { logout } from '../actions/users';
 
-export default class Nav extends React.Component {
+class Nav extends React.Component {
   constructor(props) {
     super(props);
 
@@ -28,11 +31,13 @@ export default class Nav extends React.Component {
                   Home
                 </NavLink>
               </li>
-              <li className="nav-item">
-                <NavLink to="/collection" className="nav-link">
-                  Collection
-                </NavLink>
-              </li>
+              {this.props.user.authenticated ? (
+                <li className="nav-item">
+                  <NavLink to="/collection" className="nav-link">
+                    My Collection
+                  </NavLink>
+                </li>
+              ) : null}
               <li className="nav-item">
                 <NavLink to="/cards" className="nav-link">
                   All Cards
@@ -43,6 +48,13 @@ export default class Nav extends React.Component {
                   Debug
                 </NavLink>
               </li>
+              {this.props.user.authenticated ? (
+                <li className="nav-item">
+                  <div onClick={() => this.props.logout()} className="nav-link">
+                    Logout
+                  </div>
+                </li>
+              ) : null}
             </ul>
           </div>
         </nav>
@@ -50,3 +62,19 @@ export default class Nav extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state) {
+  let { user } = state;
+  return { user };
+}
+
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators(
+    {
+      logout
+    },
+    dispatch
+  );
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Nav);

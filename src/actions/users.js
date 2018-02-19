@@ -1,8 +1,21 @@
 import apiFetch, { persistLocally } from './index';
+import jwtDecode from 'jwt-decode';
 export const LOGIN_FROM_JWT_SUCCESS = 'LOGIN_FROM_JWT_SUCCESS';
 export function loginFromJWT(token) {
-  // TODO: save token
   return dispatch => {
+    let decoded = jwtDecode(token);
+
+    let expirationDate = decoded.exp;
+    let timeMs = Math.round(new Date().getTime() / 1000);
+    console.log('DECODED', decoded);
+
+    if (expirationDate) {
+      if (expirationDate >= timeMs) console.log('expiring soon!');
+      else if (expirationDate < timeMs) {
+        console.log('expired!!');
+        dispatch(logout());
+      }
+    }
     persistLocally('jwt', token);
     dispatch(saveToken(token));
     setTimeout(() => {
@@ -15,6 +28,20 @@ function saveToken(token) {
   return {
     type: LOGIN_FROM_JWT_SUCCESS,
     token: token
+  };
+}
+
+export const REMOVE_TOKEN = 'REMOVE_TOKEN';
+function removeToken() {
+  return {
+    type: REMOVE_TOKEN
+  };
+}
+
+export function logout() {
+  return dispatch => {
+    persistLocally('jwt', null);
+    dispatch(removeToken());
   };
 }
 
