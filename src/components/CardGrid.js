@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import '../styles/App.scss';
+import '../styles/App.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 import 'animate.css';
