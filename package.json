@@ -8,6 +8,7 @@
     "@fortawesome/react-fontawesome": "^0.0.17",
     "animate.css": "^3.6.1",
     "bootstrap": "4.0.0",
+    "codecov": "^3.0.0",
     "enzyme": "^3.3.0",
     "enzyme-adapter-react-16": "^1.1.1",
     "eth-sig-util": "^1.4.2",
@@ -38,6 +39,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "codecov": "codecov < ./coverage/lcov.info"
   }
 }
