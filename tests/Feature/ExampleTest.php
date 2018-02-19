@@ -46,5 +46,11 @@ class ExampleTest extends TestCase
         $data = json_decode($response->getContent(), true)['data'];
         $this->assertEquals(count($data),Card::all()->count());
     }
+    public function testGetCardDetails() {
+        $card = factory(Card::class)->create();
+        $response = $this->json('GET','/v1/cards/'.$card->id);
+        $data = json_decode($response->getContent(), true)['data'];
+        $this->assertEquals($card->name,$data['name']);
+    }
 
 }

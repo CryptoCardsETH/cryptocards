@@ -10,4 +10,8 @@ class Card extends Model
     {
         return $this->hasMany('App\Models\CardAttribute');
     }
+    public function user()
+    {
+        return $this->BelongsTo('App\Models\User');
+    }
 }

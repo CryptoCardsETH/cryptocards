@@ -13,7 +13,7 @@ class MarketplaceController extends Controller {
 
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getAllCards']]);
+        $this->middleware('jwt.auth', ['except' => ['getAllCards','getCardDetail']]);
     }
 
     /**
@@ -21,7 +21,11 @@ class MarketplaceController extends Controller {
      * @return mixed cards
      */
     public function getAllCards() {
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes')->get());
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes','user')->get());
+    }
+
+    public function getCardDetail($card_id) {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes','user')->find($card_id));
     }
 	
 }
