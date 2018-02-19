@@ -6,9 +6,21 @@ import 'animate.css';
 
 class CardGrid extends Component {
   render() {
+    let { cards, filter } = this.props;
+    if (filter && filter.text && filter.text !== '') {
+      cards = cards.filter(c => c.name.includes(filter.text));
+    }
+    if (filter && filter.sort) {
+      if (filter.sort === 'id')
+        cards.sort((a, b) => (a.id > b.id ? 1 : b.id > a.id ? -1 : 0));
+      if (filter.sort === 'az')
+        cards.sort((a, b) => (a.name > b.name ? 1 : b.name > a.name ? -1 : 0));
+      if (filter.sort === 'za')
+        cards.sort((a, b) => (a.name < b.name ? 1 : b.name < a.name ? -1 : 0));
+    }
     return (
       <div className="row">
-        {this.props.cards.map((card, index) => {
+        {cards.map((card, index) => {
           let style = {
             animationDelay: (index % 3) / 10 + 's'
           };

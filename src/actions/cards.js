@@ -54,3 +54,21 @@ function receiveCardDetail(cardId, card) {
     card
   };
 }
+
+export const SET_CARD_FILTER_TEXT = 'SET_CARD_FILTER_TEXT';
+export function setCardFilterText(key, text) {
+  return {
+    type: SET_CARD_FILTER_TEXT,
+    key,
+    text
+  };
+}
+
+export const SET_CARD_SORT_OPTION = 'SET_CARD_SORT_OPTION';
+export function setCardSortOption(key, sort) {
+  return {
+    type: SET_CARD_SORT_OPTION,
+    key,
+    sort
+  };
+}
