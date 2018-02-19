@@ -1,8 +1,14 @@
-import { REQUEST_ALL_CARDS, RECEIVE_ALL_CARDS } from '../actions/cards';
-
+import {
+  REQUEST_ALL_CARDS,
+  RECEIVE_ALL_CARDS,
+  RECEIVE_CARD_DETAIL
+} from '../actions/cards';
+import update from 'immutability-helper';
 const INITIAL_STATE = {
   all_cards: [],
-  all_cards_loading: false
+  all_cards_loading: false,
+  card_detail: {},
+  card_detail_loading: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -18,6 +24,12 @@ export default function(state = INITIAL_STATE, action) {
         all_cards: action.cards,
         all_cards_loading: false
       };
+    case RECEIVE_CARD_DETAIL:
+      return update(state, {
+        card_detail: {
+          [action.cardId]: { $set: action.card }
+        }
+      });
     default:
       return state;
   }
