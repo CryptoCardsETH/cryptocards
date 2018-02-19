@@ -9,6 +9,7 @@ import ethUtil from 'ethereumjs-util';
 import sigUtil from 'eth-sig-util';
 import Web3 from 'web3';
 import { APP_NAME } from '../config';
+import { toast } from 'react-toastify';
 
 class Web3Login extends React.Component {
   //sign the message containing a simple string, which will we give to server in exchange for a JWT
@@ -53,12 +54,14 @@ class Web3Login extends React.Component {
       let { accounts_list } = this.props.user;
       if (accounts_list.length === 0) {
         console.log('no accounts!');
+        toast.error('No ETH accounts! Perhaps metamask is locked?');
       } else {
         //todo: offer mechanism for picking address if there are multiple?
         this.signMessage(accounts_list[0], web3client);
       }
     } else {
       console.log('no web3');
+      toast.error('No web3 client!');
     }
   };
   render() {

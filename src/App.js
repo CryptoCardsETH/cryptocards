@@ -15,6 +15,7 @@ import LoginPage from './pages/Login';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
+import { ToastContainer } from 'react-toastify';
 
 const PrivateRoute = ({
   component: Component,
@@ -57,8 +58,9 @@ const App = () => (
   <Router>
     <div>
       <Web3Initialization />
+      <ToastContainer />
       <Nav />
-      <main role="main" className="container">
+      <main role="main" className="container" style={{ paddingTop: '80px' }}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={LoginPage} />

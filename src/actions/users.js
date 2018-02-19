@@ -1,5 +1,6 @@
 import apiFetch, { persistLocally } from './index';
 import jwtDecode from 'jwt-decode';
+import { toast } from 'react-toastify';
 export const LOGIN_FROM_JWT_SUCCESS = 'LOGIN_FROM_JWT_SUCCESS';
 export function loginFromJWT(token) {
   return dispatch => {
@@ -13,6 +14,7 @@ export function loginFromJWT(token) {
       if (expirationDate >= timeMs) console.log('expiring soon!');
       else if (expirationDate < timeMs) {
         console.log('expired!!');
+        toast.error('Token expired! Please log in again');
         dispatch(logout());
       }
     }
