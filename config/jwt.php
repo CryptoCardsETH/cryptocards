@@ -149,7 +149,7 @@ return [
     'required_claims' => [
         'iss',
         'iat',
-        'exp',
+//        'exp',
         'nbf',
         'sub',
         'jti',
