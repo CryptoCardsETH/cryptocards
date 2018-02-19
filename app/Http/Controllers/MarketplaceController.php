@@ -21,7 +21,7 @@ class MarketplaceController extends Controller {
      * @return mixed cards
      */
     public function getAllCards() {
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::get());
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes')->get());
     }
 	
 }

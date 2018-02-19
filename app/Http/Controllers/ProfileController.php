@@ -25,7 +25,7 @@ class ProfileController extends Controller {
      * @return mixed cards
      */
     public function getMyCards() {
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::where("user_id",auth()->user()->id)->get());
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes')->where("user_id",auth()->user()->id)->get());
     }
 
 	

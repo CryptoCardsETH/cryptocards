@@ -54,14 +54,13 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         if ($exception instanceof UnauthorizedHttpException) {
-            if ($exception->getPrevious() instanceof TokenExpiredException) {
-                response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_EXPIRED);
-            } else {
-                if ($exception->getPrevious() instanceof TokenInvalidException)
-                    response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_INVALID);
-                return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_ERROR);
-            }
+            if ($exception instanceof TokenExpiredException)
+                return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_EXPIRED);
+            if ($exception->getPrevious() instanceof TokenInvalidException)
+                return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_INVALID);
+            return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_ERROR);
         }
+
         return parent::render($request, $exception);
     }
 
