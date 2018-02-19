@@ -26,3 +26,31 @@ function receiveAllCards(cards) {
     cards
   };
 }
+export const REQUEST_CARD_DETAIL = 'REQUEST_CARD_DETAIL';
+export const RECEIVE_CARD_DETAIL = 'RECEIVE_CARD_DETAIL';
+
+export function fetchCardDetail(cardId) {
+  return dispatch => {
+    dispatch(requestCardDetail());
+    return apiFetch('cards/' + cardId)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveCardDetail(cardId, json.data));
+      });
+  };
+}
+
+function requestCardDetail(cardId) {
+  return {
+    type: REQUEST_CARD_DETAIL,
+    cardId
+  };
+}
+
+function receiveCardDetail(cardId, card) {
+  return {
+    type: RECEIVE_CARD_DETAIL,
+    cardId,
+    card
+  };
+}

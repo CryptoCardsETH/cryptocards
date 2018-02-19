@@ -16,6 +16,7 @@ import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
+import CardDetail from './pages/CardDetail';
 
 const PrivateRoute = ({
   component: Component,
@@ -66,6 +67,7 @@ const App = () => (
           <Route path="/login" component={LoginPage} />
           <Route path="/debug" component={Debug} />
           <Route path="/cards" component={AllCards} />
+          <Route path="/card/:id" component={CardDetail} />
 
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
