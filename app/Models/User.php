@@ -9,6 +9,8 @@ use Tymon\JWTAuth\Contracts\JWTSubject;
 class User extends Authenticatable implements JWTSubject
 {
     use Notifiable;
+    const FIELD_EMAIL = 'email';
+    const FIELD_NICKNAME = 'nickname';
     protected $guarded = ['id'];
 
     /**
@@ -29,5 +31,10 @@ class User extends Authenticatable implements JWTSubject
     public function getJWTCustomClaims()
     {
         return ['address'=>$this->address];
+    }
+
+    public function getToken()
+    {
+        return auth()->login($this);
     }
 }
