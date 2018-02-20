@@ -1,0 +1,37 @@
+language: php
+php:
+  - 7.1
+cache: yarn
+node_js:
+- 6
+install:
+- pip install --user awscli
+before_script:
+- cd backend/
+- cp .env.travis .env
+- mysql -e 'create database laravel_test;'
+- composer self-update
+- composer install --no-interaction
+- php artisan key:generate
+- php artisan migrate --env=testing --no-interaction -vvv
+- php artisan db:seed --env=testing --no-interaction -vvv
+- cd ..
+- cd frontend/
+- yarn
+- cd ..
+script:
+- cd backend/
+- vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
+- cd ..
+- cd frontend/
+- yarn run build-css
+- yarn test --coverage
+- yarn run build
+- cd ..
+after_success:
+- cd backend/
+- bash <(curl -s https://codecov.io/bash)
+- cd ..
+- cd frontend/
+- yarn run codecov
+- cd ..
