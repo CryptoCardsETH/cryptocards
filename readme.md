@@ -1,7 +1,5 @@
 # CryptoCards
 
-https://travis-ci.org/CryptoCardsETH/cryptocards.svg?branch=master
-
 [![Build Status](https://travis-ci.org/CryptoCardsETH/cryptocards.svg?branch=master)](https://travis-ci.org/CryptoCardsETH/cryptocards)
 
 [![codecov](https://codecov.io/gh/CryptoCardsETH/cryptocards/branch/master/graph/badge.svg)](https://codecov.io/gh/CryptoCardsETH/cryptocards)
