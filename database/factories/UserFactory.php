@@ -14,18 +14,15 @@ use Faker\Generator as Faker;
 */
 
 $factory->define(App\Models\User::class, function (Faker $faker) {
-    static $password;
-
     return [
-        'name' => $faker->name,
-        'email' => $faker->unique()->safeEmail,
-        'password' => $password ?: $password = bcrypt('secret'),
-        'remember_token' => str_random(10),
+
+        'nickname' => $faker->firstName,
+//        'email' => $faker->unique()->safeEmail,
+        'address' => '0xfakex'.$faker->unique()->sha1,
     ];
 });
 
 $factory->define(App\Models\Card::class, function (Faker $faker) {
-
     return [
         'name' => $faker->word,
     ];

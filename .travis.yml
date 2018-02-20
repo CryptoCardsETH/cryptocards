@@ -13,4 +13,6 @@ before_script:
   - php artisan db:seed --env=testing --no-interaction -vvv
 
 script:
-  - vendor/bin/phpunit
+  - vendor/bin/phpunit --verbose --coverage-text --coverage-clover=coverage.xml
+after_success:
+  - bash <(curl -s https://codecov.io/bash)

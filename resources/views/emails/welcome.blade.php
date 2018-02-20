@@ -1,0 +1,1 @@
+Thanks for making an account with {{env('APP_NAME')}}! Your account has been created with wallet address {{$user->address}}
