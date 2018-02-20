@@ -39,7 +39,13 @@ class CardGrid extends Component {
                 </div>
               </div>
               <div className="card-body">
-                <h4 className="card-title text-center">{card.name}</h4>
+                <h5 className="card-title text-center">{card.name}</h5>
+                <p className="card-text">
+                  owner: {card.user ? card.user.nickname : 'n/a'}
+                </p>
+                <p className="card-text">
+                  hidden: {card.hidden ? 'yes' : 'no'}
+                </p>
               </div>
             </div>
           );
