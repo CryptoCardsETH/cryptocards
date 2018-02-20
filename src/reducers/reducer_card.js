@@ -1,7 +1,8 @@
 import {
   REQUEST_ALL_CARDS,
   RECEIVE_ALL_CARDS,
-  RECEIVE_CARD_DETAIL
+  RECEIVE_CARD_DETAIL,
+  EDIT_CARD_DETAIL
 } from '../actions/cards';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -28,6 +29,14 @@ export default function(state = INITIAL_STATE, action) {
       return update(state, {
         card_detail: {
           [action.cardId]: { $set: action.card }
+        }
+      });
+    case EDIT_CARD_DETAIL:
+      return update(state, {
+        card_detail: {
+          [action.cardId]: {
+            [action.key]: { $set: action.value }
+          }
         }
       });
     default:
