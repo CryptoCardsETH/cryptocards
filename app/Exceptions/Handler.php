@@ -36,7 +36,8 @@ class Handler extends ExceptionHandler
      *
      * This is a great spot to send exceptions to Sentry, Bugsnag, etc.
      *
-     * @param  \Exception  $exception
+     * @param \Exception $exception
+     *
      * @return void
      */
     public function report(Exception $exception)
@@ -47,17 +48,21 @@ class Handler extends ExceptionHandler
     /**
      * Render an exception into an HTTP response.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  \Exception  $exception
+     * @param \Illuminate\Http\Request $request
+     * @param \Exception               $exception
+     *
      * @return \Illuminate\Http\Response
      */
     public function render($request, Exception $exception)
     {
         if ($exception instanceof UnauthorizedHttpException) {
-            if ($exception instanceof TokenExpiredException)
+            if ($exception instanceof TokenExpiredException) {
                 return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_EXPIRED);
-            if ($exception->getPrevious() instanceof TokenInvalidException)
+            }
+            if ($exception->getPrevious() instanceof TokenInvalidException) {
                 return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_INVALID);
+            }
+
             return response()->build(Controller::RESPONSE_MESSAGE_ERROR_JWT_ERROR);
         }
 
@@ -66,6 +71,6 @@ class Handler extends ExceptionHandler
 
     protected function unauthenticated($request, AuthenticationException $exception)
     {
-        return response()->json(['error' => 'Unauthenticated.',$exception], 401);
+        return response()->json(['error' => 'Unauthenticated.', $exception], 401);
     }
 }

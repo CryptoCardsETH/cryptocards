@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 
-class AuthController extends Controller {
-
+class AuthController extends Controller
+{
     public function __construct()
     {
         $this->middleware('jwt.auth', ['except' => ['auth']]);
@@ -14,18 +14,21 @@ class AuthController extends Controller {
     /**
      * TODO:
      * This needs to verify that the message was properly signed.
-     * Just like web3js does: http://web3js.readthedocs.io/en/1.0/web3-eth-accounts.html#recover
+     * Just like web3js does: http://web3js.readthedocs.io/en/1.0/web3-eth-accounts.html#recover.
+     *
      * @param $signerAddress
      * @param $signedMessage
      * @param $plainTextMessage
+     *
      * @return bool
      */
-    static function didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)
+    public static function didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)
     {
         return true;
     }
 
-    public function auth() {
+    public function auth()
+    {
         $payload = json_decode(request()->getContent(), true);
 
         $signerAddress = $payload['address'];
@@ -33,7 +36,7 @@ class AuthController extends Controller {
         $plainTextMessage = $payload['plaintext'];
 
         //Check signing
-        if(! self::didAddressReallySignMessage($signerAddress,$signedMessage,$plainTextMessage)) {
+        if (!self::didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)) {
             return response()->build(self::RESPONSE_MESSAGE_ERROR_DIGEST_SIGNING_MISMATCH);
         }
 
@@ -43,6 +46,4 @@ class AuthController extends Controller {
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['token'=>$token]);
     }
-
-
 }
