@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Card extends Model
 {
+    const FIELD_HIDDEN_TOGGLE = 'hidden';
     protected $appends = ['imageURL'];
 
     public function attributes()
@@ -22,5 +23,10 @@ class Card extends Model
     {
         //TODO: real url
         return 'http://via.placeholder.com/350?text=card+id'.$this->id;
+    }
+
+    public function isUserOwner(User $user)
+    {
+        return $user->id === $this->user_id;
     }
 }
