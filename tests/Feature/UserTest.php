@@ -6,7 +6,6 @@ use App\Mail\WelcomeEmail;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Tests\TestCase;
-use Illuminate\Foundation\Testing\RefreshDatabase;
 
 class UserTest extends TestCase
 {
@@ -32,10 +31,9 @@ class UserTest extends TestCase
             ->assertJson(['success' => true]);
 
         $this->assertDatabaseHas('users', [
-            'id'=>$user->id,
-            User::FIELD_NICKNAME=>$newNickName,
+            'id'                => $user->id,
+            User::FIELD_NICKNAME=> $newNickName,
         ]);
-
 
         //test that changing email triggers welcome email
         Mail::fake();
@@ -46,6 +44,5 @@ class UserTest extends TestCase
         Mail::assertSent(WelcomeEmail::class, function ($mail) use ($user) {
             return $mail->user->id === $user->id;
         });
-
     }
 }
