@@ -10,7 +10,7 @@ class Card extends Model
 
     public function attributes()
     {
-        return $this->hasMany('App\Models\CardAttribute');
+        return $this->belongsToMany('App\Models\Attribute')->withPivot('value');
     }
 
     public function user()
