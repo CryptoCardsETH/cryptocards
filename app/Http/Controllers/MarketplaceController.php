@@ -7,6 +7,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Card;
+use Illuminate\Support\Facades\Request;
 
 class MarketplaceController extends Controller
 {
@@ -28,5 +29,27 @@ class MarketplaceController extends Controller
     public function getCardDetail($card_id)
     {
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes', 'user')->find($card_id));
+    }
+
+    public function updateCard($card_id)
+    {
+        $user = auth()->user();
+        $card = Card::find($card_id);
+        if(!$card->isUserOwner($user))
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED);
+
+
+        $data = json_decode(Request::getContent(), true);
+        foreach ($data as $key => $value) {
+            if (in_array($key, [
+                Card::FIELD_HIDDEN_TOGGLE,
+            ])) {
+                $card->$key = $value;
+            }
+        }
+
+        $card->save();
+
+        return $this->getCardDetail($card_id);
     }
 }
