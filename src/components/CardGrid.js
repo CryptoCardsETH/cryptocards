@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
-import '../styles/App.scss';
+import '../styles/App.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 import 'animate.css';
+import { withRouter } from 'react-router-dom';
 
 class CardGrid extends Component {
   render() {
@@ -29,6 +30,9 @@ class CardGrid extends Component {
               key={index}
               className="card col-lg-3 col-md-5 m-2 animated fadeInUp"
               style={style}
+              onClick={() => {
+                this.props.history.push('/card/' + card.id);
+              }}
             >
               <div className="overlay-container">
                 <img
@@ -47,7 +51,13 @@ class CardGrid extends Component {
                 </div>
               </div>
               <div className="card-body">
-                <h4 className="card-title text-center">{card.name}</h4>
+                <h5 className="card-title text-center">{card.name}</h5>
+                <p className="card-text">
+                  owner: {card.user ? card.user.nickname : 'n/a'}
+                </p>
+                <p className="card-text">
+                  hidden: {card.hidden ? 'yes' : 'no'}
+                </p>
               </div>
             </div>
           );
@@ -57,4 +67,4 @@ class CardGrid extends Component {
   }
 }
 
-export default CardGrid;
+export default withRouter(CardGrid);

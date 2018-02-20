@@ -54,7 +54,6 @@ function receiveCardDetail(cardId, card) {
     card
   };
 }
-
 export const SET_CARD_FILTER_TEXT = 'SET_CARD_FILTER_TEXT';
 export function setCardFilterText(key, text) {
   return {
@@ -70,5 +69,29 @@ export function setCardSortOption(key, sort) {
     type: SET_CARD_SORT_OPTION,
     key,
     sort
+export const EDIT_CARD_DETAIL = 'EDIT_CARD_DETAIL';
+export function editCardDetail(cardId, key, value) {
+  return {
+    type: EDIT_CARD_DETAIL,
+    cardId,
+    key,
+    value
+  };
+}
+export function saveCardDetail(cardId) {
+  return (dispatch, getState) => {
+    let cardState = getState().card.card_detail[cardId];
+    return apiFetch('cards/' + cardId, {
+      method: 'PUT',
+      body: JSON.stringify(cardState)
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          dispatch(receiveCardDetail(cardId, json.data));
+        } else {
+          console.log('oops');
+        }
+      });
   };
 }
