@@ -1,0 +1,35 @@
+/*
+	@ Harris Christiansen (code@HarrisChristiansen.com)
+	Project: CryptoCards - github.com/CryptoCardsETH/backend
+*/
+
+/* ------------------------ HTML/Body ------------------------- */
+
+main {
+	padding-top: 30px;
+}
+
+.no-bottom-margin {
+	margin-bottom: 0px;
+}
+
+/* ------------------------ Buttons ------------------------- */
+
+.btn-xl {
+	padding: .75rem 1.5rem;
+	font-size: 1.5rem;
+	line-height: 1.5;
+	border-radius: .4rem;
+}
+
+.btn:hover {
+	cursor: pointer;
+}
+
+/* ------------------------ Tables ------------------------- */
+
+.table-links tbody tr:hover {
+	cursor: pointer;
+}
+
+/* ------------------------ End ------------------------- */
