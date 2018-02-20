@@ -26,7 +26,7 @@ class MarketplaceController extends Controller {
     }
 
     public function getAllListings() {
-        $listings = Listing::join('cards','cards.id','=','listings.card_id')->select('cards.id','cards.name','listings.*')->get();
+        $listings = Listing::with(['cards'])->get();
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $listings);
     }
 	

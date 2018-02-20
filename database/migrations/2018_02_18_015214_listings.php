@@ -17,9 +17,9 @@ class Listings extends Migration
             $table->increments('id');
             $table->integer('card_id')->unsigned();
             $table->foreign('card_id')->references('id')->on('cards');
-            $table->integer('seller_id')->unsigned();
-            $table->foreign('seller_id')->references('id')->on('users');
-            $table->decimal('price', 24, 18);
+            $table->integer('user_id')->unsigned();
+            $table->foreign('user_id')->references('id')->on('users');
+            $table->bigInteger('price')->unsigned();
         });
     }
 
