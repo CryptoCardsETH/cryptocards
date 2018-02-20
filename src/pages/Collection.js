@@ -3,6 +3,7 @@ import CardGrid from '../components/CardGrid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMyCards } from '../actions/users';
+import CardFilterSort from '../components/CardFilterSort';
 
 class CollectionPage extends Component {
   componentDidMount() {
@@ -13,14 +14,18 @@ class CollectionPage extends Component {
     return (
       <div>
         <h1>My Collection</h1>
-        <CardGrid cards={this.props.user.cards} />
+        <CardFilterSort filterSortKey="mycards" />
+        <CardGrid
+          cards={this.props.user.cards}
+          filter={this.props.card.filters['mycards']}
+        />
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { user: state.user };
+  return { user: state.user, card: state.card };
 }
 
 const mapDispatchToProps = dispatch => {
