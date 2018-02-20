@@ -44,24 +44,21 @@ class ProfileController extends Controller
         //todo: integrity constraint check for email and nickname
         $user->save();
 
-
         //check if email changed
-        if($oldEmail != $user->email) {
-
-            if($oldEmail == null) {
+        if ($oldEmail != $user->email) {
+            if ($oldEmail == null) {
                 //setting email for first time
                 Mail::to($user)->send(new WelcomeEmail($user));
-                //todo: confirmation?
-            } else if($user->email = "") {
+            //todo: confirmation?
+            } elseif ($user->email = '') {
                 //bad! setting email to blank
                 $user->email = $oldEmail;
-                //todo: error message
+            //todo: error message
             } else {
                 //normal changing of email
                 //todo: confirmation?
             }
         }
-
 
         return $this->me();
     }
