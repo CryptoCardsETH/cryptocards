@@ -1,8 +1,8 @@
 <?php
 
-use Illuminate\Support\Facades\Schema;
-use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
+use Illuminate\Database\Schema\Blueprint;
+use Illuminate\Support\Facades\Schema;
 
 class Listings extends Migration
 {
@@ -13,7 +13,7 @@ class Listings extends Migration
      */
     public function up()
     {
-        Schema::create('listings', function(Blueprint $table) {
+        Schema::create('listings', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('card_id')->unsigned();
             $table->foreign('card_id')->references('id')->on('cards');
