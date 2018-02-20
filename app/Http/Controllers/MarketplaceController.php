@@ -7,13 +7,14 @@
 namespace App\Http\Controllers;
 
 use App\Models\Card;
+use App\Models\Listing;
 use Illuminate\Support\Facades\Request;
 
 class MarketplaceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getAllCards', 'getCardDetail']]);
+        $this->middleware('jwt.auth', ['except' => ['getAllCards', 'getCardDetail', 'getAllListings']]);
     }
 
     /**
@@ -51,5 +52,12 @@ class MarketplaceController extends Controller
         $card->save();
 
         return $this->getCardDetail($card_id);
+    }
+
+    public function getAllListings()
+    {
+        $listings = Listing::with(['cards'])->get();
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $listings);
     }
 }
