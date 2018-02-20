@@ -1,5 +1,12 @@
 # CryptoCards
 
+https://travis-ci.org/CryptoCardsETH/cryptocards.svg?branch=master
+
+[![Build Status](https://travis-ci.org/CryptoCardsETH/cryptocards.svg?branch=master)](https://travis-ci.org/CryptoCardsETH/cryptocards)
+
+[![codecov](https://codecov.io/gh/CryptoCardsETH/cryptocards/branch/master/graph/badge.svg)](https://codecov.io/gh/CryptoCardsETH/cryptocards)
+
+
 ## Synopsis
 
 [WIP] CryptoCards is a game centered around unique playing cards which you can battle against other players. Each card is one-of-a-kind and 100% owned by you; it cannot be replicated, taken away, or destroyed.  
