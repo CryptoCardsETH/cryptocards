@@ -46,7 +46,9 @@ class UserTest extends TestCase
             return $mail->user->id === $user->id;
         });
     }
-    public function testGetUpdateCardHiddenFlag() {
+
+    public function testGetUpdateCardHiddenFlag()
+    {
         $card = factory(Card::class)->create();
         $user = factory(User::class)->create();
         $card->user_id = $user->id;

@@ -24,7 +24,9 @@ class Card extends Model
         //TODO: real url
         return 'http://via.placeholder.com/350?text=card+id'.$this->id;
     }
-    public function isUserOwner(User $user) {
+
+    public function isUserOwner(User $user)
+    {
         return $user->id === $this->user_id;
     }
 }

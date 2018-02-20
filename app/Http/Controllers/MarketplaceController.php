@@ -35,9 +35,9 @@ class MarketplaceController extends Controller
     {
         $user = auth()->user();
         $card = Card::find($card_id);
-        if(!$card->isUserOwner($user))
+        if (!$card->isUserOwner($user)) {
             return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED);
-
+        }
 
         $data = json_decode(Request::getContent(), true);
         foreach ($data as $key => $value) {
