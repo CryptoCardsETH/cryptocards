@@ -3,7 +3,7 @@ import {
   RECEIVE_ALL_CARDS,
   RECEIVE_CARD_DETAIL,
   SET_CARD_FILTER_TEXT,
-  SET_CARD_SORT_OPTION
+  SET_CARD_SORT_OPTION,
   EDIT_CARD_DETAIL
 } from '../actions/cards';
 import update from 'immutability-helper';
@@ -48,6 +48,8 @@ export default function(state = INITIAL_STATE, action) {
       return update(state, {
         filters: {
           [action.key]: { $auto: { sort: { $set: action.sort } } }
+        }
+      });
     case EDIT_CARD_DETAIL:
       return update(state, {
         card_detail: {

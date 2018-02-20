@@ -69,6 +69,8 @@ export function setCardSortOption(key, sort) {
     type: SET_CARD_SORT_OPTION,
     key,
     sort
+  };
+}
 export const EDIT_CARD_DETAIL = 'EDIT_CARD_DETAIL';
 export function editCardDetail(cardId, key, value) {
   return {
