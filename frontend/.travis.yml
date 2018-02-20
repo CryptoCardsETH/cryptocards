@@ -1,0 +1,13 @@
+language: node_js
+cache: yarn
+node_js:
+- 6
+install:
+- pip install --user awscli
+- yarn
+script:
+- yarn run build-css
+- yarn test --coverage
+- yarn run build
+after_success:
+- yarn run codecov
