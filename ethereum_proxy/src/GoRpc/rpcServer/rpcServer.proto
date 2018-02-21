@@ -6,6 +6,8 @@ service Greeter {
 
   rpc GetBlank(BlankRequest) returns (BlankReply) {}
 
+  rpc GetCards(CardRequest) returns (CardReply) {}
+
 }
 
 message BlankRequest {
