@@ -28,7 +28,7 @@ class AccountPage extends Component {
       <div className="container">
         <div className="row">
           <div className="col-md-9">
-            <h4>My Account</h4>
+            <h1>My Account</h1>
             <br />
             <form className="form-horizontal" onSubmit={this.handleSubmit}>
               <div className="form-group">
