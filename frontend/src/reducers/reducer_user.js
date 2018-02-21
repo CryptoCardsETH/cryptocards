@@ -12,6 +12,7 @@ import {
 const INITIAL_STATE = {
   authenticated: false,
   me: {
+    nickname: '',
     email: ''
   },
   isWeb3Available: false,

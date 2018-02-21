@@ -66,6 +66,22 @@ export function fetchMe() {
   };
 }
 
+//request to update email and nickname of user in account page
+export function updateMe(data) {
+  console.log('updateMe in user');
+  console.log(data);
+  return dispatch => {
+    console.log('dispatch');
+    dispatch(requestMe());
+    return apiFetch('me', { method: 'PUT', body: JSON.stringify(data) })
+      .then(response => response.json())
+      .then(json => {
+        //todo: error checking (i.e. expired token)
+        dispatch(receiveMe(json.data));
+      });
+  };
+}
+
 function requestMe() {
   return {
     type: REQUEST_ME
