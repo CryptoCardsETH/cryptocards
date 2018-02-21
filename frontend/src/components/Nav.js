@@ -33,6 +33,13 @@ class Nav extends React.Component {
               </li>
               {this.props.user.authenticated ? (
                 <li className="nav-item">
+                  <NavLink to="/account" className="nav-link">
+                    Account
+                  </NavLink>
+                </li>
+              ) : null}
+              {this.props.user.authenticated ? (
+                <li className="nav-item">
                   <NavLink to="/collection" className="nav-link">
                     My Collection
                   </NavLink>

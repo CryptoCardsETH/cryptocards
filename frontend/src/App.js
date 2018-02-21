@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Debug from './pages/Debug';
 import AllCards from './pages/AllCards';
 import LoginPage from './pages/Login';
+import AccountPage from './pages/Account';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
@@ -65,6 +66,7 @@ const App = () => (
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/login" component={LoginPage} />
+          <Route path="/account" component={AccountPage} />
           <Route path="/debug" component={Debug} />
           <Route path="/cards" component={AllCards} />
           <Route path="/card/:id" component={CardDetail} />
@@ -72,6 +74,7 @@ const App = () => (
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/collection" component={Collection} />
+          <UserRoute path="/account" component={AccountPage} />
         </Switch>
       </main>
       {/*<Footer />*/}
