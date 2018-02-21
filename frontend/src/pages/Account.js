@@ -87,7 +87,6 @@ class AccountPage extends Component {
                 <div className="col-md-8">
                   <button> Save Changes</button>
                   <span className="tab-space">
-                    {' '}
                     {this.state.showresult ? 'Changes Saved!' : ''}{' '}
                   </span>
                 </div>
