@@ -4,11 +4,13 @@ import {
   RECEIVE_MY_CARDS,
   REMOVE_TOKEN,
   REQUEST_MY_CARDS,
+  EDIT_ME_DETAILS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
   SET_SIGNED_MESSAGES,
   SET_WEB3_AVAILABILITY
 } from '../actions/users';
+import update from 'immutability-helper';
 const INITIAL_STATE = {
   authenticated: false,
   me: {
@@ -75,6 +77,12 @@ export default function(state = INITIAL_STATE, action) {
         cards: action.cards,
         cards_loading: false
       };
+    case EDIT_ME_DETAILS:
+      return update(state, {
+        me: {
+          [action.key]: { $set: action.value }
+        }
+      });
     default:
       return state;
   }

@@ -53,6 +53,7 @@ export function logout() {
 
 export const REQUEST_ME = 'REQUEST_ME';
 export const RECEIVE_ME = 'RECEIVE_ME';
+export const EDIT_ME_DETAILS = 'EDIT_ME_DETAILS';
 
 export function fetchMe() {
   return dispatch => {
@@ -67,18 +68,29 @@ export function fetchMe() {
 }
 
 //request to update email and nickname of user in account page
-export function updateMe(data) {
-  console.log('updateMe in user');
-  console.log(data);
-  return dispatch => {
-    console.log('dispatch');
+export function updateMe() {
+  return (dispatch, getState) => {
+    let meState = getState().user.me;
+    console.log(meState);
     dispatch(requestMe());
-    return apiFetch('me', { method: 'PUT', body: JSON.stringify(data) })
+    return apiFetch('me', { method: 'PUT', body: JSON.stringify(meState) })
       .then(response => response.json())
       .then(json => {
+        if (json.success) {
+          toast.success('Changes Saved!');
+          dispatch(receiveMe(json.data));
+        } else toast.error('User not updated');
         //todo: error checking (i.e. expired token)
-        dispatch(receiveMe(json.data));
       });
+  };
+}
+
+//to edit the global state of user's info
+export function editMeDetails(key, value) {
+  return {
+    type: EDIT_ME_DETAILS,
+    key,
+    value
   };
 }
 

@@ -1,17 +1,15 @@
 import React, { Component } from 'react';
 import '../styles/App.scss';
-import { updateMe } from '../actions/users';
 import { connect } from 'react-redux';
+import { Button } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { fetchMe } from '../actions/users';
+import { fetchMe, editMeDetails, updateMe } from '../actions/users';
 
 //Account page for update user's info
 class AccountPage extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.onChangeEmail = this.onChangeEmail.bind(this);
-    this.onChangeNickName = this.onChangeNickName.bind(this);
     this.state = { showresult: false };
   }
 
@@ -19,26 +17,13 @@ class AccountPage extends Component {
     this.props.fetchMe();
   }
 
-  onChangeEmail(e) {
-    const state = this.props.user;
-    state[e.target.name] = e.target.value;
-    this.setState(state);
-  }
-
-  onChangeNickName(e) {
-    const state = this.props.user;
-    state[e.target.name] = e.target.value;
-    this.setState(state);
-  }
-
   handleSubmit(e) {
     e.preventDefault();
-    const data = this.state;
-    this.setState({ showresult: true });
-    this.props.updateMe(data);
+    this.props.updateMe();
   }
 
   render() {
+    let { me } = this.props.user;
     return (
       <div className="container">
         <div className="row">
@@ -54,12 +39,10 @@ class AccountPage extends Component {
                     placeholder="Nickname"
                     name="nickname"
                     type="text"
-                    defaultValue={
-                      this.props.user.me.nickname == null
-                        ? ''
-                        : this.props.user.me.nickname
-                    }
-                    onChange={this.onChangeNickName}
+                    value={me.nickname}
+                    onChange={e => {
+                      this.props.editMeDetails('nickname', e.target.value);
+                    }}
                     autoFocus
                   />
                 </div>
@@ -73,22 +56,20 @@ class AccountPage extends Component {
                     placeholder="E-mail"
                     name="email"
                     type="email"
-                    defaultValue={
-                      this.props.user.me.email == null
-                        ? ''
-                        : this.props.user.me.email
-                    }
-                    onChange={this.onChangeEmail}
+                    value={me.email}
+                    onChange={e => {
+                      this.props.editMeDetails('email', e.target.value);
+                    }}
                   />
                 </div>
               </div>
               <div className="form-group">
                 <label className="col-md-3 control-label" />
                 <div className="col-md-8">
-                  <button> Save Changes</button>
-                  <span className="tab-space">
-                    {this.state.showresult ? 'Changes Saved!' : ''}{' '}
-                  </span>
+                  <Button type="submit" value="submit">
+                    {' '}
+                    Save Changes
+                  </Button>
                 </div>
               </div>
             </form>
@@ -104,7 +85,7 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchMe, updateMe }, dispatch);
+  return bindActionCreators({ fetchMe, updateMe, editMeDetails }, dispatch);
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);
