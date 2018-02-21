@@ -2,9 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Support\Facades\Log;
-use RpcServer\BlankRequest;
 use Illuminate\Console\Command;
+use RpcServer\BlankRequest;
 use RpcServer\GreeterClient;
 
 class ProtoTest extends Command
@@ -41,14 +40,13 @@ class ProtoTest extends Command
     public function handle()
     {
         $msg = new BlankRequest();
-        $msg->setName("test");
-        $this->info("sending:".$msg->getName());
+        $msg->setName('test');
+        $this->info('sending:'.$msg->getName());
 
-        $client = new GreeterClient(env('RPC_SERVER_ADDRESS'),[
+        $client = new GreeterClient(env('RPC_SERVER_ADDRESS'), [
             'credentials' => \Grpc\ChannelCredentials::createInsecure(),
         ]);
         list($reply, $status) = $client->GetBlank($msg)->wait();
-        $this->info("received:".$reply->getMessage());
-
+        $this->info('received:'.$reply->getMessage());
     }
 }
