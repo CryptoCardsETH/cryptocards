@@ -41,7 +41,10 @@ class CardGrid extends Component {
                   src={`http://via.placeholder.com/350?text=card+id+${card.id}`}
                   alt={card.name || card.cards.name}
                 />
-                <div className="overlay">
+                <div className="overlay overlay-price">
+                  {card.price ? <EtherPrice price={card.price} /> : null}
+                </div>
+                <div className="overlay overlay-background">
                   <a href="/collection" title="More Details">
                     <FontAwesomeIcon
                       icon={faExternalLinkAlt}
@@ -55,7 +58,6 @@ class CardGrid extends Component {
                 <h5 className="card-title text-center">
                   {card.name || card.cards.name}
                 </h5>
-                {card.price ? <EtherPrice price={card.price} /> : null}
                 <p className="card-text">
                   owner: {card.user ? card.user.nickname : 'n/a'}
                 </p>

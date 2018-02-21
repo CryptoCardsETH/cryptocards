@@ -23,12 +23,20 @@ body {
   left: 0;
   right: 0;
   top: 0;
-  background: rgba(0, 0, 0, 0.5);
   transition: 0.5s ease;
-  opacity: 0;
   font-size: 20px;
-  padding: 20px;
+}
+
+.overlay-background {
+  background: rgba(0, 0, 0, 0.5);
+  opacity: 0;
   text-align: center;
+  padding: 20px;
+}
+
+.overlay-price {
+  text-align: right;
+  font-weight: bold;
 }
 
 .details {
