@@ -2,7 +2,6 @@ import {
   REQUEST_ALL_LISTINGS,
   RECEIVE_ALL_LISTINGS
 } from '../actions/listings';
-import update from 'immutability-helper';
 const INITIAL_STATE = {
   all_listings: [],
   all_listings_loading: false

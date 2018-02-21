@@ -8,8 +8,8 @@ class EtherPrice extends Component {
   }
   render() {
     return (
-      <div className="row ether-price">
-        <p className="text-right">{this.convertToEth(this.props.price)} Eth</p>
+      <div className="ether-price">
+        <p className="">{this.convertToEth(this.props.price)} Eth</p>
         <FontAwesomeIcon className="price-icon" icon={faTag} />
       </div>
     );
