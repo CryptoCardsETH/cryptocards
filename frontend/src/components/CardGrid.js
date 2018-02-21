@@ -2,10 +2,15 @@ import React, { Component } from 'react';
 import '../styles/App.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
+import faTag from '@fortawesome/fontawesome-free-solid/faTag';
 import 'animate.css';
 import { withRouter } from 'react-router-dom';
+import EtherPrice from './EtherPrice.js';
 
 class CardGrid extends Component {
+  convertToEth(value) {
+    return value / Math.pow(10, 13);
+  }
   render() {
     let { cards, filter } = this.props;
     if (filter && filter.text && filter.text !== '') {
@@ -51,6 +56,11 @@ class CardGrid extends Component {
                 </div>
               </div>
               <div className="card-body">
+                {card.price ? (
+                  <EtherPrice price={card.price} className="pull-right" />
+                ) : null}
+                {/* <FontAwesomeIcon icon={faTag} />
+                {card.price ? <p className="text-right ether-price">{this.convertToEth(card.price)} eth</p> : null } */}
                 <h5 className="card-title text-center">{card.name}</h5>
                 <p className="card-text">
                   owner: {card.user ? card.user.nickname : 'n/a'}
