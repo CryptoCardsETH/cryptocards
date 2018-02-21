@@ -10,7 +10,9 @@ class EtherPrice extends Component {
   render() {
     return (
       <div className="ether-price">
-        <p className="">{this.convertToEth(this.props.price)} Eth</p>
+        <p className="inline-block">
+          {this.convertToEth(this.props.price)} Eth
+        </p>
         <FontAwesomeIcon className="price-icon" icon={faTag} />
       </div>
     );

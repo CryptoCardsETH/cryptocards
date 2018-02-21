@@ -19,7 +19,7 @@ class CardGrid extends Component {
     return (
       <div className="row">
         {cards.map((card, index) => {
-          return <Card card={card} index={index} type={type} />;
+          return <Card key={index} card={card} index={index} type={type} />;
         })}
       </div>
     );
