@@ -9,7 +9,7 @@ class Card extends Component {
   render() {
     let { card, index, type } = this.props;
     let listing;
-    if (type === 'marketplace') {
+    if (type === CARD_TYPE_MARKETPLACE) {
       listing = card;
       card = card.cards;
     }
@@ -32,8 +32,8 @@ class Card extends Component {
             alt={card.name}
           />
           <div className="overlay overlay-price">
-            {type === 'marketplace' ? (
-              <EtherPrice price={listing.price} />
+            {type === CARD_TYPE_MARKETPLACE ? (
+              <EtherPrice price={parseInt(listing.price, 10)} />
             ) : null}
           </div>
           <div className="overlay overlay-background">
@@ -48,7 +48,7 @@ class Card extends Component {
         </div>
         <div className="card-body">
           <h5 className="card-title text-center">{card.name}</h5>
-          {type === 'collection' ? (
+          {type === CARD_TYPE_COLLECTION ? (
             <div>
               <p className="card-text">
                 owner: {card.user ? card.user.nickname : 'n/a'}
@@ -61,5 +61,8 @@ class Card extends Component {
     );
   }
 }
+
+export const CARD_TYPE_MARKETPLACE = 'marketplace';
+export const CARD_TYPE_COLLECTION = 'collection';
 
 export default Card;
