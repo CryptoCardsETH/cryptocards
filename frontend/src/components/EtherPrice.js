@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faTag from '@fortawesome/fontawesome-free-solid/faTag';
+import PropTypes from 'prop-types';
 
 class EtherPrice extends Component {
   convertToEth(value) {
@@ -15,5 +16,9 @@ class EtherPrice extends Component {
     );
   }
 }
+
+EtherPrice.propTypes = {
+  price: PropTypes.number.isRequired
+};
 
 export default EtherPrice;

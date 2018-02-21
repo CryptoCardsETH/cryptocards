@@ -1,6 +1,6 @@
 import apiFetch from './index';
 
-export const REQUEST_ALL_LISTINGS = 'REQUEST_ALL_lISTINGS';
+export const REQUEST_ALL_LISTINGS = 'REQUEST_ALL_LISTINGS';
 export const RECEIVE_ALL_LISTINGS = 'RECEIVE_ALL_LISTINGS';
 
 export function fetchAllListings() {

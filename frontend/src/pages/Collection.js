@@ -18,6 +18,7 @@ class CollectionPage extends Component {
         <CardGrid
           cards={this.props.user.cards}
           filter={this.props.card.filters['mycards']}
+          type="collection"
         />
       </div>
     );

@@ -3,7 +3,6 @@ import CardGrid from '../components/CardGrid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllListings } from '../actions/listings';
-import CardFilterSort from '../components/CardFilterSort';
 
 class MarketplacePage extends Component {
   componentDidMount() {
@@ -13,7 +12,7 @@ class MarketplacePage extends Component {
     return (
       <div className="marketplace">
         <h1>Marketplace</h1>
-        <CardGrid cards={this.props.listing.all_listings} />
+        <CardGrid cards={this.props.listing.all_listings} type="marketplace" />
       </div>
     );
   }

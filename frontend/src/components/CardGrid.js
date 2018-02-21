@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
-import '../styles/App.css';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
-import 'animate.css';
 import { withRouter } from 'react-router-dom';
-import EtherPrice from './EtherPrice.js';
+import Card from './Card.js';
 
 class CardGrid extends Component {
   render() {
-    let { cards, filter } = this.props;
+    let { cards, filter, type } = this.props;
     if (filter && filter.text && filter.text !== '') {
       cards = cards.filter(c => c.name.includes(filter.text));
     }
@@ -23,50 +19,7 @@ class CardGrid extends Component {
     return (
       <div className="row">
         {cards.map((card, index) => {
-          let style = {
-            animationDelay: (index % 3) / 10 + 's'
-          };
-          return (
-            <div
-              key={index}
-              className="card col-lg-3 col-md-5 m-2 animated fadeInUp"
-              style={style}
-              onClick={() => {
-                this.props.history.push('/card/' + card.id);
-              }}
-            >
-              <div className="overlay-container">
-                <img
-                  className="card-img-top"
-                  src={`http://via.placeholder.com/350?text=card+id+${card.id}`}
-                  alt={card.name || card.cards.name}
-                />
-                <div className="overlay overlay-price">
-                  {card.price ? <EtherPrice price={card.price} /> : null}
-                </div>
-                <div className="overlay overlay-background">
-                  <a href="/collection" title="More Details">
-                    <FontAwesomeIcon
-                      icon={faExternalLinkAlt}
-                      className="details"
-                      size="2x"
-                    />
-                  </a>
-                </div>
-              </div>
-              <div className="card-body">
-                <h5 className="card-title text-center">
-                  {card.name || card.cards.name}
-                </h5>
-                <p className="card-text">
-                  owner: {card.user ? card.user.nickname : 'n/a'}
-                </p>
-                <p className="card-text">
-                  hidden: {card.hidden ? 'yes' : 'no'}
-                </p>
-              </div>
-            </div>
-          );
+          return <Card card={card} index={index} type={type} />;
         })}
       </div>
     );
