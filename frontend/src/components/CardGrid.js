@@ -4,6 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 import 'animate.css';
 import { withRouter } from 'react-router-dom';
+import { Button } from 'reactstrap';
 
 class CardGrid extends Component {
   render() {
@@ -58,6 +59,15 @@ class CardGrid extends Component {
                 <p className="card-text">
                   hidden: {card.hidden ? 'yes' : 'no'}
                 </p>
+                <div class="float-right">
+                  <Button
+                    onClick={() => {
+                      //call functions from card in actions
+                    }}
+                  >
+                    Buy
+                  </Button>
+                </div>
               </div>
             </div>
           );

@@ -7,14 +7,14 @@ use Illuminate\Database\Eloquent\Model;
 class Transaction extends Model
 {
     const FIELD_TRANSACTION_TIME = 'transaction_time';
-    
-    public function attributes()
+
+    public function transactionCard()
     {
-        return $this->belongsToMany('App\Models\Attribute')->withPivot('value');
+        return $this->BelongsTo(Card::class, 'id', 'card_id');
     }
-    
-    public function cards()
+
+    public function transactionUser()
     {
-        return $this->hasOne(Card::class, 'id', 'card_id');
+        return $this->BelongsTo('App\Models\User');
     }
 }
