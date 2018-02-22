@@ -3,7 +3,9 @@ import CardGrid from '../components/CardGrid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMyCards } from '../actions/users';
-import CardFilterSort from '../components/CardFilterSort';
+import CardFilterSort, {
+  FILTER_SORT_PRESET_FULL
+} from '../components/CardFilterSort';
 
 class CollectionPage extends Component {
   componentDidMount() {
@@ -14,7 +16,10 @@ class CollectionPage extends Component {
     return (
       <div>
         <h1>My Collection</h1>
-        <CardFilterSort filterSortKey="mycards" />
+        <CardFilterSort
+          filterSortKey="mycards"
+          sortTypes={FILTER_SORT_PRESET_FULL}
+        />
         <CardGrid
           cards={this.props.user.cards}
           filter={this.props.card.filters['mycards']}
