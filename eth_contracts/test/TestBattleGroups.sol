@@ -11,7 +11,7 @@ contract TestBattleGroups {
 	function testCreateBattleGroup() public {
 		uint expected = battleGroups.countBattleGroups();
 
-		uint256[3] memory cards = [uint256(1), uint256(2), uint256(3)];
+		uint256[5] memory cards = [uint256(1), uint256(2), uint256(3), uint256(4), uint256(5)];
 
 		uint returnedID = battleGroups.createBattleGroup(this, cards);
 
