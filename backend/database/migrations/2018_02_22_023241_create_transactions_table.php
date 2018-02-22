@@ -19,7 +19,7 @@ class CreateTransactionsTable extends Migration
             $table->foreign('card_id')->references('id')->on('cards');
             $table->integer('user_id')->unsigned();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->timestamps();        
+            $table->timestamps();
         });
     }
 

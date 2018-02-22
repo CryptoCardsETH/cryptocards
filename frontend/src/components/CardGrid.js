@@ -59,15 +59,6 @@ class CardGrid extends Component {
                 <p className="card-text">
                   hidden: {card.hidden ? 'yes' : 'no'}
                 </p>
-                <div class="float-right">
-                  <Button
-                    onClick={() => {
-                      //call functions from card in actions
-                    }}
-                  >
-                    Buy
-                  </Button>
-                </div>
               </div>
             </div>
           );

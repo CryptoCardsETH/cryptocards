@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import {
   editCardDetail,
   fetchCardDetail,
-  saveCardDetail
+  saveCardDetail,
+  updateUserCards
 } from '../actions/cards';
 import { fetchMe } from '../actions/users';
 import { Button } from 'reactstrap';
@@ -64,7 +65,18 @@ class CardDetail extends Component {
                 Save Card Preferences
               </Button>
             </div>
-          ) : null}
+          ) : (
+            <div>
+              <br />
+              <Button
+                onClick={() => {
+                  this.props.updateUserCards(this.state.cardId);
+                }}
+              >
+                Buy
+              </Button>
+            </div>
+          )}
         </div>
       </div>
     );
@@ -77,7 +89,13 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { fetchCardDetail, fetchMe, editCardDetail, saveCardDetail },
+    {
+      fetchCardDetail,
+      fetchMe,
+      editCardDetail,
+      saveCardDetail,
+      updateUserCards
+    },
     dispatch
   );
 };

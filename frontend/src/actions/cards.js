@@ -43,25 +43,15 @@ export function fetchCardDetail(cardId) {
 
 export function updateUserCards(cardId) {
   return dispatch => {
-    dispatch(requestCardDetail());
-    return apiFetch('cards/' + cardId + '/buy')
+    return apiFetch('cards/' + cardId + '/transaction', {
+      method: 'PUT',
+      body: JSON.stringify(cardId)
+    })
       .then(response => response.json())
       .then(json => {
         if (json.success) {
           toast.success('Card successfuly purchased!');
-          dispatch(receiveCardDetail(cardId, json.data));
         } else toast.error('Failure purchasing card');
-      });
-  };
-}
-
-export function updateHiddenCards(cardId) {
-  return dispatch => {
-    dispatch(requestCardDetail());
-    return apiFetch('cards/' + cardId)
-      .then(response => response.json())
-      .then(json => {
-        dispatch(receiveCardDetail(cardId, json.data));
       });
   };
 }
