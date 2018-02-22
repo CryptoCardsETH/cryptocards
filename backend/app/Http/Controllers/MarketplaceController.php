@@ -61,15 +61,13 @@ class MarketplaceController extends Controller
         $user = auth()->user();
         $card = Card::find($card_id);
         if ($card->isUserOwner($user)) {
-            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED,'User does not own the card');
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User does not own the card');
         }
 
         $data = json_decode(Request::getContent(), true);
         $card->user_id = $user->id;
 
         $card->save();
-
-         //add transaction to the transactions table 
 
         $transaction = new Transaction();
         $transaction->card_id = $card_id;

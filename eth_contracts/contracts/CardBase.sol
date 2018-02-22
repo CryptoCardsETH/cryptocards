@@ -27,12 +27,8 @@ contract CardBase {
 	// Mapping of cardIDs to owner address
 	mapping (uint256 => address) public cardIndexToOwner;
 
-	// Mapping of owner address to number of tokends held
+	// Mapping of owner address to number of tokens held
 	mapping (address => uint256) ownershipTokenCount;
-
-	function balanceOf(address _owner) public view returns (uint256 count) {
-		return ownershipTokenCount[_owner];
-	}
 
 	// Transfer Event: Emitted every time a card is transfered to a new address
 	event Transfer(address from, address to, uint256 tokenID);
@@ -122,12 +118,12 @@ contract CardOwnership is CardBase {
 		_transfer(msg.sender, _to, _cardId);
 	}
 
-	function createCard(address _owner) external returns (uint) {
+	function createCard(address _owner, uint256 _attributes) external returns (uint) {
 		// Prevent ownership by CryptoCards contracts
 		require(_owner != address(this));
 
 		// Create the card
-		uint cardID = _createCard(0, 0, _owner);
+		uint cardID = _createCard(0, _attributes, _owner);
 
 		return cardID;
 	}
