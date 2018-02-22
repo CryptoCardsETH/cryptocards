@@ -88,6 +88,7 @@ class UserTest extends TestCase
             CARD::FIELD_HIDDEN_TOGGLE => true,
         ]);
     }
+
     public function testGetUserById()
     {
         //make a user with 2 cards, one of which is hidden.
@@ -106,19 +107,19 @@ class UserTest extends TestCase
         $response = $this->authenticatedJSON('GET', '/v1/users/'.$user->id, [], $user->getToken());
         $response->assertStatus(200)->assertJson(['success' => true]);
         $data = $response->json()['data'];
-        self::assertEquals(2,sizeof($data['cards']));
+        self::assertEquals(2, count($data['cards']));
 
         //another user getting me should only see my 1 public card
         $user2 = factory(User::class)->create();
         $response = $this->authenticatedJSON('GET', '/v1/users/'.$user->id, [], $user2->getToken());
         $response->assertStatus(200)->assertJson(['success' => true]);
         $data = $response->json()['data'];
-        self::assertEquals(1,sizeof($data['cards']));
+        self::assertEquals(1, count($data['cards']));
 
         //an unauthorized user getting me should only see my 1 public card
         $response = $this->json('GET', '/v1/users/'.$user->id);
         $response->assertStatus(200)->assertJson(['success' => true]);
         $data = $response->json()['data'];
-        self::assertEquals(1,sizeof($data['cards']));
+        self::assertEquals(1, count($data['cards']));
     }
 }

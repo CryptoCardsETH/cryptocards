@@ -64,18 +64,20 @@ class ProfileController extends Controller
     }
 
     /**
-     * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile
+     * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
      *
      * @return mixed cards
      */
-    public function getUserDetail($user_id) {
+    public function getUserDetail($user_id)
+    {
         $isRequestingMe = auth()->user() && (auth()->user()->id == $user_id);
 
         $cards = Card::with('attributes');
-        if(!$isRequestingMe) $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE,false);
+        if (!$isRequestingMe) {
+            $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
+        }
         $cards = $cards->where('user_id', $user_id)->get();
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards]);
-
     }
 }
