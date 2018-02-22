@@ -25,6 +25,7 @@ Route::get('/cards', 'MarketplaceController@getAllCards');
 Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');
 Route::put('/cards/{id}', 'MarketplaceController@updateCard');
 Route::get('/listings', 'MarketplaceController@getAllListings');
+Route::put('/cards/buy/{id}', 'MarketplaceController@buyCard');
 
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
