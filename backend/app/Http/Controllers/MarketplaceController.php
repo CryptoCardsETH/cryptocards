@@ -61,13 +61,13 @@ class MarketplaceController extends Controller
         $user = auth()->user();
         $card = Card::find($card_id);
         if ($card->isUserOwner($user)) {
-            return response()->build("User own the card");
+            return response()->build('User own the card');
         }
 
         $data = json_decode(Request::getContent(), true);
         foreach ($data as $key => $value) {
             if (in_array($key, [
-                user_id
+                user_id,
             ])) {
                 $card->$key = $value;
             }
@@ -75,14 +75,14 @@ class MarketplaceController extends Controller
 
         $card->save();
 
-        //add transaction to the transactions table 
+         //add transaction to the transactions table 
 
-        $transaction = new Transaction;
+        $transaction = new Transaction();
         $transaction->card_id = $card_id;
         $transaction->user_id = $user_id;
 
         $transaction->save();
-                
+        
         return $this->getCardDetail($card_id);
     }
 
