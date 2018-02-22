@@ -4,6 +4,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllCards } from '../actions/cards';
 import CardFilterSort from '../components/CardFilterSort';
+import { CARD_TYPE_COLLECTION } from '../components/Card';
 
 class CollectionPage extends Component {
   componentDidMount() {
@@ -18,6 +19,7 @@ class CollectionPage extends Component {
         <CardGrid
           cards={this.props.card.all_cards}
           filter={this.props.card.filters['allcards']}
+          type={CARD_TYPE_COLLECTION}
         />
       </div>
     );

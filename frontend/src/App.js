@@ -12,6 +12,7 @@ import Home from './pages/Home';
 import Debug from './pages/Debug';
 import AllCards from './pages/AllCards';
 import LoginPage from './pages/Login';
+import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
@@ -72,6 +73,7 @@ const App = () => (
           <Route path="/debug" component={Debug} />
           <Route path="/cards" component={AllCards} />
           <Route path="/card/:id" component={CardDetail} />
+          <Route path="/marketplace" component={MarketplacePage} />
 
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />

@@ -3,6 +3,7 @@ import CardGrid from '../components/CardGrid';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMyCards } from '../actions/users';
+import { CARD_TYPE_COLLECTION } from '../components/Card';
 import CardFilterSort, {
   FILTER_SORT_PRESET_FULL
 } from '../components/CardFilterSort';
@@ -12,7 +13,6 @@ class CollectionPage extends Component {
     this.props.fetchMyCards();
   }
   render() {
-    // fake card data
     return (
       <div>
         <h1>My Collection</h1>
@@ -23,6 +23,7 @@ class CollectionPage extends Component {
         <CardGrid
           cards={this.props.user.cards}
           filter={this.props.card.filters['mycards']}
+          type={CARD_TYPE_COLLECTION}
         />
       </div>
     );
