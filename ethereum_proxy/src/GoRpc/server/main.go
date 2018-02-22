@@ -32,6 +32,7 @@ func main() {
 	pb.RegisterGreeterServer(s, &server{})
 
 	reflection.Register(s)
+	log.Printf("RPC Server listening on %v", port)
 	if err := s.Serve(lis); err != nil {
 		log.Fatalf("failed to serve %v", err)
 	}

@@ -31,4 +31,10 @@ func main() {
 		log.Fatalf("could not greet: %v", err)
 	}
 	log.Printf("Greeting: %s", r.Message)
+
+	rep, err := c.GetCardsByOwner(context.Background(), &pb.CardsRequest{Address: "0x1"})
+	if err != nil {
+		log.Fatalf("could not get blank card: %v", err)
+	}
+	log.Printf("Template Card: %d, %d, %d, %d, %s", rep.CreationTime, rep.BattleCooldownEnd, rep.CreationBattleID, rep.CurrentBattleID, rep.Attributes)
 }
