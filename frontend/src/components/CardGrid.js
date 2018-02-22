@@ -9,7 +9,10 @@ import {
   FILTER_SORT_AZ,
   FILTER_SORT_ZA,
   FILTER_SORT_PUBLIC,
-  FILTER_SORT_HIDDEN
+  FILTER_SORT_HIDDEN,
+  FILTER_SORT_POPULARITY,
+  FILTER_SORT_PRICE,
+  FILTER_SORT_ATTRIBUTES
 } from './CardFilterSort';
 
 class CardGrid extends Component {
@@ -29,7 +32,14 @@ class CardGrid extends Component {
         cards = cards.filter(c => !c.hidden);
       if (filter.sort === FILTER_SORT_HIDDEN.value)
         cards = cards.filter(c => c.hidden);
+      if (filter.sort === FILTER_SORT_POPULARITY.value)
+        console.log('TODO:IMPLEMENT');
+      if (filter.sort === FILTER_SORT_PRICE.value)
+        console.log('TODO:IMPLEMENT');
+      if (filter.sort === FILTER_SORT_ATTRIBUTES.value)
+        console.log('TODO:IMPLEMENT');
     }
+
     return (
       <div className="row">
         {cards.map((card, index) => {

@@ -15,13 +15,29 @@ export const FILTER_SORT_ZA = {
 export const FILTER_SORT_PUBLIC = { label: 'Public only', value: 'public' };
 export const FILTER_SORT_HIDDEN = { label: 'Hidden only', value: 'hidden' };
 
-export const FILTER_SORT_PRESET_FULL = [
+export const FILTER_SORT_POPULARITY = {
+  label: 'Popularity',
+  value: 'popularity'
+};
+export const FILTER_SORT_PRICE = { label: 'Price', value: 'price' };
+export const FILTER_SORT_ATTRIBUTES = {
+  label: 'Attributes',
+  value: 'attributes'
+};
+
+export const FILTER_SORT_PRESET_BASE = [
   FILTER_SORT_ID,
   FILTER_SORT_AZ,
   FILTER_SORT_ZA,
+  FILTER_SORT_POPULARITY,
+  FILTER_SORT_PRICE,
+  FILTER_SORT_ATTRIBUTES
+];
+
+export const FILTER_SORT_PRESET_FULL = FILTER_SORT_PRESET_BASE.concat([
   FILTER_SORT_PUBLIC,
   FILTER_SORT_HIDDEN
-];
+]);
 
 class CardFilterSort extends React.Component {
   render() {
@@ -54,7 +70,7 @@ CardFilterSort.propTypes = {
 };
 
 CardFilterSort.defaultProps = {
-  sortTypes: [FILTER_SORT_ID, FILTER_SORT_AZ, FILTER_SORT_ZA]
+  sortTypes: FILTER_SORT_PRESET_BASE
 };
 
 function mapStateToProps(state) {
