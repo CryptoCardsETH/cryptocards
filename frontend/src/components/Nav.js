@@ -48,6 +48,11 @@ class Nav extends React.Component {
                   Debug
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink to="/faq" className="nav-link">
+                  FAQ
+                </NavLink>
+              </li>
               {this.props.user.authenticated ? (
                 <li className="nav-item">
                   <div onClick={() => this.props.logout()} className="nav-link">
