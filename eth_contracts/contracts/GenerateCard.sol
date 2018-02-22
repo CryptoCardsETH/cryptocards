@@ -12,7 +12,6 @@ contract GenerateCard {
         for (i = uint256(1); i <= numberOfCards; i++) {
             uint256 returnedID = 1;
             cardOwnership.createCard(this, i);
-            //cardOwnership.totalSupply();
             if (returnedID == 0) {
                 return 0;
             }
