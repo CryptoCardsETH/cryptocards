@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use App\Helpers\EthereumConverter;
 use Illuminate\Database\Eloquent\Model;
 
 class Listing extends Model
@@ -12,5 +13,11 @@ class Listing extends Model
     public function cards()
     {
         return $this->hasOne(Card::class, 'id', 'card_id');
+    }
+
+    public function getPriceAttribute($value)
+    {
+        //price is stores as a bigint in the db, need to make it a properly formatted float.
+        return EthereumConverter::convertETHPriceToFloat($value);
     }
 }
