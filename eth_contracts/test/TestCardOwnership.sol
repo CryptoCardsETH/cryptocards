@@ -11,7 +11,7 @@ contract TestCardOwnership {
 	function testCreateCard() public {
 		uint expected = cardOwnership.totalSupply();
 
-		uint returnedID = cardOwnership.createCard(this);
+		uint returnedID = cardOwnership.createCard(this, 0);
 
 		Assert.equal(returnedID, expected, "Created card should have next sequential cardID");
 
