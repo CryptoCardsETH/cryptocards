@@ -1,0 +1,47 @@
+# CryptoCards Contracts
+
+## Synopsis
+
+[WIP] CryptoCards is a game centered around unique playing cards which you can battle against other players. Each card is one-of-a-kind and 100% owned by you; it cannot be replicated, taken away, or destroyed.  
+
+CryptoCards Contracts are build with [Ethereum](https://ethereum.org) using [Solidity](https://solidity.readthedocs.io/en/develop/), as well as the [Truffle Development Framework](http://truffleframework.com).  
+
+Available at [GitHub.com/CryptoCardsETH/cryptocards](https://github.com/CryptoCardsETH/cryptocards)  
+
+## Getting Started - Installation
+
+Follow the [Truffle Getting Started Instructions at truffleframework.com](http://truffleframework.com/docs/getting_started/installation).  
+
+## Features
+
+- [ ] CardBase Contract
+- [ ] CardOwnership Contract
+
+
+## Contributors
+
+@harrischristiansen [HarrisChristiansen.com](http://www.harrischristiansen.com) (code@harrischristiansen.com)  
+
+## License
+
+MIT License  
+
+Copyright (c) 2018 [CryptoCards](https://github.com/CryptoCardsETH)  
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:  
+
+The above copyright notice and this permission notice shall be included in all
+copies or substantial portions of the Software.  
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+SOFTWARE.  
