@@ -9,10 +9,13 @@ contract CardBase {
 		uint64 battleCooldownEnd;
 
 		// ID of battle which created card
-		uint32 creationBattleID;
+		uint128 creationBattleID;
+
+		// Count of battles card has participated in
+		uint128 battleCount;
 
 		// ID of battle which card is most recently in
-		uint32 currentBattleID;
+		uint128 currentBattleID;
 
 		// Card Attributes
 		uint256 attributes;
@@ -25,31 +28,61 @@ contract CardBase {
 	mapping (uint256 => address) public cardIndexToOwner;
         mapping (address => uint256[]) public cardsHeldByOwner;
 
-	// Mapping of owner address to number of cards held
-	mapping (address => uint256) ownershipCardCount;
+	// Mapping of owner address to number of tokens held
+	mapping (address => uint256) ownershipTokenCount;
 
 	// Transfer Event: Emitted every time a card is transfered to a new address
-	event Transfer(address from, address to, uint256 tokenId);
+	event Transfer(address from, address to, uint256 tokenID);
 
 	// Process Transfer: Reassign ownership and emit transfer event
-	function _transfer(address _from, address _to, uint256 _cardId) internal {
+	function _transfer(address _from, address _to, uint256 _cardID) internal
+	{
 		// Increase new owner's token count
-		ownershipCardCount[_to]++;
+		ownershipTokenCount[_to]++;
 
 		// Transfer ownership
-		cardIndexToOwner[_cardId] = _to;
+		cardIndexToOwner[_cardID] = _to;
 
 		// Handle old ownership (newly created cards are sent from address 0x00)
 		if (_from != address(0)) {
-			ownershipCardCount[_from]--;
+			ownershipTokenCount[_from]--;
 		}
 
 		// Emit transfer event
-		Transfer(_from, _to, _tokenId);
+		Transfer(_from, _to, _cardID);
 	}
 
 	// New Card Event: Emitted every time a new card is created
-	event NewCard(address owner, uint256 cardID, uint256 battleID, uint256 attributes);
+	event NewCard(address owner, uint256 cardID, uint128 creationBattleID, uint256 attributes);
+
+	function _createCard(uint128 _battleID, uint256 _attributes, address _owner) internal returns (uint)
+	{
+		GameCard memory _card = GameCard({
+			creationTime: uint64(now),
+			battleCooldownEnd: 0,
+			creationBattleID: _battleID,
+			battleCount: 0,
+			currentBattleID: 0,
+			attributes: _attributes
+		});
+		uint256 newCardID = cards.push(_card) - 1;
+
+		// Make sure we never overflow the card max (4 billion cards)
+		require(newCardID == uint256(uint32(newCardID)));
+
+		// Emit NewCard Event
+		NewCard(
+			_owner,
+			newCardID,
+			_card.creationBattleID,
+			_card.attributes
+		);
+
+		// Assign ownership and emit the Transfer event - per ERC732 draft
+		_transfer(0, _owner, newCardID);
+
+		return newCardID;
+	}
 }
 
 contract CardOwnership is CardBase {
@@ -58,8 +91,13 @@ contract CardOwnership is CardBase {
 	string public constant symbol = "CCB";
 
 	// Return if address _claimant currently holds card _cardId
-	function _owns(address _claimant, uint256 _cardId) internal view returns (bool) {
-		return cardIndexToOwner[_cardId] == _claimant;
+	function _owns(address _claimant, uint256 _cardID) internal view returns (bool) {
+		return cardIndexToOwner[_cardID] == _claimant;
+	}
+
+	// Return total count of all existing tokens (cards)
+	function totalSupply() public view returns (uint) {
+		return cards.length;
 	}
 
 	// Return current token balance of address _owner
@@ -80,4 +118,46 @@ contract CardOwnership is CardBase {
 		// Reassign ownership and emit transfer event
 		_transfer(msg.sender, _to, _cardId);
 	}
+<<<<<<< HEAD
+=======
+
+	function createCard(address _owner, uint256 _attributes) external returns (uint) {
+		// Prevent ownership by CryptoCards contracts
+		require(_owner != address(this));
+
+		// Create the card
+		uint cardID = _createCard(0, _attributes, _owner);
+
+		return cardID;
+	}
+
+	function ownerOf(uint256 _tokenId) external view returns (address owner)
+	{
+		owner = cardIndexToOwner[_tokenId];
+		require(owner != address(0));
+	}
+
+	// NOTE: Do not call from within smartcontracts - too expensive to loop through all cards
+	function tokensOfOwner(address _owner) external view returns(uint256[] ownerTokens) {
+		uint256 tokenCount = balanceOf(_owner);
+
+		if (tokenCount == 0) { // No tokens, return an empty array
+			return new uint256[](0);
+		} else {
+			uint256[] memory result = new uint256[](tokenCount);
+			uint256 totalTokens = totalSupply();
+			uint256 resultIndex = 0;
+
+			uint256 cardID;
+			for (cardID = 1; cardID <= totalTokens; cardID++) {
+				if (cardIndexToOwner[cardID] == _owner) {
+					result[resultIndex] = cardID;
+					resultIndex++;
+				}
+			}
+
+			return result;
+		}
+	}
+>>>>>>> master
 }
