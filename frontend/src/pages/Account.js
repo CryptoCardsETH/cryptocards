@@ -64,10 +64,9 @@ class AccountPage extends Component {
                 </div>
               </div>
               <div className="form-group">
-                <label className="col-md-3 control-label" />
+                <br />
                 <div className="col-md-8">
                   <Button type="submit" value="submit">
-                    {' '}
                     Save Changes
                   </Button>
                 </div>

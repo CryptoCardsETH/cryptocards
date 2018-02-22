@@ -71,7 +71,6 @@ export function fetchMe() {
 export function updateMe() {
   return (dispatch, getState) => {
     let meState = getState().user.me;
-    console.log(meState);
     dispatch(requestMe());
     return apiFetch('me', { method: 'PUT', body: JSON.stringify(meState) })
       .then(response => response.json())
