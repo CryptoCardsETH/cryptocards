@@ -8,8 +8,5 @@ namespace App\Http\Controllers;
 
 class BattlegroundController extends Controller
 {
-    public function getIndex()
-    {
-        return view('pages.battleground.index');
-    }
+    //
 }
