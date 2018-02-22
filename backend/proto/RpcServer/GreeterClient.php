@@ -29,4 +29,17 @@ class GreeterClient extends \Grpc\BaseStub {
         $metadata, $options);
     }
 
+    /**
+     * @param \RpcServer\CardsRequest $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     */
+    public function GetCardsByOwner(\RpcServer\CardsRequest $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/rpcServer.Greeter/GetCardsByOwner',
+        $argument,
+        ['\RpcServer\CardsReply', 'decode'],
+        $metadata, $options);
+    }
+
 }
