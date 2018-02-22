@@ -100,7 +100,7 @@ contract CardOwnership is CardBase {
 
 	// Return total count of all existing tokens (cards)
 	function totalSupply() public view returns (uint) {
-		return cards.length - 1;
+		return cards.length;
 	}
 
 	// Return current token balance of address _owner
@@ -122,6 +122,23 @@ contract CardOwnership is CardBase {
 		_transfer(msg.sender, _to, _cardId);
 	}
 
+	function createCard(address _owner) external returns (uint) {
+		// Prevent ownership by CryptoCards contracts
+		require(_owner != address(this));
+
+		// Create the card
+		uint cardID = _createCard(0, 0, _owner);
+
+		return cardID;
+	}
+
+	function ownerOf(uint256 _tokenId) external view returns (address owner)
+	{
+		owner = cardIndexToOwner[_tokenId];
+		require(owner != address(0));
+	}
+
+	// NOTE: Do not call from within smartcontracts - too expensive to loop through all cards
 	function tokensOfOwner(address _owner) external view returns(uint256[] ownerTokens) {
 		uint256 tokenCount = balanceOf(_owner);
 
