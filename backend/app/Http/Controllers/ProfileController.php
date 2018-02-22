@@ -12,7 +12,7 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth');
+        $this->middleware('jwt.auth', ['except' => ['getUserDetail']]);
     }
 
     /**
@@ -64,12 +64,20 @@ class ProfileController extends Controller
     }
 
     /**
-     * Gets all the cards that the user is an owner of.
+     * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
      *
      * @return mixed cards
      */
-    public function getMyCards()
+    public function getUserDetail($user_id)
     {
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes')->where('user_id', auth()->user()->id)->get());
+        $isRequestingMe = auth()->user() && (auth()->user()->id == $user_id);
+
+        $cards = Card::with('attributes');
+        if (!$isRequestingMe) {
+            $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
+        }
+        $cards = $cards->where('user_id', $user_id)->get();
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards]);
     }
 }
