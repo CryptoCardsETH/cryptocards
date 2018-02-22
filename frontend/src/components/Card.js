@@ -37,7 +37,7 @@ class Card extends Component {
             ) : null}
           </div>
           <div className="overlay overlay-background">
-            <a href="/collection" title="More Details">
+            <a href={'/card/' + card.id} title="More Details">
               <FontAwesomeIcon
                 icon={faExternalLinkAlt}
                 className="details"
