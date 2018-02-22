@@ -1,9 +1,5 @@
 pragma solidity ^0.4.17;
 
-contract Battle {
-	
-}
-
 contract BattleGroups {
 	struct BattleGroup {
 		// The timestamp from the block when the battlegroup was created
@@ -16,7 +12,7 @@ contract BattleGroups {
 		uint256[3] cards;
 	}
 
-	// Array of all existing GameCards
+	// Array of all existing BattleGroups
 	BattleGroup[] battlegroups;
 
 	// New BattleGroup Event: Emitted every time a new BattleGroup is created
@@ -31,7 +27,7 @@ contract BattleGroups {
 		});
 		uint256 newID = battlegroups.push(_group) - 1;
 
-		// Make sure we never overflow the battlegroup max (4 billion cards)
+		// Make sure we never overflow the battlegroup max (4 billion groups)
 		require(newID == uint256(uint32(newID)));
 
 		// Emit NewBattleGroup Event

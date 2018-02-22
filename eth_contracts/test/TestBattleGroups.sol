@@ -2,10 +2,10 @@ pragma solidity ^0.4.17;
 
 import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
-import "../contracts/Battle.sol";
+import "../contracts/BattleGroups.sol";
 
 contract TestBattleGroups {
-  BattleGroups battleGroups = BattleGroups(DeployedAddresses.BattleGroups());
+	BattleGroups battleGroups = BattleGroups(DeployedAddresses.BattleGroups());
 
 	// Testing the createBattleGroup() function
 	function testCreateBattleGroup() public {
@@ -15,19 +15,17 @@ contract TestBattleGroups {
 
 		uint returnedID = battleGroups.createBattleGroup(this, cards);
 
-		Assert.equal(returnedID, expected, "Created card should have next sequential cardID");
+		Assert.equal(returnedID, expected, "New BattleGroup should have next sequential battleGroupID");
 	}
 
 	// Test creating many additional battlegroups
-	function testCreateManyCards() public {
+	function testCreateManyGroups() public {
 		uint numGroups = 5;
 		uint expected = battleGroups.countBattleGroups() + numGroups;
 
-		uint256[3] memory cards = [uint256(1), uint256(2), uint256(3)];
-
 		uint i = 0;
 		for (i = 0; i < numGroups; i++) {
-			battleGroups.createBattleGroup(this, cards);
+			testCreateBattleGroup();
 		}
 
 		uint256 totalGroups = battleGroups.countBattleGroups();
