@@ -122,12 +122,12 @@ contract CardOwnership is CardBase {
 		_transfer(msg.sender, _to, _cardId);
 	}
 
-	function createCard(address _owner) external returns (uint) {
+	function createCard(address _owner, uint256 _attributes) external returns (uint) {
 		// Prevent ownership by CryptoCards contracts
 		require(_owner != address(this));
 
 		// Create the card
-		uint cardID = _createCard(0, 0, _owner);
+		uint cardID = _createCard(0, _attributes, _owner);
 
 		return cardID;
 	}
