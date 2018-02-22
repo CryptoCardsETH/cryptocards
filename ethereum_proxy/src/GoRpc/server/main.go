@@ -19,6 +19,10 @@ func (s *server) GetBlank(ctx context.Context, in *pb.BlankRequest) (*pb.BlankRe
 	return &pb.BlankReply{Message: "Hello" + in.Name}, nil
 }
 
+func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.CardsReply, error) {
+	return &pb.CardsReply{CreationTime: 5555, BattleCooldownEnd: 5555, CreationBattleID: 10, CurrentBattleID: 10, Attributes: "maybe tokens man idk"}, nil
+}
+
 func main() {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {

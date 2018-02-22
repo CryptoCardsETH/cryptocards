@@ -6,7 +6,7 @@ service Greeter {
 
   rpc GetBlank(BlankRequest) returns (BlankReply) {}
 
-  rpc GetCards(CardRequest) returns (CardReply) {}
+  rpc GetCardsByOwner(CardsRequest) returns (CardsReply) {}
 
 }
 
@@ -17,3 +17,16 @@ message BlankRequest {
 message BlankReply {
   string message = 1;  
 }
+
+message CardsRequest {
+  string address = 1;  
+}
+
+message CardsReply {
+  uint64 creationTime = 1;
+  uint64 battleCooldownEnd = 2;
+  uint32 creationBattleID = 3;
+  uint32 currentBattleID = 4;
+  string attributes = 5;
+}
+

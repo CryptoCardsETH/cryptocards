@@ -1,4 +1,5 @@
 /src/GoRpc/vendor
 /bin/
 /pkg
+/src/github.com
 
