@@ -118,8 +118,6 @@ contract CardOwnership is CardBase {
 		// Reassign ownership and emit transfer event
 		_transfer(msg.sender, _to, _cardId);
 	}
-<<<<<<< HEAD
-=======
 
 	function createCard(address _owner, uint256 _attributes) external returns (uint) {
 		// Prevent ownership by CryptoCards contracts
@@ -159,5 +157,4 @@ contract CardOwnership is CardBase {
 			return result;
 		}
 	}
->>>>>>> master
 }
