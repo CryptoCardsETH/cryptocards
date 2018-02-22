@@ -4,6 +4,7 @@ import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
 import 'animate.css';
 import EtherPrice from './EtherPrice.js';
+import { Link } from 'react-router-dom';
 
 class Card extends Component {
   render() {
@@ -21,9 +22,6 @@ class Card extends Component {
         key={index}
         className="card col-lg-3 col-md-5 m-2 animated fadeInUp"
         style={style}
-        onClick={() => {
-          this.props.history.push('/card/' + card.id);
-        }}
       >
         <div className="overlay-container">
           <img
@@ -37,13 +35,13 @@ class Card extends Component {
             ) : null}
           </div>
           <div className="overlay overlay-background">
-            <a href={'/card/' + card.id} title="More Details">
+            <Link to={'/card/' + card.id} title="More Details">
               <FontAwesomeIcon
                 icon={faExternalLinkAlt}
                 className="details"
                 size="2x"
               />
-            </a>
+            </Link>
           </div>
         </div>
         <div className="card-body">
