@@ -1,14 +1,13 @@
 import {
   LOGIN_FROM_JWT_SUCCESS,
   RECEIVE_ME,
-  RECEIVE_MY_CARDS,
   REMOVE_TOKEN,
-  REQUEST_MY_CARDS,
   EDIT_ME_DETAILS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
   SET_SIGNED_MESSAGES,
-  SET_WEB3_AVAILABILITY
+  SET_WEB3_AVAILABILITY,
+  RECEIVE_USER_DETAIL
 } from '../actions/users';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -24,7 +23,9 @@ const INITIAL_STATE = {
   accounts_list: [],
 
   cards: [],
-  cards_loading: false
+  cards_loading: false,
+
+  user_detail: {}
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -66,21 +67,16 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         me: action.me
       };
-    case REQUEST_MY_CARDS:
-      return {
-        ...state,
-        cards_loading: true
-      };
-    case RECEIVE_MY_CARDS:
-      return {
-        ...state,
-        cards: action.cards,
-        cards_loading: false
-      };
     case EDIT_ME_DETAILS:
       return update(state, {
         me: {
           [action.key]: { $set: action.value }
+        }
+      });
+    case RECEIVE_USER_DETAIL:
+      return update(state, {
+        user_detail: {
+          [action.userId]: { $set: action.user }
         }
       });
     default:
