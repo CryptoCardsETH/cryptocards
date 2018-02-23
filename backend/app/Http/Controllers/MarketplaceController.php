@@ -10,6 +10,7 @@ use App\Models\Card;
 use App\Models\Listing;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Request;
+use App\Helpers\EthereumConverter;
 
 class MarketplaceController extends Controller
 {
@@ -60,7 +61,7 @@ class MarketplaceController extends Controller
         //update card user's id with current id
         $user = auth()->user();
         $card = Card::find($card_id);
-        $listing = Listing::where('card_id', $card_id)->get();
+        $listing = Listing::where('card_id', $card_id)->first();
         if ($card->isUserOwner($user)) {
             return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User does not own the card');
         }
@@ -73,8 +74,8 @@ class MarketplaceController extends Controller
         $transaction = new Transaction();
         $transaction->card_id = $card_id;
         $transaction->user_id = $user->id;
-        dd($listing);
-        $transaction->price = $listing->price;
+        $price = EthereumConverter::convertETHPriceToInt($listing->price);
+        $transaction->price = $price;
 
         $transaction->save();
 
