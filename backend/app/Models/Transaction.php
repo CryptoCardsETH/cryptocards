@@ -10,11 +10,11 @@ class Transaction extends Model
 
     public function transactionCard()
     {
-        return $this->BelongsTo(App\Models\Card::class, 'id', 'card_id');
+        return $this->hasOne(Card::class, 'id', 'card_id');
     }
 
     public function transactionUser()
     {
-        return $this->BelongsTo('App\Models\User');
+        return $this->hasOne('App\Models\User');
     }
 }

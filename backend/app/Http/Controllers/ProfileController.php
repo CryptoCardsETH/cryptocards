@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
-use App\Models\User;
 use App\Models\Transaction;
+use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 
@@ -81,6 +81,6 @@ class ProfileController extends Controller
      */
      public function getMyTransactions()
      {
-         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::with('transactionCard')->where('user_id', auth()->user()->id)->get());
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
      }
 }

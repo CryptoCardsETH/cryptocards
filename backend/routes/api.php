@@ -20,7 +20,7 @@ Route::get('/me', 'ProfileController@me');
 Route::put('/me', 'ProfileController@updateMe');
 
 Route::get('/me/cards', 'ProfileController@getMyCards');
-Route::get('/me/transactions', 'MarketplaceController@getMyCards');
+Route::get('/me/transactions', 'ProfileController@getMyTransactions');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
 Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');

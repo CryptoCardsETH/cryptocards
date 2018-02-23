@@ -50,7 +50,7 @@ export function updateUserCards(cardId) {
       .then(response => response.json())
       .then(json => {
         if (json.success) {
-          toast.success('Card successfuly purchased!');
+          toast.success('Card successfully purchased!');
         } else toast.error('Failure purchasing card');
       });
   };

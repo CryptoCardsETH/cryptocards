@@ -87,7 +87,6 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         transactions_loading: true
       };
-
     case RECEIVE_MY_TRANSACTIONS:
       return {
         ...state,

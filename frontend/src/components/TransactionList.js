@@ -1,13 +1,10 @@
 import React, { Component } from 'react';
-import '../styles/App.css';
 import 'animate.css';
 import { withRouter } from 'react-router-dom';
 
 class TransactionList extends Component {
   render() {
     let { transactions } = this.props;
-    console.log('transactions');
-    console.log(transactions);
     return (
       <div>
         <div className="transaction">
@@ -24,22 +21,24 @@ class TransactionList extends Component {
                   let style = {
                     animationDelay: (index % 3) / 10 + 's'
                   };
-                  <tbody key={index}>
-                    <tr>
-                      <td rowspan="index + 1">
-                        <div>{transaction.id}</div>
-                      </td>
-                      <td>
-                        <div>{transaction.time}</div>
-                      </td>
-                      <td>
-                        <div>{transaction.card_id}</div>
-                      </td>
-                      <td>
-                        <div>{transaction.price}</div>
-                      </td>
-                    </tr>
-                  </tbody>;
+                  return (
+                    <tbody key={index}>
+                      <tr>
+                        <td rowspan="index + 1">
+                          <div>{transaction.id}</div>
+                        </td>
+                        <td>
+                          <div>{transaction.created_at}</div>
+                        </td>
+                        <td>
+                          <div>{transaction.card_id}</div>
+                        </td>
+                        <td>
+                          <div>{transaction.price}</div>
+                        </td>
+                      </tr>
+                    </tbody>
+                  );
                 })}
               </thead>
             </table>

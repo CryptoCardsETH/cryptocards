@@ -6,22 +6,20 @@ import { fetchMyTransactions } from '../actions/users';
 
 class TransactionPage extends Component {
   componentDidMount() {
-    console.log('comes here1');
     this.props.fetchMyTransactions();
   }
   render() {
-    console.log('comes here2');
     return (
-      <div class="container">
+      <div className="container">
         <h2>Transactions History</h2>
-        <TransactionList transaction={this.props.user.transactions} />
+        <TransactionList transactions={this.props.user.transactions} />
       </div>
     );
   }
 }
 
 function mapStateToProps(state) {
-  return { user: state.user, transaction: state.transaction };
+  return { user: state.user };
 }
 
 const mapDispatchToProps = dispatch => {
