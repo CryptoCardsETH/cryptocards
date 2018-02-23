@@ -6,11 +6,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EthereumConverter;
 use App\Models\Card;
 use App\Models\Listing;
 use App\Models\Transaction;
 use Illuminate\Support\Facades\Request;
-use App\Helpers\EthereumConverter;
 
 class MarketplaceController extends Controller
 {
