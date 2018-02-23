@@ -31,6 +31,11 @@ class Nav extends React.Component {
                   Home
                 </NavLink>
               </li>
+              <li className="nav-item">
+                <NavLink exact to="/marketplace" className="nav-link">
+                  Marketplace
+                </NavLink>
+              </li>
               {this.props.user.authenticated ? (
                 <li className="nav-item">
                   <NavLink to="/account" className="nav-link">
@@ -40,7 +45,10 @@ class Nav extends React.Component {
               ) : null}
               {this.props.user.authenticated ? (
                 <li className="nav-item">
-                  <NavLink to="/collection" className="nav-link">
+                  <NavLink
+                    to={'/user/' + this.props.user.me.id}
+                    className="nav-link"
+                  >
                     My Collection
                   </NavLink>
                 </li>

@@ -150,20 +150,19 @@ export function initializeAuthFlow(address, signed) {
   };
 }
 
-export const REQUEST_MY_CARDS = 'REQUEST_MY_CARDS';
-export const RECEIVE_MY_CARDS = 'RECEIVE_MY_CARDS';
+export const REQUEST_USER_DETAIL = 'REQUEST_USER_DETAIL';
+export const RECEIVE_USER_DETAIL = 'RECEIVE_USER_DETAIL';
 
 export const REQUEST_MY_TRANSACTIONS = 'REQUEST_MY_TRANSACTIONS';
 export const RECEIVE_MY_TRANSACTIONS = 'RECEIVE_MY_TRANSACTIONS';
 
-export function fetchMyCards() {
+export function fetchUserDetail(userId) {
   return dispatch => {
-    dispatch(requestMyCards());
-    return apiFetch('me/cards')
+    dispatch(requestUserDetail());
+    return apiFetch('users/' + userId)
       .then(response => response.json())
       .then(json => {
-        //todo: error checking (i.e. expired token)
-        dispatch(receiveMyCards(json.data));
+        dispatch(receiveUserDetail(userId, json.data));
       });
   };
 }
@@ -193,15 +192,17 @@ function receiveMyTransactions(transactions) {
   };
 }
 
-function requestMyCards() {
+function requestUserDetail(userId) {
   return {
-    type: REQUEST_MY_CARDS
+    type: REQUEST_USER_DETAIL,
+    userId
   };
 }
 
-function receiveMyCards(cards) {
+function receiveUserDetail(userId, user) {
   return {
-    type: RECEIVE_MY_CARDS,
-    cards
+    type: RECEIVE_USER_DETAIL,
+    userId,
+    user
   };
 }

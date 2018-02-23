@@ -7,11 +7,11 @@ import {
   withRouter
 } from 'react-router-dom';
 
-import Collection from './pages/Collection';
 import Home from './pages/Home';
 import Debug from './pages/Debug';
 import AllCards from './pages/AllCards';
 import LoginPage from './pages/Login';
+import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
 import TransactionPage from './pages/AllTransactions';
 import Nav from './components/Nav';
@@ -20,6 +20,7 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import CardDetail from './pages/CardDetail';
 import FAQ from './pages/Static/FAQ';
+import UserDetail from './pages/UserDetail';
 
 const PrivateRoute = ({
   component: Component,
@@ -73,10 +74,11 @@ const App = () => (
           <Route path="/debug" component={Debug} />
           <Route path="/cards" component={AllCards} />
           <Route path="/card/:id" component={CardDetail} />
+          <Route path="/user/:id" component={UserDetail} />
+          <Route path="/marketplace" component={MarketplacePage} />
 
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
-          <UserRoute path="/collection" component={Collection} />
           <UserRoute path="/account" component={AccountPage} />
           <UserRoute path="/transactions" component={TransactionPage} />
         </Switch>

@@ -36,48 +36,82 @@ class CardDetail extends Component {
       user.me.id === cardDetail.user.id;
     return (
       <div>
-        <h1>Card Detail: #{this.state.cardId}</h1>
-        <pre>{JSON.stringify(cardDetail, true, 2)}</pre>
-        <div>my user: {user.me.id}</div>
         <div>
-          {doesCurrentUserOwnCard ? (
-            <div>
-              You own this card!
-              <br />
-              Hide card from public lists and your profile?
-              <input
-                name="isHidden"
-                type="checkbox"
-                checked={cardDetail.hidden}
-                onChange={e => {
-                  this.props.editCardDetail(
-                    this.state.cardId,
-                    'hidden',
-                    e.target.checked
-                  );
-                }}
+          <div className="row">
+            <div className="col-md-6">
+              <img
+                className="card-img-top"
+                src={cardDetail.imageURL}
+                alt={cardDetail.name}
               />
-              <Button
-                onClick={() => {
-                  this.props.saveCardDetail(this.state.cardId);
-                }}
-              >
-                Save Card Preferences
-              </Button>
             </div>
-          ) : (
-            <div>
+            <div className="col-md-6">
+              <h1>{cardDetail.name}</h1>
+              <hr />
+              <div>my user: {user.me.id}</div>
+              <div>
+                {doesCurrentUserOwnCard ? (
+                  <div>
+                    You own this card!
+                    <br />
+                    Hide card from public lists and your profile?
+                    <input
+                      name="isHidden"
+                      type="checkbox"
+                      checked={cardDetail.hidden}
+                      onChange={e => {
+                        this.props.editCardDetail(
+                          this.state.cardId,
+                          'hidden',
+                          e.target.checked
+                        );
+                      }}
+                    />
+                    <br />
+                    <Button
+                      onClick={() => {
+                        this.props.saveCardDetail(this.state.cardId);
+                      }}
+                    >
+                      Save Card Preferences
+                    </Button>
+                  </div>
+                ) : (
+                  <div>
+                    <br />
+                    <Button
+                      onClick={e => {
+                        this.props.updateUserCards(this.state.cardId);
+                        e.preventDefault();
+                      }}
+                    >
+                      Buy
+                    </Button>
+                  </div>
+                )}
+              </div>
               <br />
-              <Button
-                onClick={e => {
-                  this.props.updateUserCards(this.state.cardId);
-                  e.preventDefault();
-                }}
-              >
-                Buy
-              </Button>
+              <div>
+                {cardDetail.attributes.length > 0 ? (
+                  <div>
+                    <h4>Attributes</h4>
+                    <table className="table">
+                      <tbody>
+                        {cardDetail.attributes.map((attribute, index) => {
+                          return (
+                            <tr>
+                              <td>{attribute.name}</td>
+                              <td>{attribute.pivot.value}</td>
+                            </tr>
+                          );
+                        })}
+                      </tbody>
+                    </table>
+                  </div>
+                ) : null}
+              </div>
             </div>
-          )}
+          </div>
         </div>
       </div>
     );
