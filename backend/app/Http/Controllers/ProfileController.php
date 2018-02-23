@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
 use App\Models\User;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
 
@@ -72,4 +73,14 @@ class ProfileController extends Controller
     {
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::with('attributes')->where('user_id', auth()->user()->id)->get());
     }
+
+    /**
+     * Gets all the transactions of the user's purchases.
+     *
+     * @return mixed transactions
+     */
+     public function getMyTransactions()
+     {
+         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::with('transactionCard')->where('user_id', auth()->user()->id)->get());
+     }
 }

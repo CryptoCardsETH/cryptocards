@@ -13,6 +13,7 @@ import Debug from './pages/Debug';
 import AllCards from './pages/AllCards';
 import LoginPage from './pages/Login';
 import AccountPage from './pages/Account';
+import TransactionPage from './pages/AllTransactions';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
@@ -77,6 +78,7 @@ const App = () => (
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/collection" component={Collection} />
           <UserRoute path="/account" component={AccountPage} />
+          <UserRoute path="/transactions" component={TransactionPage} />
         </Switch>
       </main>
       {/*<Footer />*/}

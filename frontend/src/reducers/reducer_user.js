@@ -4,6 +4,8 @@ import {
   RECEIVE_MY_CARDS,
   REMOVE_TOKEN,
   REQUEST_MY_CARDS,
+  REQUEST_MY_TRANSACTIONS,
+  RECEIVE_MY_TRANSACTIONS,
   EDIT_ME_DETAILS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
@@ -24,7 +26,10 @@ const INITIAL_STATE = {
   accounts_list: [],
 
   cards: [],
-  cards_loading: false
+  cards_loading: false,
+
+  transactions: [],
+  transactions_loading: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -76,6 +81,18 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         cards: action.cards,
         cards_loading: false
+      };
+    case REQUEST_MY_TRANSACTIONS:
+      return {
+        ...state,
+        transactions_loading: true
+      };
+
+    case RECEIVE_MY_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: action.transactions,
+        transactions_loading: false
       };
     case EDIT_ME_DETAILS:
       return update(state, {

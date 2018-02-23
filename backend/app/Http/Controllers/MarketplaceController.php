@@ -60,6 +60,7 @@ class MarketplaceController extends Controller
         //update card user's id with current id
         $user = auth()->user();
         $card = Card::find($card_id);
+        $cardList = Listing::find($card_id)
         if ($card->isUserOwner($user)) {
             return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User does not own the card');
         }
@@ -72,6 +73,7 @@ class MarketplaceController extends Controller
         $transaction = new Transaction();
         $transaction->card_id = $card_id;
         $transaction->user_id = $user->id;
+        $transaction->price = $cardList->price
 
         $transaction->save();
 

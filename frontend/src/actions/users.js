@@ -153,6 +153,9 @@ export function initializeAuthFlow(address, signed) {
 export const REQUEST_MY_CARDS = 'REQUEST_MY_CARDS';
 export const RECEIVE_MY_CARDS = 'RECEIVE_MY_CARDS';
 
+export const REQUEST_MY_TRANSACTIONS = 'REQUEST_MY_TRANSACTIONS';
+export const RECEIVE_MY_TRANSACTIONS = 'RECEIVE_MY_TRANSACTIONS';
+
 export function fetchMyCards() {
   return dispatch => {
     dispatch(requestMyCards());
@@ -162,6 +165,31 @@ export function fetchMyCards() {
         //todo: error checking (i.e. expired token)
         dispatch(receiveMyCards(json.data));
       });
+  };
+}
+
+export function fetchMyTransactions() {
+  return dispatch => {
+    console.log('fetch here');
+    dispatch(requestMyTransactions());
+    return apiFetch('me/transactions')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveMyTransactions(json.data));
+      });
+  };
+}
+
+function requestMyTransactions() {
+  return {
+    type: REQUEST_MY_TRANSACTIONS
+  };
+}
+
+function receiveMyTransactions(transactions) {
+  return {
+    type: RECEIVE_MY_TRANSACTIONS,
+    transactions
   };
 }
 
