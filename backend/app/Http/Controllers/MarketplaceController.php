@@ -74,7 +74,7 @@ class MarketplaceController extends Controller
         $transaction->card_id = $card_id;
         $transaction->user_id = $user->id;
         $transaction->price = 0;
-        //TO-DO: when listing has cards pricing 
+        //TO-DO: when listing has cards pricing
         //$transaction->price = $cardList->price;
 
         $transaction->save();

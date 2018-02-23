@@ -87,8 +87,8 @@ class ProfileController extends Controller
      *
      * @return mixed transactions
      */
-     public function getMyTransactions()
-     {
+    public function getMyTransactions()
+    {
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
-     }
+    }
 }

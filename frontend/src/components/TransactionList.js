@@ -22,20 +22,16 @@ class TransactionList extends Component {
                 return (
                   <tbody key={index}>
                     <tr>
-                      <td
-                        class="transaction-id"
-                        class="active"
-                        rowspan="index + 1"
-                      >
+                      <td className="transaction-id" rowspan="index + 1">
                         <div>{transaction.id}</div>
                       </td>
-                      <td class="transaction-time">
+                      <td className="transaction-time">
                         <div>{transaction.created_at}</div>
                       </td>
-                      <td class="transaction-cardId">
+                      <td className="transaction-cardId">
                         <div>{transaction.card_id}</div>
                       </td>
-                      <td class="transaction-price">
+                      <td className="transaction-price">
                         <div>{transaction.price}</div>
                       </td>
                     </tr>
