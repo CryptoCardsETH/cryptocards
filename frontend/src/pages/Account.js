@@ -84,7 +84,7 @@ class AccountPage extends Component {
                 type="button"
                 class="btn btn-link"
                 onClick={() => {
-                  //redirect to transaction page
+                  this.props.history.push('/transactions');
                 }}
               >
                 Transactions

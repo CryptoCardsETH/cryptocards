@@ -69,8 +69,9 @@ class CardDetail extends Component {
             <div>
               <br />
               <Button
-                onClick={() => {
+                onClick={e => {
                   this.props.updateUserCards(this.state.cardId);
+                  e.preventDefault();
                 }}
               >
                 Buy

@@ -12,6 +12,7 @@ class TransactionPage extends Component {
     return (
       <div className="container">
         <h2>Transactions History</h2>
+        <br />
         <TransactionList transactions={this.props.user.transactions} />
       </div>
     );

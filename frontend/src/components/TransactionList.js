@@ -17,30 +17,31 @@ class TransactionList extends Component {
                   <th>Card Id</th>
                   <th>Transaction Price</th>
                 </tr>
-                {transactions.map((transaction, index) => {
-                  let style = {
-                    animationDelay: (index % 3) / 10 + 's'
-                  };
-                  return (
-                    <tbody key={index}>
-                      <tr>
-                        <td rowspan="index + 1">
-                          <div>{transaction.id}</div>
-                        </td>
-                        <td>
-                          <div>{transaction.created_at}</div>
-                        </td>
-                        <td>
-                          <div>{transaction.card_id}</div>
-                        </td>
-                        <td>
-                          <div>{transaction.price}</div>
-                        </td>
-                      </tr>
-                    </tbody>
-                  );
-                })}
               </thead>
+              {transactions.map((transaction, index) => {
+                return (
+                  <tbody key={index}>
+                    <tr>
+                      <td
+                        class="transaction-id"
+                        class="active"
+                        rowspan="index + 1"
+                      >
+                        <div>{transaction.id}</div>
+                      </td>
+                      <td class="transaction-time">
+                        <div>{transaction.created_at}</div>
+                      </td>
+                      <td class="transaction-cardId">
+                        <div>{transaction.card_id}</div>
+                      </td>
+                      <td class="transaction-price">
+                        <div>{transaction.price}</div>
+                      </td>
+                    </tr>
+                  </tbody>
+                );
+              })}
             </table>
           </div>
         </div>
