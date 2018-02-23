@@ -5,7 +5,7 @@ import {
   editCardDetail,
   fetchCardDetail,
   saveCardDetail,
-  updateUserCards
+  putTransaction
 } from '../actions/cards';
 import { fetchMe } from '../actions/users';
 import { Button } from 'reactstrap';
@@ -81,7 +81,7 @@ class CardDetail extends Component {
                     <br />
                     <Button
                       onClick={e => {
-                        this.props.updateUserCards(this.state.cardId);
+                        this.props.putTransaction(this.state.cardId);
                         e.preventDefault();
                       }}
                     >
@@ -129,7 +129,7 @@ const mapDispatchToProps = dispatch => {
       fetchMe,
       editCardDetail,
       saveCardDetail,
-      updateUserCards
+      putTransaction
     },
     dispatch
   );

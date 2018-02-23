@@ -41,7 +41,7 @@ export function fetchCardDetail(cardId) {
   };
 }
 
-export function updateUserCards(cardId) {
+export function putTransaction(cardId) {
   return dispatch => {
     return apiFetch('cards/' + cardId + '/transaction', {
       method: 'PUT',
