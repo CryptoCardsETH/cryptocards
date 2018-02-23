@@ -52,7 +52,7 @@ class AccountPage extends Component {
                 </div>
 
                 <div className="form-group">
-                  <label className="col-lg-3 control-label">
+                  <label className="col-lg-5 control-label">
                     Email Address:
                   </label>
                   <div className="col-lg-8">
