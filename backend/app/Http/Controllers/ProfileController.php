@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
+use App\Models\Friend;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -65,19 +66,44 @@ class ProfileController extends Controller
 
     /**
      * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
+     * Includes isFriend if user_id is a friend of the authorized user
      *
      * @return mixed cards
      */
     public function getUserDetail($user_id)
     {
         $isRequestingMe = auth()->user() && (auth()->user()->id == $user_id);
-
         $cards = Card::with('attributes');
+        $isFriend = false;
         if (!$isRequestingMe) {
-            $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
+                $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
+                $isFriend = Friend::areFriends(auth()->user()->id, $user_id);
         }
         $cards = $cards->where('user_id', $user_id)->get();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards]);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'isFriend'=> $isFriend]);
+    }
+
+    /**
+     * Adds friend_id and the current authorized user to the friends table.
+     * 
+     * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FRIENDS
+     */
+    public function addFriend($friend_id)
+    {
+        $user = auth()->user();
+
+        $response = '';
+        if ($user && !Friend::areFriends($user->id, $friend_id) ) {
+            $friend = new Friend;
+            $friend->user_id = $user->id;
+            $friend->friend_id = $friend_id;
+            $friend->save();
+            $response = self::RESPONSE_MESSAGE_SUCCESS;
+        } else {
+            $response = self::RESPONSE_MESSAGE_ALREADY_FRIENDS;
+        }
+
+        return response()->build($response);
     }
 }

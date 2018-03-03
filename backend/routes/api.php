@@ -19,6 +19,7 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'ProfileController@me');
 Route::put('/me', 'ProfileController@updateMe');
 
+Route::put('/friend/{id}', 'ProfileController@addFriend');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
