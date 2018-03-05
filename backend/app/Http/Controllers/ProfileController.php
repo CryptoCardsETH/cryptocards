@@ -66,7 +66,7 @@ class ProfileController extends Controller
 
     /**
      * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
-     * Includes isFriend if user_id is a friend of the authorized user
+     * Includes isFriend if user_id is a friend of the authorized user.
      *
      * @return mixed cards
      */
@@ -76,8 +76,8 @@ class ProfileController extends Controller
         $cards = Card::with('attributes');
         $isFriend = false;
         if (!$isRequestingMe) {
-                $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-                $isFriend = Friend::areFriends(auth()->user()->id, $user_id);
+            $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
+            $isFriend = Friend::areFriends(auth()->user()->id, $user_id);
         }
         $cards = $cards->where('user_id', $user_id)->get();
 
@@ -86,7 +86,7 @@ class ProfileController extends Controller
 
     /**
      * Adds friend_id and the current authorized user to the friends table.
-     * 
+     *
      * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FRIENDS
      */
     public function addFriend($friend_id)
@@ -94,8 +94,8 @@ class ProfileController extends Controller
         $user = auth()->user();
 
         $response = '';
-        if ($user && !Friend::areFriends($user->id, $friend_id) ) {
-            $friend = new Friend;
+        if ($user && !Friend::areFriends($user->id, $friend_id)) {
+            $friend = new Friend();
             $friend->user_id = $user->id;
             $friend->friend_id = $friend_id;
             $friend->save();
