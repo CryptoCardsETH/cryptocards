@@ -1,7 +1,7 @@
 <?php
 
 use Illuminate\Database\Seeder;
-
+use Faker\Generator as Faker;
 class CardsTableSeeder extends Seeder
 {
     /**
@@ -11,6 +11,14 @@ class CardsTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Card::class, 10)->create();
+        $faker = \Faker\Factory::create();
+
+        DB::table('attribute_card')->insert(
+            [
+                'attribute_id' => factory(App\Models\Attribute::class)->create()->id,
+                'card_id' => factory(App\Models\Card::class)->create()->id,
+                'value' => $faker->randomFloat(2,0,10)
+            ]
+        );
     }
 }

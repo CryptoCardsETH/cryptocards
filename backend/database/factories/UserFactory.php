@@ -27,3 +27,10 @@ $factory->define(App\Models\Card::class, function (Faker $faker) {
         'name' => $faker->word,
     ];
 });
+
+
+$factory->define(App\Models\Attribute::class, function (Faker $faker) {
+    return [
+        'name' => $faker->word,
+    ];
+});
