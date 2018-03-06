@@ -5,7 +5,7 @@ import faUserPlus from '@fortawesome/fontawesome-free-solid/faUserPlus';
 import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { addFriend, fetchMe, fetchUserDetail } from '../actions/users';
+import { fetchMe, follow, fetchUserDetail } from '../actions/users';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
 import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
@@ -41,18 +41,18 @@ class UserDetail extends Component {
         </h1>
         {!isViewingMyProfile ? (
           <div className="float-right">
-            {!userDetail.isFriend ? (
+            {!userDetail.isFollowing ? (
               <button
                 className="btn btn-success"
                 onClick={() => {
-                  this.props.addFriend(userId);
+                  this.props.follow(userId);
                 }}
               >
-                <FontAwesomeIcon icon={faUserPlus} /> Add Friend
+                <FontAwesomeIcon icon={faUserPlus} /> Follow
               </button>
             ) : (
               <div className="btn bg-primary text-white">
-                <FontAwesomeIcon icon={faCheck} /> Friends
+                <FontAwesomeIcon icon={faCheck} /> Following
               </div>
             )}
           </div>
@@ -80,6 +80,6 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchMe, fetchUserDetail, addFriend }, dispatch);
+  return bindActionCreators({ fetchMe, fetchUserDetail, follow }, dispatch);
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);

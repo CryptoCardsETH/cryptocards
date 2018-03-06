@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
-use App\Models\Friend;
+use App\Models\Follow;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -66,42 +66,43 @@ class ProfileController extends Controller
 
     /**
      * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
-     * Includes isFriend if user_id is a friend of the authorized user.
+     * Includes isFollowing, true if authorized user is following user_id
      *
      * @return mixed cards
      */
     public function getUserDetail($user_id)
     {
-        $isRequestingMe = auth()->user() && (auth()->user()->id == $user_id);
+        $user = auth()->user();
+        $isRequestingMe = $user && ($user->id == $user_id);
         $cards = Card::with('attributes');
-        $isFriend = false;
+        $isFollowing = false;
         if (!$isRequestingMe) {
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFriend = Friend::areFriends(auth()->user()->id, $user_id);
+            $isFollowing = $user->isFollowing($user_id);
         }
         $cards = $cards->where('user_id', $user_id)->get();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'isFriend'=> $isFriend]);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'isFollowing'=> $isFollowing]);
     }
 
     /**
-     * Adds friend_id and the current authorized user to the friends table.
-     *
-     * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FRIENDS
+     * authorized user follows user_id
+     * 
+     * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
      */
-    public function addFriend($friend_id)
+    public function follow($user_id)
     {
         $user = auth()->user();
 
         $response = '';
-        if ($user && !Friend::areFriends($user->id, $friend_id)) {
-            $friend = new Friend();
-            $friend->user_id = $user->id;
-            $friend->friend_id = $friend_id;
-            $friend->save();
+        if ($user && !$user->isFollowing($user_id) ) {
+            $follow = new Follow();
+            $follow->user_id = $user_id;
+            $follow->follower_id = $user->id;
+            $follow->save();
             $response = self::RESPONSE_MESSAGE_SUCCESS;
         } else {
-            $response = self::RESPONSE_MESSAGE_ALREADY_FRIENDS;
+            $response = self::RESPONSE_MESSAGE_ALREADY_FOLLOWING;
         }
 
         return response()->build($response);

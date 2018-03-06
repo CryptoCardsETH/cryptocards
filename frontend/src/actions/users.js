@@ -179,15 +179,15 @@ function receiveUserDetail(userId, user) {
   };
 }
 
-export function addFriend(userId) {
+export function follow(userId) {
   return dispatch => {
-    return apiFetch('friend/' + userId, { method: 'PUT' })
+    return apiFetch('follow/' + userId, { method: 'PUT' })
       .then(response => response.json())
       .then(json => {
         if (json.success) {
-          toast.success('You are now Friends!');
+          toast.success('You are following User #' + userId);
           dispatch(fetchUserDetail(userId));
-        } else toast.error('You are already Friends');
+        } else toast.error('You are already a follower');
       });
   };
 }

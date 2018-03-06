@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
+use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -36,5 +37,17 @@ class User extends Authenticatable implements JWTSubject
     public function getToken()
     {
         return auth()->login($this);
+    }
+
+    /**
+     * Return boolean, whether or not user is following user_id
+     * 
+     * @return boolean
+     */
+    public function isFollowing($user_id) {
+        return Follow::where([
+            ['user_id', '=', $user_id],
+            ['follower_id', '=', $this->id],
+        ])->exists();
     }
 }
