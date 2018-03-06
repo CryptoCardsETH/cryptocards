@@ -92,7 +92,7 @@ class ProfileController extends Controller
      */
     public function follow($user_id)
     {
-        if ( auth()->user()->follow($user_id)) {
+        if (auth()->user()->follow($user_id)) {
             return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
         } else {
             return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);

@@ -53,7 +53,7 @@ class User extends Authenticatable implements JWTSubject
 
     /**
      * Follow user_id.
-     * 
+     *
      * @return bool True - if user is successfully following user_id, False - if user is already following user_id
      */
     public function follow($user_id)
@@ -63,6 +63,7 @@ class User extends Authenticatable implements JWTSubject
             $follow->user_id = $user_id;
             $follow->follower_id = $this->id;
             $follow->save();
+
             return true;
         } else {
             return false;
