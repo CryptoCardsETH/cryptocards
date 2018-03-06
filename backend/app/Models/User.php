@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
-use Illuminate\Database\Eloquent\Model;
 use Tymon\JWTAuth\Contracts\JWTSubject;
 
 class User extends Authenticatable implements JWTSubject
@@ -40,14 +39,33 @@ class User extends Authenticatable implements JWTSubject
     }
 
     /**
-     * Return boolean, whether or not user is following user_id
-     * 
-     * @return boolean
+     * Return boolean, whether or not user is following user_id.
+     *
+     * @return bool
      */
-    public function isFollowing($user_id) {
+    public function isFollowing($user_id)
+    {
         return Follow::where([
             ['user_id', '=', $user_id],
             ['follower_id', '=', $this->id],
         ])->exists();
+    }
+
+    /**
+     * Follow user_id.
+     * 
+     * @return bool True - if user is successfully following user_id, False - if user is already following user_id
+     */
+    public function follow($user_id)
+    {
+        if (!$this->isFollowing($user_id)) {
+            $follow = new Follow();
+            $follow->user_id = $user_id;
+            $follow->follower_id = $this->id;
+            $follow->save();
+            return true;
+        } else {
+            return false;
+        }
     }
 }

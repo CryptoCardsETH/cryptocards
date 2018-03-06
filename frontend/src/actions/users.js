@@ -185,7 +185,6 @@ export function follow(userId) {
       .then(response => response.json())
       .then(json => {
         if (json.success) {
-          toast.success('You are following User #' + userId);
           dispatch(fetchUserDetail(userId));
         } else toast.error('You are already a follower');
       });

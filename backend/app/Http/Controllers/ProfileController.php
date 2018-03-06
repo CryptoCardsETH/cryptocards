@@ -66,7 +66,7 @@ class ProfileController extends Controller
 
     /**
      * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
-     * Includes isFollowing, true if authorized user is following user_id
+     * Includes isFollowing, true if authorized user is following user_id.
      *
      * @return mixed cards
      */
@@ -86,25 +86,16 @@ class ProfileController extends Controller
     }
 
     /**
-     * authorized user follows user_id
-     * 
+     * authorized user follows user_id.
+     *
      * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
      */
     public function follow($user_id)
     {
-        $user = auth()->user();
-
-        $response = '';
-        if ($user && !$user->isFollowing($user_id) ) {
-            $follow = new Follow();
-            $follow->user_id = $user_id;
-            $follow->follower_id = $user->id;
-            $follow->save();
-            $response = self::RESPONSE_MESSAGE_SUCCESS;
+        if ( auth()->user()->follow($user_id)) {
+            return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
         } else {
-            $response = self::RESPONSE_MESSAGE_ALREADY_FOLLOWING;
+            return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);
         }
-
-        return response()->build($response);
     }
 }
