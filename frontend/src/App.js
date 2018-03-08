@@ -20,6 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import CardDetail from './pages/CardDetail';
 import FAQ from './pages/Static/FAQ';
 import UserDetail from './pages/UserDetail';
+import Admin from './pages/Admin';
 
 const PrivateRoute = ({
   component: Component,
@@ -58,6 +59,13 @@ const UserRoute = withRouter(
   }))(PrivateRoute)
 );
 
+const AdminRoute = withRouter(
+  connect(state => ({
+    isAuthenticated: state.user.authenticated,
+    isAllowed: state.user.me.admin
+  }))(PrivateRoute)
+);
+
 const App = () => (
   <Router>
     <div>
@@ -79,6 +87,9 @@ const App = () => (
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/account" component={AccountPage} />
+
+          {/*Routes that only admins can access*/}
+          <AdminRoute path="/admin" component={Admin} />
         </Switch>
       </main>
       {/*<Footer />*/}
