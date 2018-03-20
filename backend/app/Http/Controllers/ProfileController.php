@@ -13,7 +13,7 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getUserDetail']]);
+        $this->middleware('jwt.auth', ['except' => ['getUserDetail','getAllUsers']]);
     }
 
     /**
@@ -97,5 +97,13 @@ class ProfileController extends Controller
         } else {
             return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);
         }
+    }
+    /**
+     * Gets all the users, with their cards
+     * @return mixed users  
+     */ 
+    public function getAllUsers()
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::with('cards')->get());
     }
 }
