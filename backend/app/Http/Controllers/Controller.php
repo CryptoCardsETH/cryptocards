@@ -19,6 +19,6 @@ class Controller extends BaseController
     const RESPONSE_MESSAGE_ERROR_JWT_INVALID = [12, 403, 'JWT is invalid!'];
     const RESPONSE_MESSAGE_ERROR_UNAUTHORIZED = [13, 401, 'Not authorized!'];
     const RESPONSE_MESSAGE_ERROR_DIGEST_SIGNING_MISMATCH = [14, 403, 'Signed message signature does not match! Login failed.'];
-
+    const RESPONSE_MESSAGE_ERROR_NOT_FOUND = [15, 404, 'Not found!'];
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

@@ -68,17 +68,24 @@ class ProfileController extends Controller
      *
      * @return mixed cards
      */
-    public function getUserDetail($user_id)
+    public function getUserDetail($userIdOrNickname)
     {
-        $isRequestingMe = auth()->user() && (auth()->user()->id == $user_id);
+
+        $user = User::where(User::FIELD_NICKNAME,$userIdOrNickname)->orWhere('id',$userIdOrNickname)->first();
+
+        if(!$user) {
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_NOT_FOUND, "user not found with identifier: {$userIdOrNickname}");
+        }
+
+        $isRequestingMe = auth()->user() && (auth()->user()->id == $user->id);
 
         $cards = Card::with('attributes');
         if (!$isRequestingMe) {
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
         }
-        $cards = $cards->where('user_id', $user_id)->get();
+        $cards = $cards->where('user_id', $user->id)->get();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards]);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'user'=>$user]);
     }
     /**
      * Gets all the users, with their cards
@@ -86,6 +93,7 @@ class ProfileController extends Controller
      */ 
     public function getAllUsers()
     {
+        //TODO: hide hidden cards!
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::with('cards')->get());
     }
 }
