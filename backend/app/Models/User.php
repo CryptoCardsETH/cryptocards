@@ -13,6 +13,11 @@ class User extends Authenticatable implements JWTSubject
     const FIELD_NICKNAME = 'nickname';
     protected $guarded = ['id'];
 
+    public function cards()
+    {
+        return $this->hasMany(Card::class);
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
