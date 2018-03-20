@@ -6,6 +6,7 @@ import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMe, follow, fetchUserDetail } from '../actions/users';
+import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
 import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
@@ -16,28 +17,33 @@ import '../styles/App.css';
 class UserDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { userId: null };
+    this.state = { userIdOrNickname: null };
   }
   componentDidMount() {
     this.props.fetchMe();
   }
   componentWillReceiveProps(nextProps) {
-    let userIdFromRouter = parseInt(nextProps.match.params.id, 10);
-    if (userIdFromRouter !== this.state.userId) {
-      this.props.fetchUserDetail(userIdFromRouter);
-      this.setState({ userId: userIdFromRouter });
+    let userIdOrNicknameFromRouter = nextProps.match.params.id;
+    if (userIdOrNicknameFromRouter !== this.state.userIdOrNickname) {
+      this.props.fetchUserDetail(userIdOrNicknameFromRouter);
+      this.setState({ userIdOrNickname: userIdOrNicknameFromRouter });
     }
   }
   render() {
     let { user } = this.props;
-    let { userId } = this.state;
-    let userDetail = user.user_detail[userId];
+    let { userIdOrNickname } = this.state;
+    let userDetail = user.user_detail[userIdOrNickname];
     if (!userDetail) return <h1>Loading</h1>;
+    let userId = userDetail.user.id;
     let isViewingMyProfile = user.authenticated && user.me.id === userId;
     return (
       <div>
         <h1>
-          {isViewingMyProfile ? 'My Collection' : `Viewing User #${userId}`}
+          {isViewingMyProfile ? 'My Collection' : `Viewing User #${userId}`}{' '}
+          &nbsp;
+          <small>
+            {userDetail.user.nickname ? userDetail.user.nickname : ''}
+          </small>
         </h1>
         {!isViewingMyProfile ? (
           <div className="float-right">
@@ -57,6 +63,10 @@ class UserDetail extends Component {
             )}
           </div>
         ) : null}
+        Canonical profile URL: {buildProfileURL(userDetail.user, true)}
+        <hr />
+        <pre>{JSON.stringify({ user, userDetail }, true, 2)}</pre>
+        <hr />
         <CardFilterSort
           filterSortKey="mycards"
           sortTypes={

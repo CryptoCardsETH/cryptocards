@@ -19,11 +19,8 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'ProfileController@me');
 Route::put('/me', 'ProfileController@updateMe');
 
-<<<<<<< HEAD
 Route::put('/follow/{id}', 'ProfileController@follow');
-=======
 Route::get('/users', 'ProfileController@getAllUsers');
->>>>>>> api route and UI to list users
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');

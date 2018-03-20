@@ -46,6 +46,7 @@ services:
         - { type: bind, source: ./frontend, target: /app }
     environment:
       REACT_APP_API_BASE_URL: http://localhost:8728/v1
+      REACT_APP_SITE_URL: http://localhost:5000
       PORT: 3000
     ports:
       - "5000:3000" #expose 3000 via 5000

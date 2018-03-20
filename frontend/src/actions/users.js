@@ -179,7 +179,6 @@ function receiveUserDetail(userId, user) {
   };
 }
 
-<<<<<<< HEAD
 export function follow(userId) {
   return dispatch => {
     return apiFetch('follow/' + userId, { method: 'PUT' })
@@ -191,7 +190,6 @@ export function follow(userId) {
       });
   };
 }
-=======
 export const RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
 
 export function fetchAllUsers() {
@@ -210,4 +208,3 @@ function receiveAllUsers(users) {
     users
   };
 }
->>>>>>> api route and UI to list users
