@@ -37,4 +37,34 @@ class User extends Authenticatable implements JWTSubject
     {
         return auth()->login($this);
     }
+
+    public function followers()
+    {
+        return $this->belongsToMany('App\Models\User', 'follows', 'user_id', 'follower_id')->withTimestamps();
+    }
+
+    public function following()
+    {
+        return $this->belongsToMany('App\Models\User', 'follows', 'follower_id', 'user_id')->withTimestamps();
+    }
+
+    /**
+     * Follow user_id.
+     *
+     * @throws ModelNotFoundException if $user_id could not be found.
+     *                                http 404 page is returned if exception is not caught.
+     *
+     * @return bool True - if user is successfully following user_id, False - if user is already following user_id.
+     */
+    public function follow($user_id)
+    {
+        if (!$this->following->contains($user_id)) {
+            $user = self::findOrFail($user_id);
+            $user->followers()->attach($this->id);
+
+            return true;
+        } else {
+            return false;
+        }
+    }
 }

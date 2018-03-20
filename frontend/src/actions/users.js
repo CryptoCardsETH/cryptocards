@@ -178,3 +178,15 @@ function receiveUserDetail(userId, user) {
     user
   };
 }
+
+export function follow(userId) {
+  return dispatch => {
+    return apiFetch('follow/' + userId, { method: 'PUT' })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          dispatch(fetchUserDetail(userId));
+        } else toast.error('You are already a follower');
+      });
+  };
+}

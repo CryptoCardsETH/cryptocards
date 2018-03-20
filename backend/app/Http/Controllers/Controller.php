@@ -20,5 +20,6 @@ class Controller extends BaseController
     const RESPONSE_MESSAGE_ERROR_UNAUTHORIZED = [13, 401, 'Not authorized!'];
     const RESPONSE_MESSAGE_ERROR_DIGEST_SIGNING_MISMATCH = [14, 403, 'Signed message signature does not match! Login failed.'];
 
+    const RESPONSE_MESSAGE_ALREADY_FOLLOWING = [15, 400, 'Already Following'];
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }
