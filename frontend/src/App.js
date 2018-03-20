@@ -20,7 +20,7 @@ import { ToastContainer } from 'react-toastify';
 import CardDetail from './pages/CardDetail';
 import FAQ from './pages/Static/FAQ';
 import UserDetail from './pages/UserDetail';
-import Admin from './pages/Admin';
+import AdminPage from './pages/Admin';
 
 const PrivateRoute = ({
   component: Component,
@@ -89,7 +89,7 @@ const App = () => (
           <UserRoute path="/account" component={AccountPage} />
 
           {/*Routes that only admins can access*/}
-          <AdminRoute path="/admin" component={Admin} />
+          <AdminRoute path="/admin" component={AdminPage} />
         </Switch>
       </main>
       {/*<Footer />*/}
