@@ -41,7 +41,7 @@ class ProfileController extends Controller
                 $user->$key = $value;
             }
         }
-
+        
         //todo: integrity constraint check for email and nickname
         $user->save();
 
@@ -73,19 +73,22 @@ class ProfileController extends Controller
     public function getUserDetail($userIdOrNickname)
     {
 
+        $requestorUser = auth()->user();
         $user = User::where(User::FIELD_NICKNAME,$userIdOrNickname)->orWhere('id',$userIdOrNickname)->first();
 
         if(!$user) {
-            return response()->build(self::RESPONSE_MESSAGE_ERROR_NOT_FOUND, "user not found with identifier: {$userIdOrNickname}");
+            //user not found
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_NOT_FOUND, "user not found: {$userIdOrNickname}");
         }
 
-        $isRequestingMe = auth()->user() && (auth()->user()->id == $user->id);
+        $isRequestingMe = $requestorUser && ($requestorUser->id == $user->id);
 
         $cards = Card::with('attributes');
         $isFollowing = false;
         if (!$isRequestingMe) {
+            //requesting another user, so hide their hidden cards and calculate if we are following them
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFollowing = $user->following->contains($user->id);
+            $isFollowing = $requestorUser && $requestorUser->following->contains($user);
         }
         $cards = $cards->where('user_id', $user->id)->get();
 

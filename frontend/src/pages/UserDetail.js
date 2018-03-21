@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { fetchMe, follow, fetchUserDetail } from '../actions/users';
 import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
+import { Redirect } from 'react-router';
 import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
   FILTER_SORT_PRESET_FULL
@@ -33,9 +34,13 @@ class UserDetail extends Component {
     let { user } = this.props;
     let { userIdOrNickname } = this.state;
     let userDetail = user.user_detail[userIdOrNickname];
+    // show loading message if user data hasn't loaded yet.
     if (!userDetail) return <h1>Loading</h1>;
     let userId = userDetail.user.id;
     let isViewingMyProfile = user.authenticated && user.me.id === userId;
+    // redirect to username if accessed via ID
+    if (parseInt(userIdOrNickname, 10) == userId && userDetail.user.nickname)
+      return <Redirect to={buildProfileURL(userDetail.user)} />;
     return (
       <div>
         <h1>
@@ -64,8 +69,6 @@ class UserDetail extends Component {
           </div>
         ) : null}
         Canonical profile URL: {buildProfileURL(userDetail.user, true)}
-        <hr />
-        <pre>{JSON.stringify({ user, userDetail }, true, 2)}</pre>
         <hr />
         <CardFilterSort
           filterSortKey="mycards"

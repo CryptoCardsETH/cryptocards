@@ -18,8 +18,7 @@ class AllUsers extends Component {
           return (
             <div>
               <h3>
-                {u.id}: {address}
-                {buildProfileURL(u, true)}
+                #{u.id}: {address}
               </h3>
               <Link to={buildProfileURL(u)}>view user</Link>
               <pre>
