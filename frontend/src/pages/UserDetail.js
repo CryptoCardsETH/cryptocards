@@ -9,12 +9,12 @@ import { fetchMe, follow, fetchUserDetail } from '../actions/users';
 import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
 import { Redirect } from 'react-router';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
   FILTER_SORT_PRESET_FULL
 } from '../components/CardFilterSort';
-import '../styles/App.css';
-
+import { Button } from 'reactstrap';
 class UserDetail extends Component {
   constructor(props) {
     super(props);
@@ -65,10 +65,12 @@ class UserDetail extends Component {
               <div className="btn bg-primary text-white">
                 <FontAwesomeIcon icon={faCheck} /> Following
               </div>
-            )}
+            )}{' '}
+            <CopyToClipboard text={buildProfileURL(userDetail.user, true)}>
+              <Button color="primary">copy profile URL</Button>
+            </CopyToClipboard>
           </div>
         ) : null}
-        Canonical profile URL: {buildProfileURL(userDetail.user, true)}
         <hr />
         <CardFilterSort
           filterSortKey="mycards"
