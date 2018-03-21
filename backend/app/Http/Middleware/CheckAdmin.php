@@ -2,8 +2,8 @@
 
 namespace App\Http\Middleware;
 
-use Closure;
 use App\Http\Controllers\Controller;
+use Closure;
 
 class CheckAdmin
 {
