@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllCountStats } from '../actions/stats.js';
+import { Card, CardBody, CardTitle } from 'reactstrap';
 import '../styles/App.scss';
 
 class AdminPage extends Component {
@@ -18,30 +19,30 @@ class AdminPage extends Component {
         ) : (
           <div>
             <div className="stats row">
-              <div className="card col-lg-3 col-md-5 m-2">
-                <div className="card-body">
-                  <h4 className="card-title">Total Users</h4>
+              <Card className="col-lg-3 col-md-5 m-2">
+                <CardBody>
+                  <CardTitle>Total Users</CardTitle>
                   <h1 className="text-center">
                     {this.props.stats.count_stats.user}
                   </h1>
-                </div>
-              </div>
-              <div className="card col-lg-3 col-md-5 m-2">
-                <div className="card-body">
-                  <h4 className="card-title">Total Cards</h4>
+                </CardBody>
+              </Card>
+              <Card className="card col-lg-3 col-md-5 m-2">
+                <CardBody>
+                  <CardTitle>Total Cards</CardTitle>
                   <h1 className="text-center">
                     {this.props.stats.count_stats.card}
                   </h1>
-                </div>
-              </div>
-              <div className="card col-lg-3 col-md-5 m-2">
-                <div className="card-body">
-                  <h4 className="card-title">Total Listings</h4>
+                </CardBody>
+              </Card>
+              <Card className="card col-lg-3 col-md-5 m-2">
+                <CardBody>
+                  <CardTitle>Total Listings</CardTitle>
                   <h1 className="text-center">
                     {this.props.stats.count_stats.listing}
                   </h1>
-                </div>
-              </div>
+                </CardBody>
+              </Card>
             </div>
           </div>
         )}
