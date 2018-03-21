@@ -39,7 +39,7 @@ class UserDetail extends Component {
     let userId = userDetail.user.id;
     let isViewingMyProfile = user.authenticated && user.me.id === userId;
     // redirect to username if accessed via ID
-    if (parseInt(userIdOrNickname, 10) == userId && userDetail.user.nickname)
+    if (parseInt(userIdOrNickname, 10) === userId && userDetail.user.nickname)
       return <Redirect to={buildProfileURL(userDetail.user)} />;
     return (
       <div>
