@@ -13,7 +13,7 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getUserDetail','getAllUsers']]);
+        $this->middleware('jwt.auth', ['except' => ['getUserDetail', 'getAllUsers']]);
     }
 
     /**
@@ -41,7 +41,7 @@ class ProfileController extends Controller
                 $user->$key = $value;
             }
         }
-        
+
         //todo: integrity constraint check for email and nickname
         $user->save();
 
@@ -72,11 +72,10 @@ class ProfileController extends Controller
      */
     public function getUserDetail($userIdOrNickname)
     {
-
         $requestorUser = auth()->user();
-        $user = User::where(User::FIELD_NICKNAME,$userIdOrNickname)->orWhere('id',$userIdOrNickname)->first();
+        $user = User::where(User::FIELD_NICKNAME, $userIdOrNickname)->orWhere('id', $userIdOrNickname)->first();
 
-        if(!$user) {
+        if (!$user) {
             //user not found
             return response()->build(self::RESPONSE_MESSAGE_ERROR_NOT_FOUND, "user not found: {$userIdOrNickname}");
         }
@@ -112,10 +111,12 @@ class ProfileController extends Controller
             return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);
         }
     }
+
     /**
-     * Gets all the users, with their cards
-     * @return mixed users  
-     */ 
+     * Gets all the users, with their cards.
+     *
+     * @return mixed users
+     */
     public function getAllUsers()
     {
         //TODO: hide hidden cards!
