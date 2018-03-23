@@ -6,7 +6,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EthereumConverter;
 use App\Models\Card;
 use App\Models\Listing;
 use App\Models\Transaction;

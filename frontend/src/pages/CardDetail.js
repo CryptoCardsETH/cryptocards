@@ -48,7 +48,6 @@ class CardDetail extends Component {
             <div className="col-md-6">
               <h1>{cardDetail.name}</h1>
               <hr />
-              <div>my user: {user.me.id}</div>
               <div>
                 {doesCurrentUserOwnCard ? (
                   <div>

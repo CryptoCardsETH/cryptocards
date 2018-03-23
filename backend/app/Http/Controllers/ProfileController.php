@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
 use App\Models\Transaction;
+use App\Models\Follow;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -66,20 +67,37 @@ class ProfileController extends Controller
 
     /**
      * Gets all the cards for a given user. Includes hidden cards if the authorized user is requesting their own profile.
+     * Includes isFollowing, true if authorized user is following user_id.
      *
      * @return mixed cards
      */
     public function getUserDetail($user_id)
     {
-        $isRequestingMe = auth()->user() && (auth()->user()->id == $user_id);
-
+        $user = auth()->user();
+        $isRequestingMe = $user && ($user->id == $user_id);
         $cards = Card::with('attributes');
+        $isFollowing = false;
         if (!$isRequestingMe) {
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
+            $isFollowing = $user->following->contains($user_id);
         }
         $cards = $cards->where('user_id', $user_id)->get();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards]);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'isFollowing'=> $isFollowing]);
+    }
+
+    /**
+     * authorized user follows user_id.
+     *
+     * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
+     */
+    public function follow($user_id)
+    {
+        if (auth()->user()->follow($user_id)) {
+            return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
+        } else {
+            return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);
+        }
     }
 
     /**

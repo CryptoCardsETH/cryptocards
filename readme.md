@@ -11,6 +11,23 @@
 
 Available at [GitHub.com/CryptoCardsETH/](https://github.com/CryptoCardsETH/)   
 
+## Running 
+
+### Locally
+
+coming soon...
+
+### With docker
+
+Run `docker-compose up` from the root directory. Frontend will be on :5000 if you've run the setup proceedures below:
+
+The frontend automatically installs yarn dependencies during the image build process.
+
+To run `php artisan migrate` and `composer install` and other backend tooling, get a shell with `docker-compose exec fpm /bin/bash`
+
+Mysql is exposed on port _3307_ (one higher than the default, so it doesn't conflict with any mysql on the docker host.)
+
+
 ## License
 
 MIT License  

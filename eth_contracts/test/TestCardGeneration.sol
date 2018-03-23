@@ -8,10 +8,7 @@ import "../contracts/GenerateCard.sol";
 contract TestCardGeneration {
 
     CardOwnership cardOwnership = CardOwnership(DeployedAddresses.CardOwnership());
-
     GenerateCard generateCard = GenerateCard(DeployedAddresses.GenerateCard());
-
-
 
     // Testing the createCard() function
     function testCreateCard() public {
