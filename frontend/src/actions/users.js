@@ -169,7 +169,6 @@ export function fetchUserDetail(userId) {
 
 export function fetchMyTransactions() {
   return dispatch => {
-    console.log('fetch here');
     dispatch(requestMyTransactions());
     return apiFetch('me/transactions')
       .then(response => response.json())

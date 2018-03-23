@@ -74,7 +74,7 @@ class MarketplaceController extends Controller
         $transaction = new Transaction();
         $transaction->card_id = $card_id;
         $transaction->user_id = $user->id;
-        $price = EthereumConverter::convertETHPriceToInt($listing->price);
+        $price = $transaction->getPriceAttribute($listing->price);
         $transaction->price = $price;
 
         $transaction->save();
