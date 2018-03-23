@@ -4,8 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
-use App\Models\Transaction;
 use App\Models\Follow;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
