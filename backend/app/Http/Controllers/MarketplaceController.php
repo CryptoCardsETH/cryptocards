@@ -6,6 +6,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EthereumConverter;
 use App\Models\Card;
 use App\Models\Listing;
 use App\Models\Transaction;
@@ -73,7 +74,7 @@ class MarketplaceController extends Controller
         $transaction = new Transaction();
         $transaction->card_id = $card_id;
         $transaction->user_id = $user->id;
-        $price = $transaction->getPriceAttribute($listing->price);
+        $price = EthereumConverter::convertETHPriceToInt($listing->price);
         $transaction->price = $price;
 
         $transaction->save();

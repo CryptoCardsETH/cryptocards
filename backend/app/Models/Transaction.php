@@ -22,6 +22,6 @@ class Transaction extends Model
     public function getPriceAttribute($value)
     {
         //price is stores as a bigint in the db, need to make it a properly formatted float.
-        return EthereumConverter::convertETHPriceToInt($value);
+        return EthereumConverter::convertETHPriceToFloat($value);
     }
 }
