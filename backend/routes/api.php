@@ -28,6 +28,8 @@ Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');
 Route::put('/cards/{id}', 'MarketplaceController@updateCard');
 Route::get('/listings', 'MarketplaceController@getAllListings');
 
+Route::get('/stats/counts', 'StatsController@getCounts');
+
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
 });
