@@ -54,6 +54,11 @@ class Nav extends React.Component {
                 </li>
               ) : null}
               <li className="nav-item">
+                <NavLink to="/users" className="nav-link">
+                  All Users
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/cards" className="nav-link">
                   All Cards
                 </NavLink>
