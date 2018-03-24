@@ -153,6 +153,9 @@ export function initializeAuthFlow(address, signed) {
 export const REQUEST_USER_DETAIL = 'REQUEST_USER_DETAIL';
 export const RECEIVE_USER_DETAIL = 'RECEIVE_USER_DETAIL';
 
+export const REQUEST_MY_TRANSACTIONS = 'REQUEST_MY_TRANSACTIONS';
+export const RECEIVE_MY_TRANSACTIONS = 'RECEIVE_MY_TRANSACTIONS';
+
 export function fetchUserDetail(userId) {
   return dispatch => {
     dispatch(requestUserDetail());
@@ -161,6 +164,30 @@ export function fetchUserDetail(userId) {
       .then(json => {
         dispatch(receiveUserDetail(userId, json.data));
       });
+  };
+}
+
+export function fetchMyTransactions() {
+  return dispatch => {
+    dispatch(requestMyTransactions());
+    return apiFetch('me/transactions')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveMyTransactions(json.data));
+      });
+  };
+}
+
+function requestMyTransactions() {
+  return {
+    type: REQUEST_MY_TRANSACTIONS
+  };
+}
+
+function receiveMyTransactions(transactions) {
+  return {
+    type: RECEIVE_MY_TRANSACTIONS,
+    transactions
   };
 }
 
@@ -176,5 +203,17 @@ function receiveUserDetail(userId, user) {
     type: RECEIVE_USER_DETAIL,
     userId,
     user
+  };
+}
+
+export function follow(userId) {
+  return dispatch => {
+    return apiFetch('follow/' + userId, { method: 'PUT' })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          dispatch(fetchUserDetail(userId));
+        } else toast.error('You are already a follower');
+      });
   };
 }

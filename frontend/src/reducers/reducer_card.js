@@ -32,6 +32,7 @@ export default function(state = INITIAL_STATE, action) {
         all_cards: action.cards,
         all_cards_loading: false
       };
+
     case RECEIVE_CARD_DETAIL:
       return update(state, {
         card_detail: {

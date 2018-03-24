@@ -1,4 +1,5 @@
 import apiFetch from './index';
+import { toast } from 'react-toastify';
 
 export const REQUEST_ALL_CARDS = 'REQUEST_ALL_CARDS';
 export const RECEIVE_ALL_CARDS = 'RECEIVE_ALL_CARDS';
@@ -36,6 +37,21 @@ export function fetchCardDetail(cardId) {
       .then(response => response.json())
       .then(json => {
         dispatch(receiveCardDetail(cardId, json.data));
+      });
+  };
+}
+
+export function putTransaction(cardId) {
+  return dispatch => {
+    return apiFetch('cards/' + cardId + '/transaction', {
+      method: 'PUT',
+      body: JSON.stringify(cardId)
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          toast.success('Card successfully purchased!');
+        } else toast.error('Failure purchasing card');
       });
   };
 }
