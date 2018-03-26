@@ -3,18 +3,28 @@ import '../styles/App.scss';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import { fetchMe, editMeDetails, updateMe } from '../actions/users';
+import FollowersList from '../components/FollowersList';
+import FollowingsList from '../components/FollowingsList';
+import {
+  fetchMe,
+  editMeDetails,
+  updateMe,
+  fetchMyFollowers,
+  fetchUserDetail,
+  fetchMyFollowings
+} from '../actions/users';
 
 //Account page for update user's info
 class AccountPage extends Component {
   constructor(props) {
     super(props);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.state = { showresult: false };
   }
 
   componentDidMount() {
     this.props.fetchMe();
+    this.props.fetchMyFollowers();
+    this.props.fetchMyFollowings();
   }
 
   handleSubmit(e) {
@@ -24,6 +34,7 @@ class AccountPage extends Component {
 
   render() {
     let { me } = this.props.user;
+
     return (
       <div className="container">
         <div className="row">
@@ -73,6 +84,17 @@ class AccountPage extends Component {
               </div>
             </form>
           </div>
+          <br />
+          <div className="col-md-9">
+            <div className="float-left col-lg-4">
+              <h4> Followers </h4>
+              <FollowersList followers={this.props.user.followers} />
+            </div>
+            <div className="float-right col-lg-4">
+              <h4> Followings </h4>
+              <FollowingsList followings={this.props.user.followings} />
+            </div>
+          </div>
         </div>
       </div>
     );
@@ -84,7 +106,17 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchMe, updateMe, editMeDetails }, dispatch);
+  return bindActionCreators(
+    {
+      fetchMe,
+      updateMe,
+      editMeDetails,
+      fetchMyFollowers,
+      fetchUserDetail,
+      fetchMyFollowings
+    },
+    dispatch
+  );
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(AccountPage);

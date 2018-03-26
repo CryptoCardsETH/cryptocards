@@ -7,7 +7,11 @@ import {
   SET_NETWORK_ID,
   SET_SIGNED_MESSAGES,
   SET_WEB3_AVAILABILITY,
-  RECEIVE_USER_DETAIL
+  RECEIVE_USER_DETAIL,
+  REQUEST_MY_FOLLOWERS,
+  RECEIVE_MY_FOLLOWERS,
+  REQUEST_MY_FOLLOWINGS,
+  RECEIVE_MY_FOLLOWINGS
 } from '../actions/users';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -25,7 +29,13 @@ const INITIAL_STATE = {
   cards: [],
   cards_loading: false,
 
-  user_detail: {}
+  user_detail: {},
+
+  followers: [],
+  followers_loading: false,
+
+  followings: [],
+  followings_loading: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -66,6 +76,28 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         me: action.me
+      };
+    case REQUEST_MY_FOLLOWERS:
+      return {
+        ...state,
+        followers_loading: true
+      };
+    case RECEIVE_MY_FOLLOWERS:
+      return {
+        ...state,
+        followers: action.followers,
+        followers_loading: false
+      };
+    case REQUEST_MY_FOLLOWINGS:
+      return {
+        ...state,
+        followings_loading: true
+      };
+    case RECEIVE_MY_FOLLOWINGS:
+      return {
+        ...state,
+        followings: action.followings,
+        followings_loading: false
       };
     case EDIT_ME_DETAILS:
       return update(state, {

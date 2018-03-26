@@ -40,10 +40,10 @@ class User extends Authenticatable implements JWTSubject
 
     public function followers()
     {
-        return $this->belongsToMany('App\Models\User', 'follows', 'user_id', 'follower_id')->withTimestamps();
+        return $this->hasMany('App\Models\Follow','id', 'follower_id');
     }
 
-    public function following()
+    public function followings()
     {
         return $this->belongsToMany('App\Models\User', 'follows', 'follower_id', 'user_id')->withTimestamps();
     }
