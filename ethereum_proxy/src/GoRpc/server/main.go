@@ -24,6 +24,7 @@ func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.
 }
 
 func main() {
+	log.Printf("hello")
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

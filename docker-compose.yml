@@ -29,6 +29,7 @@ services:
          - "9000:9000"
      links: 
          - db
+         - ethereum_proxy
      volumes:
          - ./backend/:/var/www/laravel
      working_dir: /var/www/laravel
@@ -39,6 +40,7 @@ services:
       DB_DATABASE: cryptocards
       DB_USERNAME: root
       DB_PASSWORD: root
+      RPC_SERVER_ADDRESS: ethereum_proxy:50051
 
   frontend:
     build: ./frontend
@@ -51,7 +53,10 @@ services:
     ports:
       - "5000:3000" #expose 3000 via 5000
       - "35729:35729" #for hot reloading
-
+  ethereum_proxy:
+    build: ./ethereum_proxy 
+    volumes: 
+      - { type: bind, source: ./ethereum_proxy, target: /go }
   truffle_test:
     build: ./eth_contracts
     volumes:
