@@ -1,4 +1,4 @@
-var GenerateCard = artifacts.require("GenerateCard");
+var GenerateCard = artifacts.require("./GenerateCard");
 
 module.exports = function(deployer) {
 	// GenerateCard

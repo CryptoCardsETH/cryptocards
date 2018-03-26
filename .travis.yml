@@ -1,3 +1,6 @@
+sudo: required
+services:
+  - docker
 language: php
 php:
   - 7.1
@@ -28,6 +31,7 @@ script:
 - yarn test --coverage
 - yarn run build
 - cd ..
+- docker-compose run truffle_test
 after_success:
 - cd backend/
 - bash <(curl -s https://codecov.io/bash)

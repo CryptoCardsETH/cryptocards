@@ -88,4 +88,38 @@ class UserTest extends TestCase
             CARD::FIELD_HIDDEN_TOGGLE => true,
         ]);
     }
+
+    public function testGetUserById()
+    {
+        //make a user with 2 cards, one of which is hidden.
+        $user = factory(User::class)->create();
+
+        $card1 = factory(Card::class)->create();
+        $card1->user_id = $user->id;
+        $card1->save();
+
+        $card2 = factory(Card::class)->create();
+        $card2->user_id = $user->id;
+        $card2->hidden = true;
+        $card2->save();
+
+        //getting me as myself should show hidden cards (so 2 total)
+        $response = $this->authenticatedJSON('GET', '/v1/users/'.$user->id, [], $user->getToken());
+        $response->assertStatus(200)->assertJson(['success' => true]);
+        $data = $response->json()['data'];
+        self::assertEquals(2, count($data['cards']));
+
+        //another user getting me should only see my 1 public card
+        $user2 = factory(User::class)->create();
+        $response = $this->authenticatedJSON('GET', '/v1/users/'.$user->id, [], $user2->getToken());
+        $response->assertStatus(200)->assertJson(['success' => true]);
+        $data = $response->json()['data'];
+        self::assertEquals(1, count($data['cards']));
+
+        //an unauthorized user getting me should only see my 1 public card
+        $response = $this->json('GET', '/v1/users/'.$user->id);
+        $response->assertStatus(200)->assertJson(['success' => true]);
+        $data = $response->json()['data'];
+        self::assertEquals(1, count($data['cards']));
+    }
 }

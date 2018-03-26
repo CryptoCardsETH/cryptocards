@@ -150,30 +150,61 @@ export function initializeAuthFlow(address, signed) {
   };
 }
 
-export const REQUEST_MY_CARDS = 'REQUEST_MY_CARDS';
-export const RECEIVE_MY_CARDS = 'RECEIVE_MY_CARDS';
+export const REQUEST_USER_DETAIL = 'REQUEST_USER_DETAIL';
+export const RECEIVE_USER_DETAIL = 'RECEIVE_USER_DETAIL';
 
-export function fetchMyCards() {
+export function fetchUserDetail(userId) {
   return dispatch => {
-    dispatch(requestMyCards());
-    return apiFetch('me/cards')
+    dispatch(requestUserDetail());
+    return apiFetch('users/' + userId)
       .then(response => response.json())
       .then(json => {
-        //todo: error checking (i.e. expired token)
-        dispatch(receiveMyCards(json.data));
+        dispatch(receiveUserDetail(userId, json.data));
       });
   };
 }
 
-function requestMyCards() {
+function requestUserDetail(userId) {
   return {
-    type: REQUEST_MY_CARDS
+    type: REQUEST_USER_DETAIL,
+    userId
   };
 }
 
-function receiveMyCards(cards) {
+function receiveUserDetail(userId, user) {
   return {
-    type: RECEIVE_MY_CARDS,
-    cards
+    type: RECEIVE_USER_DETAIL,
+    userId,
+    user
+  };
+}
+
+export function follow(userId) {
+  return dispatch => {
+    return apiFetch('follow/' + userId, { method: 'PUT' })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          dispatch(fetchUserDetail(userId));
+        } else toast.error('You are already a follower');
+      });
+  };
+}
+export const RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
+
+export function fetchAllUsers() {
+  return dispatch => {
+    return apiFetch('users')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveAllUsers(json.data));
+      });
+  };
+}
+
+function receiveAllUsers(users) {
+  return {
+    type: RECEIVE_ALL_USERS,
+    users
   };
 }

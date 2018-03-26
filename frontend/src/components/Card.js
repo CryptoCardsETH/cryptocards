@@ -31,7 +31,7 @@ class Card extends Component {
           />
           <div className="overlay overlay-price">
             {type === CARD_TYPE_MARKETPLACE ? (
-              <EtherPrice price={parseInt(listing.price, 10)} />
+              <EtherPrice price={listing.price} />
             ) : null}
           </div>
           <div className="overlay overlay-background">

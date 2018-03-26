@@ -34,7 +34,7 @@ contract TestCardOwnership {
 
 		uint i = 0;
 		for (i = 0; i < numCards; i++) {
-			cardOwnership.createCard(this);
+			testCreateCard();
 		}
 
 		uint256 balance = cardOwnership.balanceOf(this);

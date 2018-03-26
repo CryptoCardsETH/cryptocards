@@ -1,0 +1,66 @@
+version: '3.2'
+
+services:
+  db:
+    image: mysql:5.7
+    volumes:
+      - "./.data/db:/var/lib/mysql"
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: cryptocards 
+    ports:
+      - "3307:3306" #expose 3306 on a nonstandard port so that it doesn't conflict with mysql on the host
+  nginx:
+    image: nginx:latest
+    ports:
+        - "8728:8080"
+    volumes:
+        - ./backend:/var/www/laravel
+    working_dir: /var/www/laravel
+    links:
+      - fpm
+    volumes:
+      - ./images/nginx/vhost.conf:/etc/nginx/conf.d/laravel.conf
+
+  fpm:  
+     build: ./images/php-fpm
+     ports:
+         - "9000:9000"
+     links: 
+         - db
+     volumes:
+         - ./backend/:/var/www/laravel
+     working_dir: /var/www/laravel
+     environment:
+      DB_HOST: db
+      DB_PORT: 3306
+      DB_CONNECTION: mysql
+      DB_DATABASE: cryptocards
+      DB_USERNAME: root
+      DB_PASSWORD: root
+
+  frontend:
+    build: ./frontend
+    volumes:
+        - { type: bind, source: ./frontend, target: /app }
+    environment:
+      REACT_APP_API_BASE_URL: http://localhost:8728/v1
+      REACT_APP_SITE_URL: http://localhost:5000
+      PORT: 3000
+    ports:
+      - "5000:3000" #expose 3000 via 5000
+      - "35729:35729" #for hot reloading
+
+  truffle_test:
+    build: ./eth_contracts
+    volumes:
+      - ./eth_contracts:/app
+    environment:
+      RPC_HOST: eth_rpc
+      RPC_PORT: 8545
+    links:
+      - eth_rpc
+
+  eth_rpc:
+    image: trufflesuite/ganache-cli:latest

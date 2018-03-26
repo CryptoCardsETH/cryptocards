@@ -7,10 +7,10 @@ import {
   withRouter
 } from 'react-router-dom';
 
-import Collection from './pages/Collection';
 import Home from './pages/Home';
 import Debug from './pages/Debug';
 import AllCards from './pages/AllCards';
+import AllUsers from './pages/AllUsers';
 import LoginPage from './pages/Login';
 import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
@@ -20,6 +20,8 @@ import { connect } from 'react-redux';
 import { ToastContainer } from 'react-toastify';
 import CardDetail from './pages/CardDetail';
 import FAQ from './pages/Static/FAQ';
+import UserDetail from './pages/UserDetail';
+import AdminPage from './pages/Admin';
 
 const PrivateRoute = ({
   component: Component,
@@ -58,6 +60,13 @@ const UserRoute = withRouter(
   }))(PrivateRoute)
 );
 
+const AdminRoute = withRouter(
+  connect(state => ({
+    isAuthenticated: state.user.authenticated,
+    isAllowed: state.user.me.admin
+  }))(PrivateRoute)
+);
+
 const App = () => (
   <Router>
     <div>
@@ -73,12 +82,16 @@ const App = () => (
           <Route path="/debug" component={Debug} />
           <Route path="/cards" component={AllCards} />
           <Route path="/card/:id" component={CardDetail} />
+          <Route path="/users" component={AllUsers} />
+          <Route path="/user/:id" component={UserDetail} />
           <Route path="/marketplace" component={MarketplacePage} />
 
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
-          <UserRoute path="/collection" component={Collection} />
           <UserRoute path="/account" component={AccountPage} />
+
+          {/*Routes that only admins can access*/}
+          <AdminRoute path="/admin" component={AdminPage} />
         </Switch>
       </main>
       {/*<Footer />*/}

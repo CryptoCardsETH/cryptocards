@@ -19,12 +19,16 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'ProfileController@me');
 Route::put('/me', 'ProfileController@updateMe');
 
-Route::get('/me/cards', 'ProfileController@getMyCards');
+Route::put('/follow/{id}', 'ProfileController@follow');
+Route::get('/users', 'ProfileController@getAllUsers');
+Route::get('/users/{id}', 'ProfileController@getUserDetail');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
 Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');
 Route::put('/cards/{id}', 'MarketplaceController@updateCard');
 Route::get('/listings', 'MarketplaceController@getAllListings');
+
+Route::get('/stats/counts', 'StatsController@getCounts');
 
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
