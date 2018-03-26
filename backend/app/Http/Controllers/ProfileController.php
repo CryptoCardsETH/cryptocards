@@ -123,7 +123,7 @@ class ProfileController extends Controller
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
     }
 
-    /** 
+    /**
      * Gets all the users, with their cards.
      *
      * @return mixed users
