@@ -25,6 +25,10 @@ The frontend automatically installs yarn dependencies during the image build pro
 
 To run `php artisan migrate` and `composer install` and other backend tooling, get a shell with `docker-compose exec fpm /bin/bash`
 
+`docker-compose exec fpm php artisan test:proto` to test the laravel <-> golang communication over gRPC (give `ethereum_proxy` ample time to start up)
+
+`docker-compose up codegen_tools` to run the codegen from protobufs
+
 Mysql is exposed on port _3307_ (one higher than the default, so it doesn't conflict with any mysql on the docker host.)
 
 
