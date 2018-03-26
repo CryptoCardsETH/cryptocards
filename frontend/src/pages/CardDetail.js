@@ -75,7 +75,7 @@ class CardDetail extends Component {
                       Save Card Preferences
                     </Button>
                   </div>
-                ) : cardDetail.user == null ? (
+                ) : (
                   <div>
                     <br />
                     <Button
@@ -87,7 +87,7 @@ class CardDetail extends Component {
                       Buy
                     </Button>
                   </div>
-                ) : null}
+                )}
               </div>
               <br />
               <div>
