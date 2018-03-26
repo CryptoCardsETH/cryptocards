@@ -14,7 +14,7 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getUserDetail']]);
+        $this->middleware('jwt.auth', ['except' => ['getUserDetail', 'getAllUsers']]);
     }
 
     /**
@@ -71,19 +71,32 @@ class ProfileController extends Controller
      *
      * @return mixed cards
      */
-    public function getUserDetail($user_id)
+    public function getUserDetail($userIdOrNickname)
     {
-        $user = auth()->user();
-        $isRequestingMe = $user && ($user->id == $user_id);
+        $requestorUser = auth()->user();
+        $user = User::where(User::FIELD_NICKNAME, $userIdOrNickname)->orWhere('id', $userIdOrNickname)->first();
+
+        if (!$user) {
+            //user not found
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_NOT_FOUND, "user not found: {$userIdOrNickname}");
+        }
+
+        $isRequestingMe = $requestorUser && ($requestorUser->id == $user->id);
+
         $cards = Card::with('attributes');
         $isFollowing = false;
         if (!$isRequestingMe) {
+            //requesting another user, so hide their hidden cards and calculate if we are following them
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFollowing = $user->following->contains($user_id);
+            $isFollowing = $requestorUser && $requestorUser->following->contains($user);
         }
-        $cards = $cards->where('user_id', $user_id)->get();
+        $cards = $cards->where('user_id', $user->id)->get();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'isFollowing'=> $isFollowing]);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
+            'cards'       => $cards,
+            'isFollowing' => $isFollowing,
+            'user'        => $user,
+        ]);
     }
 
     /**
@@ -108,5 +121,16 @@ class ProfileController extends Controller
     public function getMyTransactions()
     {
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
+    }
+
+    /** 
+     * Gets all the users, with their cards.
+     *
+     * @return mixed users
+     */
+    public function getAllUsers()
+    {
+        //TODO: hide hidden cards!
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::with('cards')->get());
     }
 }

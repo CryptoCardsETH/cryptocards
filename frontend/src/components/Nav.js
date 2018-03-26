@@ -54,6 +54,11 @@ class Nav extends React.Component {
                 </li>
               ) : null}
               <li className="nav-item">
+                <NavLink to="/users" className="nav-link">
+                  All Users
+                </NavLink>
+              </li>
+              <li className="nav-item">
                 <NavLink to="/cards" className="nav-link">
                   All Cards
                 </NavLink>
@@ -68,6 +73,13 @@ class Nav extends React.Component {
                   FAQ
                 </NavLink>
               </li>
+              {this.props.user.authenticated && this.props.user.me.admin ? (
+                <li className="nav-item">
+                  <NavLink to="/admin" className="nav-link">
+                    Admin
+                  </NavLink>
+                </li>
+              ) : null}
               {this.props.user.authenticated ? (
                 <li className="nav-item">
                   <div onClick={() => this.props.logout()} className="nav-link">
