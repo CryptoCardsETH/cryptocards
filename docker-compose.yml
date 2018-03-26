@@ -42,27 +42,6 @@ services:
       DB_PASSWORD: root
       RPC_SERVER_ADDRESS: ethereum_proxy:50051
 
-  #TODO: duplicating a lot here...
-  proxytest:  
-     build: ./images/php-fpm
-     ports:
-         - "9000:9000"
-     links: 
-         - db
-         - ethereum_proxy
-     volumes:
-         - ./backend/:/var/www/laravel
-     working_dir: /var/www/laravel
-     command: php artisan test:proto
-     environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_CONNECTION: mysql
-      DB_DATABASE: cryptocards
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      RPC_SERVER_ADDRESS: ethereum_proxy:50051
-
   frontend:
     build: ./frontend
     volumes:
@@ -78,6 +57,8 @@ services:
     build: ./ethereum_proxy 
     volumes: 
       - { type: bind, source: ./ethereum_proxy, target: /go }
+    environment:
+      PORT: 50051
   truffle_test:
     build: ./eth_contracts
     volumes:

@@ -7,10 +7,7 @@ import (
 	"google.golang.org/grpc/reflection"
 	"log"
 	"net"
-)
-
-const (
-	port = ":50051"
+	"os"
 )
 
 type server struct{}
@@ -25,6 +22,14 @@ func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.
 
 func main() {
 	log.Printf("hello")
+
+	port, exists := os.LookupEnv("PORT")
+    if !exists {
+        port = "50051"
+    }
+    port = ":"+port
+
+
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)

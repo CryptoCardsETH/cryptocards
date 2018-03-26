@@ -31,9 +31,8 @@ script:
 - yarn test --coverage
 - yarn run build
 - cd ..
-- docker-compose up -d
 - docker-compose run truffle_test
-- docker-compose run proxytest
+# - docker-compose exec fpm php artisan test:proto
 after_success:
 - cd backend/
 - bash <(curl -s https://codecov.io/bash)
