@@ -8,6 +8,6 @@ class BattleGroup extends Model
 {
     public function group_cards()
     {
-        return $this->hasMany(BattleGroupCard::class,'group_id');
+        return $this->hasMany(BattleGroupCard::class, 'group_id');
     }
-}  
+}

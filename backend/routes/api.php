@@ -23,7 +23,7 @@ Route::put('/follow/{id}', 'ProfileController@follow');
 Route::get('/users', 'ProfileController@getAllUsers');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
 
-Route::get('/battles','BattlegroundController@getAllBattles');
+Route::get('/battles', 'BattlegroundController@getAllBattles');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
 Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');

@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class BattleGroupCard extends Model
 {
-    public function card() {
-        return $this->hasOne(Card::class,'id');
-    } 
+    public function card()
+    {
+        return $this->hasOne(Card::class, 'id');
+    }
 }
- 

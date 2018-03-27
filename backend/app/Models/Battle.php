@@ -8,11 +8,11 @@ class Battle extends Model
 {
     public function group1()
     {
-        return $this->hasOne(BattleGroup::class,'id','group_1');
-    }
-    public function group2()
-    {
-        return $this->hasOne(BattleGroup::class,'id','group_2');
+        return $this->hasOne(BattleGroup::class, 'id', 'group_1');
     }
 
+    public function group2()
+    {
+        return $this->hasOne(BattleGroup::class, 'id', 'group_2');
+    }
 }
