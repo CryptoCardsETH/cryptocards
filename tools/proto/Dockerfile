@@ -26,5 +26,5 @@ RUN curl -L -o protoc_binaries.zip "https://github.com/google/protobuf/releases/
 RUN unzip protoc_binaries.zip -d "proto_tools"
 
 # run the codegen
-ENTRYPOINT ["/bin/bash","/tools/docker_run.sh"]
+ENTRYPOINT ["/bin/bash","/tools/proto/docker_run.sh"]
 CMD ["run"]
