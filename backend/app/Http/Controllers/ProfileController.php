@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
-use App\Models\BattleGroup;
 use App\Models\Card;
 use App\Models\Follow;
 use App\Models\User;
@@ -97,7 +96,7 @@ class ProfileController extends Controller
             'isFollowing'  => $isFollowing,
             'user'         => $user,
             'battleGroups' => $user->getAllBattleGroups(),
-            'battles'      => $user->getAllBattles()
+            'battles'      => $user->getAllBattles(),
         ]);
     }
 

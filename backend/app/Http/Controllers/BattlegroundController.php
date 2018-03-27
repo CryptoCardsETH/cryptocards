@@ -18,6 +18,7 @@ class BattlegroundController extends Controller
             'group2.user',
             'group2.group_cards.card.user'
         )->get();
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS,$battles);
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $battles);
     }
 }

@@ -9,6 +9,7 @@ import { fetchMe, follow, fetchUserDetail } from '../actions/users';
 import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
 import BattleGroup from '../components/BattleGroup';
+import BattleTable from '../components/BattleTable';
 import { Redirect } from 'react-router';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CardFilterSort, {
@@ -91,6 +92,8 @@ class UserDetail extends Component {
         {userDetail.battleGroups.map(bg => (
           <BattleGroup key={bg.id} group={bg} />
         ))}
+        <h2>Battles</h2>
+        <BattleTable battles={userDetail.battles} />
       </div>
     );
   }

@@ -10,8 +10,9 @@ class BattleGroup extends Model
     {
         return $this->hasMany(BattleGroupCard::class, 'group_id');
     }
+
     public function user()
     {
-        return $this->hasOne(User::class,'id','user_id');
+        return $this->hasOne(User::class, 'id', 'user_id');
     }
-}  
+}
