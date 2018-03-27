@@ -55,7 +55,7 @@ class UserTest extends TestCase
     public function testGetUpdateUserDuplicateNickname()
     {
         $faker = \Faker\Factory::create();
-        $conflictingNickname = $faker->firstName;
+        $conflictingNickname = $faker->unique()->lastName;
 
         $conflictingUser = factory(User::class)->create();
         $conflictingUser->nickname = $conflictingNickname;
@@ -88,7 +88,7 @@ class UserTest extends TestCase
     public function testGetUpdateUserDuplicateEmail()
     {
         $faker = \Faker\Factory::create();
-        $confictingEmail = $faker->email;
+        $confictingEmail = $faker->unique()->email;
 
         $conflictingUser = factory(User::class)->create();
         $conflictingUser->email = $confictingEmail;
