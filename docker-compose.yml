@@ -1,5 +1,15 @@
 version: '3.2'
 
+# Docker Services breakdown:
+# db - mysql DB, used by backend
+# nginx - webserver the backend, uses fpm as a backing
+# fpm - is called by nginx to actually execute the php for the backendd
+# frontend - runs React in dev mode with hot reloading 
+# ethereum_proxy - go layer is called by the backend over gRPC, handles communicating with eth network
+# truffle_test - ephemeral container that runs the truffle (contract) tests
+# eth_rpc - container that runs the ganache CLI, truffle_test uses this as a local eth node
+# codegen_tools - ephemeral container that generates the golang and php stubs based on RpcServer.proto
+
 services:
   db:
     image: mysql:5.7
