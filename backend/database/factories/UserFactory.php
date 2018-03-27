@@ -38,9 +38,17 @@ $factory->define(App\Models\Attribute::class, function (Faker $faker) {
 
 $factory->define(App\Models\Transaction::class, function(Faker $faker) {
     return [
-        'card_id'    => factory(App\Models\Card::class)->create()->id,
-        'user_id'    => factory(App\Models\User::class)->create()->id,
+        'card_id'    => App\Models\Card::all()->random()->id,
+        'user_id'    => App\Models\User::all()->random()->id,
         'price'      => EthereumConverter::convertETHPriceToInt($faker->randomFloat(13, 0, 2)),
         'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
+    ];
+});
+
+$factory->define(App\Models\Listing::class, function(Faker $faker) {
+    return [
+        'card_id' => App\Models\Card::all()->random()->id,
+        'user_id' => App\Models\User::all()->random()->id,
+        'price'   => EthereumConverter::convertETHPriceToInt($faker->randomFloat(13, 0, 2)),
     ];
 });
