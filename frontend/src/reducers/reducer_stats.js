@@ -1,11 +1,16 @@
 import {
   REQUEST_ALL_COUNT_STATS,
-  RECEIVE_ALL_COUNT_STATS
+  RECEIVE_ALL_COUNT_STATS,
+  REQUEST_TRANSACTION_REPORT,
+  RECEIVE_TRANSACTION_REPORT
 } from '../actions/stats';
 
 const INITIAL_STATE = {
   count_stats: {},
-  count_stats_loading: false
+  count_stats_loading: false,
+
+  transaction_report: {},
+  transaction_report_loading: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -20,6 +25,17 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         count_stats: action.stats,
         count_stats_loading: false
+      };
+    case REQUEST_TRANSACTION_REPORT:
+      return {
+        ...state,
+        transaction_report_loading: true
+      };
+    case RECEIVE_TRANSACTION_REPORT:
+      return {
+        ...state,
+        transaction_report: action.report,
+        transaction_report_loading: false
       };
     default:
       return state;

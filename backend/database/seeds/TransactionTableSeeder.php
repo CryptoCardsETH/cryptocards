@@ -1,8 +1,9 @@
 <?php
 
 use Illuminate\Database\Seeder;
+use App\Helpers\EthereumConverter;
 
-class DatabaseSeeder extends Seeder
+class TransactionTableSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -11,7 +12,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CardsTableSeeder::class);
-        $this->call(TransactionTableSeeder::class);
+        factory(App\Models\Transaction::class, 30)->create();
     }
 }

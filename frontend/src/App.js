@@ -22,6 +22,7 @@ import CardDetail from './pages/CardDetail';
 import FAQ from './pages/Static/FAQ';
 import UserDetail from './pages/UserDetail';
 import AdminPage from './pages/Admin';
+import TransactionReportPage from './pages/TransactionReport';
 
 const PrivateRoute = ({
   component: Component,
@@ -92,6 +93,10 @@ const App = () => (
 
           {/*Routes that only admins can access*/}
           <AdminRoute path="/admin" component={AdminPage} />
+          <AdminRoute
+            path="/report/transactions"
+            component={TransactionReportPage}
+          />
         </Switch>
       </main>
       {/*<Footer />*/}
