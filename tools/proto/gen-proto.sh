@@ -1,4 +1,7 @@
 #!/usr/bin/env bash
+
+echo "THIS SCRIPT DEPRECATED IN FAVOR OF DOCKER"
+
 cd "$(dirname "$0")"
 echo "generating PHP via protoc..."
 #php:
