@@ -1,4 +1,4 @@
-import apiFetch, { persistLocally } from './index';
+import apiFetch from './index';
 
 export const RECEIVE_ALL_BATTLES = 'RECEIVE_ALL_BATTLES';
 

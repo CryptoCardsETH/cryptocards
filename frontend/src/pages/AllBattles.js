@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllBattles } from '../actions/battles';
-import { Link } from 'react-router-dom';
 class AllBattles extends Component {
   componentDidMount() {
     this.props.fetchAllBattles();

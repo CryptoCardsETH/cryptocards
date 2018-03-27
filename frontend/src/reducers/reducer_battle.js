@@ -1,5 +1,4 @@
 import { RECEIVE_ALL_BATTLES } from '../actions/battles';
-import update from 'immutability-helper';
 const INITIAL_STATE = {
   all_battles: []
 };
