@@ -1,7 +1,7 @@
 <?php
 
 namespace Tests\Feature;
-use Log;
+
 use App\Http\Controllers\Controller;
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
@@ -32,7 +32,7 @@ class UserTest extends TestCase
         $response
             ->assertStatus(200)
             ->assertJson(['success' => true]);
-        
+
         $this->assertDatabaseHas('users', [
             'id'                => $user->id,
             User::FIELD_NICKNAME=> $newNickName,
@@ -51,6 +51,7 @@ class UserTest extends TestCase
             return $mail->user->id === $user->id;
         });
     }
+
     public function testGetUpdateUserDuplicateNickname()
     {
         $faker = \Faker\Factory::create();
@@ -80,9 +81,8 @@ class UserTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'id'                => $user->id,
-            User::FIELD_NICKNAME=> $originalNickname 
+            User::FIELD_NICKNAME=> $originalNickname,
         ]);
-        
     }
 
     public function testGetUpdateUserDuplicateEmail()
@@ -91,7 +91,7 @@ class UserTest extends TestCase
         $confictingEmail = $faker->email;
 
         $conflictingUser = factory(User::class)->create();
-        $conflictingUser->email= $confictingEmail;
+        $conflictingUser->email = $confictingEmail;
         $conflictingUser->save();
 
         //get /me on a user
@@ -112,10 +112,9 @@ class UserTest extends TestCase
 
         $this->assertDatabaseHas('users', [
             'id'                => $user->id,
-            User::FIELD_EMAIL   => $originalEmail
+            User::FIELD_EMAIL   => $originalEmail,
         ]);
     }
-
 
     public function testGetUpdateCardHiddenFlag()
     {
