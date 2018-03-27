@@ -1,0 +1,6 @@
+/src/GoRpc/vendor
+/bin/
+/pkg
+/src/github.com
+/src/golang.org
+

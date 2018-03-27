@@ -26,6 +26,7 @@ contract CardBase {
 
 	// Mapping of cardIDs to owner address
 	mapping (uint256 => address) public cardIndexToOwner;
+        mapping (address => uint256[]) public cardsHeldByOwner;
 
 	// Mapping of owner address to number of tokens held
 	mapping (address => uint256) ownershipTokenCount;
