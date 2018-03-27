@@ -15,4 +15,8 @@ class Battle extends Model
     {
         return $this->hasOne(BattleGroup::class, 'id', 'group_2');
     }
+    public function groupwinner()
+    {
+        return $this->hasOne(BattleGroup::class, 'id', 'group_winner');
+    }
 }

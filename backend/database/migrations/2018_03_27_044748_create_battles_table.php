@@ -18,7 +18,8 @@ class CreateBattlesTable extends Migration
             $table->foreign('group_1')->references('id')->on('battle_groups');
             $table->integer('group_2')->unsigned();
             $table->foreign('group_2')->references('id')->on('battle_groups');
-            $table->integer('state');
+            $table->integer('group_winner')->unsigned()->nullable();
+            $table->foreign('group_winner')->references('id')->on('battle_groups');
             $table->timestamps();
         });
     }

@@ -88,7 +88,8 @@ class User extends Authenticatable implements JWTSubject
             'group1.user',
             'group1.group_cards.card.user',
             'group2.user',
-            'group2.group_cards.card.user'
+            'group2.group_cards.card.user',
+            'groupwinner.user'
         )->get();
     }
 

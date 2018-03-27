@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllBattles } from '../actions/battles';
-import BattleGroup from '../components/BattleGroup';
 import BattleTable from '../components/BattleTable';
 class AllBattles extends Component {
   componentDidMount() {

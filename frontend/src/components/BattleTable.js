@@ -14,11 +14,15 @@ const BattleTable = ({ battles }) => {
       </thead>
       <tbody>
         {battles.map(b => {
-          let { id, state } = b;
+          let { id, groupwinner } = b;
           return (
             <tr key={id}>
               <td>{id}</td>
-              <td>{state}</td>
+              <td>
+                {groupwinner
+                  ? `winning group id: ${groupwinner.id}`
+                  : 'battle in progress'}
+              </td>
               <td>
                 <BattleGroup group={b.group1} />
               </td>
