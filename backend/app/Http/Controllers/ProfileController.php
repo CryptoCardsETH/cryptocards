@@ -90,11 +90,12 @@ class ProfileController extends Controller
             $isFollowing = $requestorUser && $requestorUser->following->contains($user);
         }
         $cards = $cards->where('user_id', $user->id)->get();
-
+        $battleGroups = BattleGroup::with('cards')->where('user_id', $user->id)->get();
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
-            'cards'       => $cards,
-            'isFollowing' => $isFollowing,
-            'user'        => $user,
+            'cards'        => $cards,
+            'isFollowing'  => $isFollowing,
+            'user'         => $user,
+            'battleGroups' => $battleGroups
         ]);
     }
 
