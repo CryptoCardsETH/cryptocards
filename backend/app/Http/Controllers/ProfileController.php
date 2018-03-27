@@ -3,9 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
+use App\Models\BattleGroup;
 use App\Models\Card;
 use App\Models\Follow;
-use App\Models\BattleGroup;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -92,11 +92,12 @@ class ProfileController extends Controller
         }
         $cards = $cards->where('user_id', $user->id)->get();
         $battleGroups = BattleGroup::with('cards')->where('user_id', $user->id)->get();
+
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
             'cards'        => $cards,
             'isFollowing'  => $isFollowing,
             'user'         => $user,
-            'battleGroups' => $battleGroups
+            'battleGroups' => $battleGroups,
         ]);
     }
 
