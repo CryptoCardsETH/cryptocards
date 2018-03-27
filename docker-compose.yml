@@ -10,7 +10,7 @@ version: '3.2'
 # eth_rpc - container that runs the ganache CLI, truffle_test uses this as a local eth node
 # codegen_tools_proto - ephemeral, generates the golang + php stubs based on RpcServer.proto
 # codegen_tools_abigen - ephemeral, generates the golang stubs based on solidity
-
+# codegen_tools_abigen_js - ephemeral, generates the js ABI for React to consume based on solidity
 services:
   db:
     image: mysql:5.7
@@ -99,3 +99,11 @@ services:
       - { type: bind, source: ./eth_contracts, target: /eth_contracts}
       - { type: bind, source: ./ethereum_proxy, target: /ethereum_proxy }
       - { type: bind, source: ./tools, target: /tools }
+
+  codegen_tools_abigen_js:
+    build: ./tools/abigen_js
+    volumes:
+      - { type: bind, source: ./eth_contracts, target: /eth_contracts}
+      - { type: bind, source: ./frontend, target: /frontend }
+      - { type: bind, source: ./tools, target: /tools }
+

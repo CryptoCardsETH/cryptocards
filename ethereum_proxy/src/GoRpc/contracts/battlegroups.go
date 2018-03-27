@@ -6,20 +6,13 @@ package contracts
 import (
 	"math/big"
 	"strings"
-
-	ethereum "github.com/ethereum/go-ethereum"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/event"
 )
 
 // BattleGroupsABI is the input ABI used to generate the binding from.
 const BattleGroupsABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"countBattleGroups\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MAX_CARDS_PER_GROUP\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_cards\",\"type\":\"uint256[5]\"}],\"name\":\"createBattleGroup\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"battleGroupID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"cards\",\"type\":\"uint256[5]\"}],\"name\":\"NewBattleGroup\",\"type\":\"event\"}]"
 
 // BattleGroupsBin is the compiled bytecode used for deploying new contracts.
-const BattleGroupsBin = `0x6060604052341561000f57600080fd5b6103f68061001e6000396000f3006060604052600436106100565763ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416637bf13d82811461005b578063bfeea70814610080578063fa74efc114610093575b600080fd5b341561006657600080fd5b61006e6100c1565b60405190815260200160405180910390f35b341561008b57600080fd5b61006e6100c8565b341561009e57600080fd5b61006e73ffffffffffffffffffffffffffffffffffffffff6004351660246100cd565b6000545b90565b600581565b60006100d7610285565b60006060604051908101604052804267ffffffffffffffff1681526020018673ffffffffffffffffffffffffffffffffffffffff168152602001856005806020026040519081016040529190828260a0808284375050509190925250506000805491935060019180830161014b83826102ab565b600092835260209092208591600602018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815473ffffffffffffffffffffffffffffffffffffffff9190911668010000000000000000027fffffffff0000000000000000000000000000000000000000ffffffffffffffff90911617815560408201516101e190600183019060056102dc565b50505003905063ffffffff811681146101f957600080fd5b7ff7841da7904048ca49ded1df3a41ff46907a4db7880f86ebde13572a7154f59d8582846040015160405173ffffffffffffffffffffffffffffffffffffffff8416815260208101839052604081018260a080838360005b83811015610269578082015183820152602001610251565b50505050905001935050505060405180910390a1949350505050565b60e060405190810160409081526000808352602083015281016102a661031a565b905290565b8154818355818115116102d7576006028160060283600052602060002091820191016102d79190610341565b505050565b826005810192821561030a579160200282015b8281111561030a5782518255916020019190600101906102ef565b5061031692915061038d565b5090565b60a06040519081016040526005815b60008152602001906001900390816103295790505090565b6100c591905b808211156103165780547fffffffff00000000000000000000000000000000000000000000000000000000168155600061038460018301826103a7565b50600601610347565b6100c591905b808211156103165760008155600101610393565b5060008155600101600081556001016000815560010160008155600101600090555600a165627a7a723058209007df1c0bc97060564683bc92dd1bdcdfc71405acf6decb926a7f834d78cc930029`
+const BattleGroupsBin = `0x6060604052341561000f57600080fd5b6103ed8061001e6000396000f300606060405263ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416637bf13d828114610052578063bfeea70814610077578063fa74efc11461008a57600080fd5b341561005d57600080fd5b6100656100b8565b60405190815260200160405180910390f35b341561008257600080fd5b6100656100bf565b341561009557600080fd5b61006573ffffffffffffffffffffffffffffffffffffffff6004351660246100c4565b6000545b90565b600581565b60006100ce61027c565b60006060604051908101604052804267ffffffffffffffff1681526020018673ffffffffffffffffffffffffffffffffffffffff168152602001856005806020026040519081016040529190828260a0808284375050509190925250506000805491935060019180830161014283826102a2565b600092835260209092208591600602018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815473ffffffffffffffffffffffffffffffffffffffff9190911668010000000000000000027fffffffff0000000000000000000000000000000000000000ffffffffffffffff90911617815560408201516101d890600183019060056102d3565b50505003905063ffffffff811681146101f057600080fd5b7ff7841da7904048ca49ded1df3a41ff46907a4db7880f86ebde13572a7154f59d8582846040015160405173ffffffffffffffffffffffffffffffffffffffff8416815260208101839052604081018260a080838360005b83811015610260578082015183820152602001610248565b50505050905001935050505060405180910390a1949350505050565b60e0604051908101604090815260008083526020830152810161029d610311565b905290565b8154818355818115116102ce576006028160060283600052602060002091820191016102ce9190610338565b505050565b8260058101928215610301579160200282015b828111156103015782518255916020019190600101906102e6565b5061030d929150610384565b5090565b60a06040519081016040526005815b60008152602001906001900390816103205790505090565b6100bc91905b8082111561030d5780547fffffffff00000000000000000000000000000000000000000000000000000000168155600061037b600183018261039e565b5060060161033e565b6100bc91905b8082111561030d576000815560010161038a565b5060008155600101600081556001016000815560010160008155600101600090555600a165627a7a72305820aa35573fce77fd4a1b828b381b33aadcb44f37da4db9695264b65f28256454be0029`
 
 // DeployBattleGroups deploys a new Ethereum contract, binding an instance of BattleGroups to it.
 func DeployBattleGroups(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *BattleGroups, error) {
@@ -176,10 +169,10 @@ func (_BattleGroups *BattleGroupsTransactorRaw) Transact(opts *bind.TransactOpts
 	return _BattleGroups.Contract.contract.Transact(opts, method, params...)
 }
 
-// MAX_CARDS_PER_GROUP is a free data retrieval call binding the contract method 0xbfeea708.
+// MAXCARDSPERGROUP is a free data retrieval call binding the contract method 0xbfeea708.
 //
 // Solidity: function MAX_CARDS_PER_GROUP() constant returns(uint256)
-func (_BattleGroups *BattleGroupsCaller) MAX_CARDS_PER_GROUP(opts *bind.CallOpts) (*big.Int, error) {
+func (_BattleGroups *BattleGroupsCaller) MAXCARDSPERGROUP(opts *bind.CallOpts) (*big.Int, error) {
 	var (
 		ret0 = new(*big.Int)
 	)
@@ -188,18 +181,18 @@ func (_BattleGroups *BattleGroupsCaller) MAX_CARDS_PER_GROUP(opts *bind.CallOpts
 	return *ret0, err
 }
 
-// MAX_CARDS_PER_GROUP is a free data retrieval call binding the contract method 0xbfeea708.
+// MAXCARDSPERGROUP is a free data retrieval call binding the contract method 0xbfeea708.
 //
 // Solidity: function MAX_CARDS_PER_GROUP() constant returns(uint256)
-func (_BattleGroups *BattleGroupsSession) MAX_CARDS_PER_GROUP() (*big.Int, error) {
-	return _BattleGroups.Contract.MAX_CARDS_PER_GROUP(&_BattleGroups.CallOpts)
+func (_BattleGroups *BattleGroupsSession) MAXCARDSPERGROUP() (*big.Int, error) {
+	return _BattleGroups.Contract.MAXCARDSPERGROUP(&_BattleGroups.CallOpts)
 }
 
-// MAX_CARDS_PER_GROUP is a free data retrieval call binding the contract method 0xbfeea708.
+// MAXCARDSPERGROUP is a free data retrieval call binding the contract method 0xbfeea708.
 //
 // Solidity: function MAX_CARDS_PER_GROUP() constant returns(uint256)
-func (_BattleGroups *BattleGroupsCallerSession) MAX_CARDS_PER_GROUP() (*big.Int, error) {
-	return _BattleGroups.Contract.MAX_CARDS_PER_GROUP(&_BattleGroups.CallOpts)
+func (_BattleGroups *BattleGroupsCallerSession) MAXCARDSPERGROUP() (*big.Int, error) {
+	return _BattleGroups.Contract.MAXCARDSPERGROUP(&_BattleGroups.CallOpts)
 }
 
 // CountBattleGroups is a free data retrieval call binding the contract method 0x7bf13d82.

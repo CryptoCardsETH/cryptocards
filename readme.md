@@ -29,7 +29,9 @@ To run `php artisan migrate` and `composer install` and other backend tooling, g
 
 `docker-compose up codegen_tools_proto` to run the codegen from protobufs
 
-`docker-compose up codegen_tools_abigen` to run the codegen for contract stubs
+`docker-compose up codegen_tools_abigen` to run the codegen for contract stubs (golang)
+
+`docker-compose up codegen_tools_abigen_js` to run the codegen for contract stubs (js)
 Mysql is exposed on port _3307_ (one higher than the default, so it doesn't conflict with any mysql on the docker host.)
 
 
