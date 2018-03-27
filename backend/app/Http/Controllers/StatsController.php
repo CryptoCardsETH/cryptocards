@@ -39,12 +39,19 @@ class StatsController extends Controller
         )->groupBy('day')
           ->get();
 
+        $cards = Card::select(
+            \DB::raw('DATE(`created_at`) AS day'),
+            \DB::raw('COUNT(*) AS num_cards')
+        )->groupBy('day')
+          ->get();
+
         $report = [
             'avg_price'    => $avg_price,
             'max_price'    => $max_price,
             'min_price'    => $min_price,
             'transactions' => $transactions,
             'volume'       => $volume,
+            'cards'        => $cards
         ];
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $report);

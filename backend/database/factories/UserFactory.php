@@ -25,7 +25,8 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 
 $factory->define(App\Models\Card::class, function (Faker $faker) {
     return [
-        'name' => $faker->word,
+        'name'       => $faker->word,
+        'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
     ];
 });
 

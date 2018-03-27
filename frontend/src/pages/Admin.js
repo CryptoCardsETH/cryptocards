@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchAllCountStats } from '../actions/stats.js';
-import { Card, CardBody, CardTitle } from 'reactstrap';
+import { Button, Card, CardBody, CardTitle } from 'reactstrap';
 import '../styles/App.scss';
 
 class AdminPage extends Component {
@@ -43,6 +44,11 @@ class AdminPage extends Component {
                   </h1>
                 </CardBody>
               </Card>
+            </div>
+            <div className="row">
+              <Link to="/report/transactions">
+                <Button>View Transaction Report</Button>
+              </Link>
             </div>
           </div>
         )}
