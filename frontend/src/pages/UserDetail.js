@@ -8,6 +8,7 @@ import { bindActionCreators } from 'redux';
 import { fetchMe, follow, fetchUserDetail } from '../actions/users';
 import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
+import BattleGroup from '../components/BattleGroup';
 import { Redirect } from 'react-router';
 import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CardFilterSort, {
@@ -85,6 +86,11 @@ class UserDetail extends Component {
           filter={this.props.card.filters['mycards']}
           type={CARD_TYPE_COLLECTION}
         />
+        <hr />
+        <h1>Battle Groups</h1>
+        {userDetail.battleGroups.map(bg => (
+          <BattleGroup key={bg.id} group={bg} />
+        ))}
       </div>
     );
   }
