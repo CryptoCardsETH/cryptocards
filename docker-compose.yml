@@ -31,10 +31,10 @@ services:
     links:
       - fpm
     volumes:
-      - ./images/nginx/vhost.conf:/etc/nginx/conf.d/laravel.conf
+      - ./backend/vhost-docker.conf:/etc/nginx/conf.d/laravel.conf
 
   fpm:  
-     build: ./images/php-fpm
+     build: ./backend
      ports:
          - "9000:9000"
      links: 
