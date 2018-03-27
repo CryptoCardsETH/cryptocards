@@ -1,5 +1,16 @@
 version: '3.2'
 
+# Docker Services breakdown:
+# db - mysql DB, used by backend
+# nginx - webserver the backend, uses fpm as a backing
+# fpm - is called by nginx to actually execute the php for the backendd
+# frontend - runs React in dev mode with hot reloading 
+# ethereum_proxy - glang gRPC server, is called by the backend, handles talking to eth network
+# truffle_test - ephemeral container that runs the truffle (contract) tests
+# eth_rpc - container that runs the ganache CLI, truffle_test uses this as a local eth node
+# codegen_tools_proto - ephemeral, generates the golang + php stubs based on RpcServer.proto
+# codegen_tools_abigen - ephemeral, generates the golang stubs based on solidity
+
 services:
   db:
     image: mysql:5.7
@@ -11,6 +22,7 @@ services:
       MYSQL_DATABASE: cryptocards 
     ports:
       - "3307:3306" #expose 3306 on a nonstandard port so that it doesn't conflict with mysql on the host
+
   nginx:
     image: nginx:latest
     ports:
@@ -21,14 +33,15 @@ services:
     links:
       - fpm
     volumes:
-      - ./images/nginx/vhost.conf:/etc/nginx/conf.d/laravel.conf
+      - ./backend/vhost-docker.conf:/etc/nginx/conf.d/laravel.conf
 
   fpm:  
-     build: ./images/php-fpm
+     build: ./backend
      ports:
          - "9000:9000"
      links: 
          - db
+         - ethereum_proxy
      volumes:
          - ./backend/:/var/www/laravel
      working_dir: /var/www/laravel
@@ -39,6 +52,7 @@ services:
       DB_DATABASE: cryptocards
       DB_USERNAME: root
       DB_PASSWORD: root
+      RPC_SERVER_ADDRESS: ethereum_proxy:50051
 
   frontend:
     build: ./frontend
@@ -52,6 +66,13 @@ services:
       - "5000:3000" #expose 3000 via 5000
       - "35729:35729" #for hot reloading
 
+  ethereum_proxy:
+    build: ./ethereum_proxy 
+    volumes: 
+      - { type: bind, source: ./ethereum_proxy, target: /go }
+    environment:
+      PORT: 50051
+
   truffle_test:
     build: ./eth_contracts
     volumes:
@@ -62,5 +83,19 @@ services:
     links:
       - eth_rpc
 
-  eth_rpc:
+  eth_rpc: 
     image: trufflesuite/ganache-cli:latest
+
+  codegen_tools_proto:
+    build: ./tools/proto
+    volumes: 
+      - { type: bind, source: ./backend, target: /backend }
+      - { type: bind, source: ./ethereum_proxy, target: /ethereum_proxy }
+      - { type: bind, source: ./tools, target: /tools }
+
+  codegen_tools_abigen:
+    build: ./tools/abigen
+    volumes:
+      - { type: bind, source: ./eth_contracts, target: /eth_contracts}
+      - { type: bind, source: ./ethereum_proxy, target: /ethereum_proxy }
+      - { type: bind, source: ./tools, target: /tools }

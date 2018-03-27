@@ -32,6 +32,7 @@ script:
 - yarn run build
 - cd ..
 - docker-compose run truffle_test
+# - docker-compose exec fpm php artisan test:proto
 after_success:
 - cd backend/
 - bash <(curl -s https://codecov.io/bash)
