@@ -78,7 +78,7 @@ export function updateMe() {
         if (json.success) {
           toast.success('Changes Saved!');
           dispatch(receiveMe(json.data));
-        } else toast.error('User not updated');
+        } else toast.error('User not updated! ' + json.data);
         //todo: error checking (i.e. expired token)
       });
   };
