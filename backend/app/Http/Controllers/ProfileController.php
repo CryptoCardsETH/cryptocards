@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Mail\WelcomeEmail;
+use App\Models\BattleGroup;
 use App\Models\Card;
 use App\Models\Follow;
 use App\Models\User;
@@ -90,7 +91,6 @@ class ProfileController extends Controller
             $isFollowing = $requestorUser && $requestorUser->following->contains($user);
         }
         $cards = $cards->where('user_id', $user->id)->get();
-
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
             'cards'        => $cards,

@@ -5,7 +5,9 @@
 */
 
 namespace App\Http\Controllers;
+
 use App\Models\Battle;
+
 class BattlegroundController extends Controller
 {
     public function getAllBattles()
@@ -18,5 +20,4 @@ class BattlegroundController extends Controller
         )->get();
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS,$battles);
     }
-
 }
