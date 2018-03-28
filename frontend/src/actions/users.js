@@ -217,3 +217,21 @@ export function follow(userId) {
       });
   };
 }
+export const RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
+
+export function fetchAllUsers() {
+  return dispatch => {
+    return apiFetch('users')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveAllUsers(json.data));
+      });
+  };
+}
+
+function receiveAllUsers(users) {
+  return {
+    type: RECEIVE_ALL_USERS,
+    users
+  };
+}

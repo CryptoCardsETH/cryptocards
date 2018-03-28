@@ -63,7 +63,7 @@ class MarketplaceController extends Controller
         $card = Card::find($card_id);
         $listing = Listing::where('card_id', $card_id)->first();
         if ($card->isUserOwner($user)) {
-            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User does not own the card');
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User already owns the card');
         }
 
         $data = json_decode(Request::getContent(), true);

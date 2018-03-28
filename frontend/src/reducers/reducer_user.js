@@ -9,7 +9,8 @@ import {
   SET_NETWORK_ID,
   SET_SIGNED_MESSAGES,
   SET_WEB3_AVAILABILITY,
-  RECEIVE_USER_DETAIL
+  RECEIVE_USER_DETAIL,
+  RECEIVE_ALL_USERS
 } from '../actions/users';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -29,7 +30,9 @@ const INITIAL_STATE = {
 
   transactions: [],
   transactions_loading: false,
-  user_detail: {}
+  user_detail: {},
+
+  all_users: []
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -94,6 +97,11 @@ export default function(state = INITIAL_STATE, action) {
           [action.userId]: { $set: action.user }
         }
       });
+    case RECEIVE_ALL_USERS:
+      return {
+        ...state,
+        all_users: action.users
+      };
     default:
       return state;
   }
