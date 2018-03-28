@@ -2,16 +2,16 @@ import React, { Component } from 'react';
 import '../styles/App.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import { BattleGroupABI } from './../contracts';
+import { CONTRACT_NAME_BATTLEGROUPS } from './../contracts';
 import {
-  getContractInstance,
-  waitForTxToBeMined
-} from './../actions/contracts';
+  isReadyForContract,
+  waitForTxToBeMined,
+  getContractInstanceByName
+} from '../selectors';
 class ContractPlaygroundPage extends Component {
-  test = (senderAddress, contractAddress) => {
+  test = (senderAddress, contractInstance) => {
     //todo: web3 check
-    const miniToken = getContractInstance(BattleGroupABI, contractAddress);
-    miniToken
+    contractInstance
       .createBattleGroup(senderAddress, [1, 2, 3, 4, 5], {
         from: senderAddress
       })
@@ -24,25 +24,31 @@ class ContractPlaygroundPage extends Component {
   };
 
   render() {
-    let { loaded, addresses } = this.props.contract;
-    let contractAddress = loaded ? addresses['BattleGroups'].address : null;
+    let { ready, contractInstance } = this.props;
     return (
       <div>
         <button
-          disabled={!loaded}
+          disabled={!ready}
           onClick={() =>
-            this.test(this.props.user.main_address, contractAddress)
+            this.test(this.props.user.main_address, contractInstance)
           }
         >
-          {loaded ? 'test contract' : 'loading...'}
+          {ready ? 'test contract' : 'loading...'}
         </button>
       </div>
     );
   }
 }
 function mapStateToProps(state) {
-  let { user, contract } = state;
-  return { user, contract };
+  let { user } = state;
+  return {
+    user,
+    ready: isReadyForContract(state),
+    contractInstance: getContractInstanceByName(
+      state,
+      CONTRACT_NAME_BATTLEGROUPS
+    )
+  };
 }
 
 const mapDispatchToProps = dispatch => {

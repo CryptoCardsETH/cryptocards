@@ -4,7 +4,7 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Web3Login from '../components/Web3Login';
 import { BooleanStatus } from '../components/Icons';
-
+import { isReadyForContract } from '../selectors';
 class DebugPage extends Component {
   //https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md#list-of-chain-ids
   getCanonicalNetworkName = networkId => {
@@ -54,7 +54,7 @@ class DebugPage extends Component {
 }
 function mapStateToProps(state) {
   let { user, contract } = state;
-  return { user, contract };
+  return { user, contract, a: isReadyForContract(state) };
 }
 
 const mapDispatchToProps = dispatch => {
