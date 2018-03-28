@@ -93,9 +93,11 @@ class ProfileController extends Controller
         $cards = $cards->where('user_id', $user->id)->get();
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
-            'cards'       => $cards,
-            'isFollowing' => $isFollowing,
-            'user'        => $user,
+            'cards'        => $cards,
+            'isFollowing'  => $isFollowing,
+            'user'         => $user,
+            'battleGroups' => $user->getAllBattleGroups(),
+            'battles'      => $user->getAllBattles(),
         ]);
     }
 
