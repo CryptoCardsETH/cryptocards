@@ -1,7 +1,6 @@
 <?php
 
 use Illuminate\Database\Seeder;
-use App\Helpers\EthereumConverter;
 
 class TransactionTableSeeder extends Seeder
 {

@@ -36,7 +36,7 @@ $factory->define(App\Models\Attribute::class, function (Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\Transaction::class, function(Faker $faker) {
+$factory->define(App\Models\Transaction::class, function (Faker $faker) {
     return [
         'card_id'    => App\Models\Card::all()->random()->id,
         'user_id'    => App\Models\User::all()->random()->id,
@@ -45,7 +45,7 @@ $factory->define(App\Models\Transaction::class, function(Faker $faker) {
     ];
 });
 
-$factory->define(App\Models\Listing::class, function(Faker $faker) {
+$factory->define(App\Models\Listing::class, function (Faker $faker) {
     return [
         'card_id' => App\Models\Card::all()->random()->id,
         'user_id' => App\Models\User::all()->random()->id,

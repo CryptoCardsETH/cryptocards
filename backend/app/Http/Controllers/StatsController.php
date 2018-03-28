@@ -2,8 +2,8 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Card;
 use App\Helpers\EthereumConverter;
+use App\Models\Card;
 use App\Models\Listing;
 use App\Models\Transaction;
 use App\Models\User;
@@ -51,7 +51,7 @@ class StatsController extends Controller
             'min_price'    => $min_price,
             'transactions' => $transactions,
             'volume'       => $volume,
-            'cards'        => $cards
+            'cards'        => $cards,
         ];
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $report);
