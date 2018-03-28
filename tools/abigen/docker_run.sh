@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 case $1 in
     run)
-        abigen --sol=/eth_contracts/contracts/CardBase.sol --pkg=contracts --out=/ethereum_proxy/src/GoRpc/contracts/cardbase.go
+        abigen --sol=/eth_contracts/contracts/CardBase.sol --pkg=cardbase_contract --out=/ethereum_proxy/src/GoRpc/contracts/cardbase/cardbase.go
         echo "Created cardbase.go"
         abigen --sol=/eth_contracts/contracts/Battles.sol --pkg=contracts --out=/ethereum_proxy/src/GoRpc/contracts/battles.go
         echo "Created battles.go"
