@@ -6,9 +6,11 @@ import {
   setNetworkId,
   setWeb3Availability
 } from '../actions/users';
+import { fetchContractAddresses } from '../actions/contracts';
 import Web3 from 'web3';
 class Web3Initialization extends React.Component {
   componentDidMount() {
+    this.props.fetchContractAddresses();
     // Checking if Web3 has been injected by the browser (Mist/MetaMask)
     if (window.web3 !== undefined) {
       this.props.setWeb3Availability(true);
@@ -43,7 +45,8 @@ const mapDispatchToProps = dispatch => {
     {
       setWeb3Availability,
       setNetworkId,
-      setAccountsList
+      setAccountsList,
+      fetchContractAddresses
     },
     dispatch
   );

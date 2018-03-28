@@ -2,21 +2,19 @@ import React, { Component } from 'react';
 import '../styles/App.scss';
 import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
-import Web3Login from '../components/Web3Login';
-import { BooleanStatus } from '../components/Icons';
 import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
-import { BattleGroup } from './../contracts';
+import { BattleGroupABI } from './../contracts';
 
 class DebugPage extends Component {
-  test = senderAddress => {
+  test = (senderAddress, contractAddress) => {
     const eth = new Eth(window.web3.currentProvider);
     const contract = new EthContract(eth);
 
-    const miniToken = contract(BattleGroup.ABI).at(BattleGroup.address);
+    const miniToken = contract(BattleGroupABI).at(contractAddress);
 
     miniToken
-      .createBattleGroup(senderAddress, [4, 3, 4, 2, 3], {
+      .createBattleGroup(senderAddress, [1, 2, 3, 4, 5], {
         from: senderAddress
       })
       .then(txHash => {
@@ -40,10 +38,15 @@ class DebugPage extends Component {
   }
 
   render() {
-    let { user } = this.props;
+    let contractData = this.props.contract.addresses['BattleGroups'];
+    let contractAddress = contractData ? contractData.address : null;
     return (
       <div>
-        <button onClick={() => this.test(user.main_address)}>
+        <button
+          onClick={() =>
+            this.test(this.props.user.main_address, contractAddress)
+          }
+        >
           testcontract
         </button>
       </div>
@@ -51,8 +54,8 @@ class DebugPage extends Component {
   }
 }
 function mapStateToProps(state) {
-  let { user } = state;
-  return { user };
+  let { user, contract } = state;
+  return { user, contract };
 }
 
 const mapDispatchToProps = dispatch => {

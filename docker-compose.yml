@@ -82,9 +82,11 @@ services:
       RPC_PORT: 8545
     links:
       - eth_rpc
+      - nginx
 
   eth_rpc: 
     image: trufflesuite/ganache-cli:latest
+    command: --networkId 999999
     ports:
       - "8545:8545"
 

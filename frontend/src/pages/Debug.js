@@ -24,7 +24,7 @@ class DebugPage extends Component {
     }
   };
   render() {
-    let { user } = this.props;
+    let { user, contract } = this.props;
     return (
       <div>
         <h1>Debug</h1>
@@ -40,7 +40,8 @@ class DebugPage extends Component {
         <pre>
           {JSON.stringify(
             {
-              user
+              user,
+              contract
             },
             true,
             2
@@ -52,8 +53,8 @@ class DebugPage extends Component {
   }
 }
 function mapStateToProps(state) {
-  let { user } = state;
-  return { user };
+  let { user, contract } = state;
+  return { user, contract };
 }
 
 const mapDispatchToProps = dispatch => {

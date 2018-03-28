@@ -28,7 +28,6 @@ glob(BASE + "**/*.sol", function(er, files) {
     var compiledCode = solc.compile({
         sources: inputs
     }, 1, findImports);
-    console.log(compiledCode);
 
     // now, strip down each child to only have the contracts key
     let obj = compiledCode['contracts'];
