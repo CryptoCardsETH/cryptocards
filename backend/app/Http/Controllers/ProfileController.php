@@ -32,7 +32,6 @@ class ProfileController extends Controller
         $data = json_decode(Request::getContent(), true);
 
         $oldEmail = $user->email;
-        $oldNickName = $user->nickname;
 
         foreach ($data as $key => $value) {
             if (in_array($key, [
@@ -49,7 +48,7 @@ class ProfileController extends Controller
         }
 
         //check if email changed
-        if ($oldEmail != $user->email) {
+        if ($user->isDirty(User::FIELD_EMAIL)) {
             //check for other user having this email
             if (User::where(USER::FIELD_EMAIL, $user->email)->where('id', '!=', $user->id)->first()) {
                 return response()->build(self::RESPONSE_MESSAGE_ERROR_DUPLICATE, 'A user exists with email '.$user->email);
