@@ -37,7 +37,7 @@ glob(BASE + "**/*.sol", function(er, files) {
         };
     });
 
-    fs.writeFile('/frontend/src/compiled_contracts.js', "export default contracts = " + JSON.stringify(data, null, 2), function(err) {
+    fs.writeFile('/frontend/src/compiled_contracts.js', "const contracts = " + JSON.stringify(data, null, 2) + "; export default contracts;", function(err) {
         if (err) throw err;
         console.log('Compiled & saved');
     });

@@ -13,6 +13,8 @@
     "enzyme-adapter-react-16": "^1.1.1",
     "eth-sig-util": "^1.4.2",
     "ethereumjs-util": "^5.1.4",
+    "ethjs-contract": "^0.1.9",
+    "ethjs-query": "^0.3.3",
     "husky": "^0.14.3",
     "immutability-helper": "^2.6.5",
     "js-cookie": "^2.2.0",

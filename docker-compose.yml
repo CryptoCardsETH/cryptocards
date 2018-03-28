@@ -85,6 +85,8 @@ services:
 
   eth_rpc: 
     image: trufflesuite/ganache-cli:latest
+    ports:
+      - "8545:8545"
 
   codegen_tools_proto:
     build: ./tools/proto
