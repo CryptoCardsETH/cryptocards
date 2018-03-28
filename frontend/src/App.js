@@ -11,9 +11,11 @@ import Home from './pages/Home';
 import Debug from './pages/Debug';
 import AllCards from './pages/AllCards';
 import AllUsers from './pages/AllUsers';
+import AllBattles from './pages/AllBattles';
 import LoginPage from './pages/Login';
 import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
+import TransactionPage from './pages/AllTransactions';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
@@ -80,6 +82,7 @@ const App = () => (
 
           <Route path="/login" component={LoginPage} />
           <Route path="/debug" component={Debug} />
+          <Route path="/battles" component={AllBattles} />
           <Route path="/cards" component={AllCards} />
           <Route path="/card/:id" component={CardDetail} />
           <Route path="/users" component={AllUsers} />
@@ -89,6 +92,7 @@ const App = () => (
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/account" component={AccountPage} />
+          <UserRoute path="/transactions" component={TransactionPage} />
 
           {/*Routes that only admins can access*/}
           <AdminRoute path="/admin" component={AdminPage} />
