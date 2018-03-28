@@ -86,7 +86,7 @@ services:
 
   eth_rpc: 
     image: trufflesuite/ganache-cli:latest
-    command: --networkId 999999
+    command: --deterministic --networkId 999999
     ports:
       - "8545:8545"
 
