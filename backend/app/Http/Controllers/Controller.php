@@ -21,5 +21,6 @@ class Controller extends BaseController
     const RESPONSE_MESSAGE_ERROR_DIGEST_SIGNING_MISMATCH = [14, 403, 'Signed message signature does not match! Login failed.'];
     const RESPONSE_MESSAGE_ALREADY_FOLLOWING = [15, 400, 'Already Following'];
     const RESPONSE_MESSAGE_ERROR_NOT_FOUND = [16, 404, 'Not found!'];
+    const RESPONSE_MESSAGE_ERROR_DUPLICATE = [17, 500, 'Duplicate content!'];
     use AuthorizesRequests, DispatchesJobs, ValidatesRequests;
 }

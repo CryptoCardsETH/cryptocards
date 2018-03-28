@@ -43,24 +43,28 @@ class ProfileController extends Controller
             }
         }
 
-        //todo: integrity constraint check for email and nickname
-        $user->save();
+        //check if there's another user with the nickname that the user wants to set theirs as
+        if (User::where(USER::FIELD_NICKNAME, $user->nickname)->where('id', '!=', $user->id)->first()) {
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_DUPLICATE, 'A user exists with nickname '.$user->nickname);
+        }
 
         //check if email changed
-        if ($oldEmail != $user->email) {
+        if ($user->isDirty(User::FIELD_EMAIL)) {
+            //check for other user having this email
+            if (User::where(USER::FIELD_EMAIL, $user->email)->where('id', '!=', $user->id)->first()) {
+                return response()->build(self::RESPONSE_MESSAGE_ERROR_DUPLICATE, 'A user exists with email '.$user->email);
+            }
+
             if ($oldEmail == null) {
                 //setting email for first time
+                $user->save();
                 Mail::to($user)->send(new WelcomeEmail($user));
-            //todo: confirmation?
             } elseif ($user->email = '') {
-                //bad! setting email to blank
+                //bad! setting email to blank, revert email so we can save the rest
                 $user->email = $oldEmail;
-            //todo: error message
-            } else {
-                //normal changing of email
-                //todo: confirmation?
             }
         }
+        $user->save();
 
         return $this->me();
     }
