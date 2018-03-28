@@ -11,16 +11,16 @@ contract BattleGroups {
 		address owner;
 
 		// Cards which belong to the BattleGroup
-		uint256[MAX_CARDS_PER_GROUP] cards;
+		uint256[5] cards;
 	}
 
 	// Array of all existing BattleGroups
 	BattleGroup[] battlegroups;
 
 	// New BattleGroup Event: Emitted every time a new BattleGroup is created
-	event NewBattleGroup(address owner, uint256 battleGroupID, uint256[MAX_CARDS_PER_GROUP] cards);
+	event NewBattleGroup(address owner, uint256 battleGroupID, uint256[5] cards);
 
-	function createBattleGroup(address _owner, uint256[MAX_CARDS_PER_GROUP] _cards) external returns (uint)
+	function createBattleGroup(address _owner, uint256[5] _cards) external returns (uint)
 	{
 		BattleGroup memory _group = BattleGroup({
 			creationTime: uint64(now),

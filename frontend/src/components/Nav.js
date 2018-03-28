@@ -46,7 +46,9 @@ class Nav extends React.Component {
               {this.props.user.authenticated ? (
                 <li className="nav-item">
                   <NavLink
-                    to={'/user/' + this.props.user.me.id}
+                    to={
+                      '/user/' + (this.props.user.me && this.props.user.me.id)
+                    }
                     className="nav-link"
                   >
                     My Collection
