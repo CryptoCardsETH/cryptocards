@@ -27,11 +27,7 @@ To run `php artisan migrate` and `composer install` and other backend tooling, g
 
 `docker-compose exec fpm php artisan test:proto` to test the laravel <-> golang communication over gRPC (give `ethereum_proxy` ample time to start up)
 
-`docker-compose up codegen_tools_proto` to run the codegen from protobufs
-
-`docker-compose up codegen_tools_abigen` to run the codegen for contract stubs (golang)
-
-`docker-compose up codegen_tools_abigen_js` to run the codegen for contract stubs (js)
+`./docker-tooling.sh generate` to generate run abigen and proto generators.
 
 `ganache-cli` is running in deterministic mode, with network id of 999999. This means the first account should be `0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1` with private key of `4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d`
 
