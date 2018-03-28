@@ -22,11 +22,13 @@ Route::put('/me', 'ProfileController@updateMe');
 Route::put('/follow/{id}', 'ProfileController@follow');
 Route::get('/users', 'ProfileController@getAllUsers');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
+Route::get('/me/transactions', 'ProfileController@getMyTransactions');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
 Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');
 Route::put('/cards/{id}', 'MarketplaceController@updateCard');
 Route::get('/listings', 'MarketplaceController@getAllListings');
+Route::put('/cards/{id}/transaction', 'MarketplaceController@putTransaction');
 
 Route::get('/stats/counts', 'StatsController@getCounts');
 

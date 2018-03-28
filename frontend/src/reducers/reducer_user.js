@@ -2,6 +2,8 @@ import {
   LOGIN_FROM_JWT_SUCCESS,
   RECEIVE_ME,
   REMOVE_TOKEN,
+  REQUEST_MY_TRANSACTIONS,
+  RECEIVE_MY_TRANSACTIONS,
   EDIT_ME_DETAILS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
@@ -26,6 +28,8 @@ const INITIAL_STATE = {
   cards: [],
   cards_loading: false,
 
+  transactions: [],
+  transactions_loading: false,
   user_detail: {},
 
   all_users: []
@@ -69,6 +73,17 @@ export default function(state = INITIAL_STATE, action) {
       return {
         ...state,
         me: action.me
+      };
+    case REQUEST_MY_TRANSACTIONS:
+      return {
+        ...state,
+        transactions_loading: true
+      };
+    case RECEIVE_MY_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: action.transactions,
+        transactions_loading: false
       };
     case EDIT_ME_DETAILS:
       return update(state, {
