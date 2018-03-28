@@ -1,6 +1,7 @@
 import { RECEIVE_CONTRACT_ADDRESSES } from '../actions/contracts';
 const INITIAL_STATE = {
-  addresses: {}
+  addresses: {},
+  loaded: false
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -8,7 +9,8 @@ export default function(state = INITIAL_STATE, action) {
     case RECEIVE_CONTRACT_ADDRESSES:
       return {
         ...state,
-        addresses: action.contracts
+        addresses: action.contracts,
+        loaded: true
       };
     default:
       return state;

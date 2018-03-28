@@ -38,16 +38,17 @@ class DebugPage extends Component {
   }
 
   render() {
-    let contractData = this.props.contract.addresses['BattleGroups'];
-    let contractAddress = contractData ? contractData.address : null;
+    let { loaded, addresses } = this.props.contract;
+    let contractAddress = loaded ? addresses['BattleGroups'].address : null;
     return (
       <div>
         <button
+          disabled={!loaded}
           onClick={() =>
             this.test(this.props.user.main_address, contractAddress)
           }
         >
-          testcontract
+          {loaded ? 'test contract' : 'loading...'}
         </button>
       </div>
     );
