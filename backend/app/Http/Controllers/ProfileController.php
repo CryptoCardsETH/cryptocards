@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
 use App\Models\Follow;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -92,9 +93,11 @@ class ProfileController extends Controller
         $cards = $cards->where('user_id', $user->id)->get();
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
-            'cards'       => $cards,
-            'isFollowing' => $isFollowing,
-            'user'        => $user,
+            'cards'        => $cards,
+            'isFollowing'  => $isFollowing,
+            'user'         => $user,
+            'battleGroups' => $user->getAllBattleGroups(),
+            'battles'      => $user->getAllBattles(),
         ]);
     }
 
@@ -110,6 +113,16 @@ class ProfileController extends Controller
         } else {
             return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);
         }
+    }
+
+    /**
+     * Gets all the transactions of the user's purchases.
+     *
+     * @return mixed transactions
+     */
+    public function getMyTransactions()
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
     }
 
     /**
