@@ -75,7 +75,7 @@ services:
 
   truffle_test:
     build: ./eth_contracts
-    volumes:
+    volumes:  
       - ./eth_contracts:/app
     environment:
       RPC_HOST: eth_rpc

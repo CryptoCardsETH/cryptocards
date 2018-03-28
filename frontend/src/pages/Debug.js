@@ -4,9 +4,6 @@ import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import Web3Login from '../components/Web3Login';
 import { BooleanStatus } from '../components/Icons';
-import Eth from 'ethjs-query';
-import EthContract from 'ethjs-contract';
-import CompiledContracts from './../compiled_contracts';
 
 class DebugPage extends Component {
   //https://github.com/ethereum/EIPs/blob/master/EIPS/eip-155.md#list-of-chain-ids
@@ -26,42 +23,6 @@ class DebugPage extends Component {
         return 'unknown network (' + networkId + ')';
     }
   };
-  test = () => {
-    const senderAddress = '0xAB90357976081f106B785910237a9D1fA9b05ED8';
-    const address = '0x4b591a1068e915cee06eb0da97e653ecce8a8777';
-    const contractData = CompiledContracts['BattleGroups.sol:BattleGroups'];
-    const eth = new Eth(window.web3.currentProvider);
-    const contract = new EthContract(eth);
-
-    const MiniToken = contract(contractData['interface']);
-    const miniToken = MiniToken.at(address);
-
-    miniToken
-      .createBattleGroup(
-        '0xAB90357976081f106B785910237a9D1fA9b05ED8',
-        [4, 3, 4, 2, 3],
-        { from: senderAddress }
-      )
-      .then(txHash => {
-        console.log('Transaction sent');
-        console.dir(txHash);
-        this.waitForTxToBeMined(txHash, eth);
-      })
-      .catch(console.error);
-  };
-
-  async waitForTxToBeMined(txHash, eth) {
-    let txReceipt;
-    while (!txReceipt) {
-      try {
-        txReceipt = await eth.getTransactionReceipt(txHash);
-      } catch (err) {
-        return console.log(err);
-      }
-    }
-    console.log('yayyayayay');
-  }
-
   render() {
     let { user } = this.props;
     return (
@@ -86,7 +47,6 @@ class DebugPage extends Component {
           )}
         </pre>
         <Web3Login />
-        <button onClick={this.test}>testcontract</button>
       </div>
     );
   }

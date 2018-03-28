@@ -5,6 +5,8 @@ const glob = require("glob");
 const BASE = './eth_contracts/contracts/';
 // https://github.com/ethereum/solc-js/issues/114#issuecomment-354752466
 glob(BASE + "**/*.sol", function(er, files) {
+    //read all the files in the contracts directory
+
     console.log(files);
     var inputs = {};
     files.forEach(f => {
@@ -15,19 +17,20 @@ glob(BASE + "**/*.sol", function(er, files) {
 
     function findImports(path) {
         if(path == "contracts/CardBase.sol") {
-            //hacky but...
+            //hacky but referential import fix...
             path = BASE+"CardBase.sol";
         }
         return {
             'contents': fs.readFileSync(path).toString()
         };
     }
-
+    // compile the solidity code
     var compiledCode = solc.compile({
         sources: inputs
     }, 1, findImports);
     console.log(compiledCode);
 
+    // now, strip down each child to only have the contracts key
     let obj = compiledCode['contracts'];
     let data = {};
     Object.keys(obj).forEach(function(key) {
@@ -37,7 +40,13 @@ glob(BASE + "**/*.sol", function(er, files) {
         };
     });
 
-    fs.writeFile('/frontend/src/compiled_contracts.js', "const contracts = " + JSON.stringify(data, null, 2) + "; export default contracts;", function(err) {
+    //build an exportable JS object, dump it into React's directory
+    const fileContents =
+          "//DO NOT EDIT; abigen.js generates this"
+          + "\n const contracts = "
+          + JSON.stringify(data, null, 2)
+          + "; export default contracts;";
+    fs.writeFile('/frontend/src/compiled_contracts.js', fileContents, function(err) {
         if (err) throw err;
         console.log('Compiled & saved');
     });

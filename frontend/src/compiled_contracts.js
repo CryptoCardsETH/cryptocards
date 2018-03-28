@@ -1,3 +1,4 @@
+//DO NOT EDIT; abigen.js generates this
 const contracts = {
   'BattleGroups.sol:BattleGroups': {
     bytecode:
