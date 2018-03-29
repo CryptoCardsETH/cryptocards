@@ -82,6 +82,11 @@ class MarketplaceController extends Controller
         return $this->getCardDetail($card_id);
     }
 
+    public function getCardTransactions($card_id)
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::find($card_id)->transactions);
+    }
+
     public function getAllListings()
     {
         $listings = Listing::with(['cards'])->get();

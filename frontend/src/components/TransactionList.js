@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import React, { Component } from 'react';
 import 'animate.css';
 import { withRouter } from 'react-router-dom';
@@ -5,6 +6,7 @@ import { withRouter } from 'react-router-dom';
 class TransactionList extends Component {
   render() {
     let { transactions } = this.props;
+    let showCardId = this.props.showCardId;
     return (
       <div>
         <div className="transaction">
@@ -14,7 +16,7 @@ class TransactionList extends Component {
                 <tr>
                   <th>Transaction Id</th>
                   <th>Transaction Time</th>
-                  <th>Card Id</th>
+                  {showCardId ? <th>Card Id</th> : null}
                   <th>Transaction Price</th>
                 </tr>
               </thead>
@@ -28,9 +30,11 @@ class TransactionList extends Component {
                       <td className="transaction-time">
                         <div>{transaction.created_at}</div>
                       </td>
-                      <td className="transaction-cardId">
-                        <div>{transaction.card_id}</div>
-                      </td>
+                      {showCardId ? (
+                        <td className="transaction-cardId">
+                          <div>{transaction.card_id}</div>
+                        </td>
+                      ) : null}
                       <td className="transaction-price">
                         <div>{transaction.price}</div>
                       </td>
@@ -39,11 +43,20 @@ class TransactionList extends Component {
                 );
               })}
             </table>
+            {transactions.length < 1 ? (
+              <p className="text-center">
+                <i>No Transactions to display</i>
+              </p>
+            ) : null}
           </div>
         </div>
       </div>
     );
   }
 }
+
+TransactionList.propTypes = {
+  showCardId: PropTypes.bool.isRequired
+};
 
 export default withRouter(TransactionList);

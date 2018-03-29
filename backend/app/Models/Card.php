@@ -29,4 +29,9 @@ class Card extends Model
     {
         return $user->id === $this->user_id;
     }
+
+    public function transactions()
+    {
+        return $this->hasMany('App\Models\Transaction');
+    }
 }

@@ -12,6 +12,7 @@ class CardsTableSeeder extends Seeder
     public function run()
     {
         $faker = \Faker\Factory::create();
+        factory(App\Models\Card::class, 10)->create();
 
         DB::table('attribute_card')->insert(
             [

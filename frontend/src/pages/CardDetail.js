@@ -4,11 +4,13 @@ import { connect } from 'react-redux';
 import {
   editCardDetail,
   fetchCardDetail,
+  fetchCardTransactions,
   saveCardDetail,
   putTransaction
 } from '../actions/cards';
 import { fetchMe } from '../actions/users';
 import { Button } from 'reactstrap';
+import TransactionList from '../components/TransactionList';
 
 class CardDetail extends Component {
   constructor(props) {
@@ -22,6 +24,7 @@ class CardDetail extends Component {
     let cardIdFromRouter = nextProps.match.params.id;
     if (cardIdFromRouter !== this.state.cardId) {
       this.props.fetchCardDetail(cardIdFromRouter);
+      this.props.fetchCardTransactions(cardIdFromRouter);
       this.setState({ cardId: cardIdFromRouter });
     }
   }
@@ -110,6 +113,15 @@ class CardDetail extends Component {
                 ) : null}
               </div>
             </div>
+            <div className="col-md-12">
+              <br />
+              <h2>Transaction History</h2>
+              <br />
+              <TransactionList
+                transactions={card.card_transactions}
+                showCardId={false}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -125,6 +137,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       fetchCardDetail,
+      fetchCardTransactions,
       fetchMe,
       editCardDetail,
       saveCardDetail,
