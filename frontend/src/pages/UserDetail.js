@@ -6,6 +6,7 @@ import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMe, follow, fetchUserDetail } from '../actions/users';
+import { toggleCardSelection } from '../actions/cards';
 import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
 import BattleGroup from '../components/BattleGroup';
@@ -16,6 +17,7 @@ import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
   FILTER_SORT_PRESET_FULL
 } from '../components/CardFilterSort';
+import BattleGroupCreator from '../components/BattleGroupCreator';
 import { Button } from 'reactstrap';
 class UserDetail extends Component {
   constructor(props) {
@@ -33,11 +35,16 @@ class UserDetail extends Component {
     }
   }
   render() {
-    let { user } = this.props;
+    let { user, toggleCardSelection, card } = this.props;
     let { userIdOrNickname } = this.state;
     let userDetail = user.user_detail[userIdOrNickname];
     // show loading message if user data hasn't loaded yet.
     if (!userDetail) return <h1>Loading</h1>;
+
+    let userCardsWithSelection = userDetail.cards.map(x => {
+      return { ...x, isSelected: card.selectedCardIDs.includes(x.id) };
+    });
+
     let userId = userDetail.user.id;
     let isViewingMyProfile = user.authenticated && user.me.id === userId;
     // redirect to username if accessed via ID
@@ -52,6 +59,7 @@ class UserDetail extends Component {
             {userDetail.user.nickname ? userDetail.user.nickname : ''}
           </small>
         </h1>
+        <hr />
         {!isViewingMyProfile ? (
           <div className="float-right">
             {!userDetail.isFollowing ? (
@@ -72,7 +80,12 @@ class UserDetail extends Component {
               <Button color="primary">copy profile URL</Button>
             </CopyToClipboard>
           </div>
-        ) : null}
+        ) : (
+          <div>
+            <h4>make a battle group!</h4>
+            <BattleGroupCreator cardIds={card.selectedCardIDs} />
+          </div>
+        )}
         <hr />
         <CardFilterSort
           filterSortKey="mycards"
@@ -83,7 +96,8 @@ class UserDetail extends Component {
           }
         />
         <CardGrid
-          cards={userDetail.cards}
+          toggleCardSelection={toggleCardSelection}
+          cards={userCardsWithSelection}
           filter={this.props.card.filters['mycards']}
           type={CARD_TYPE_COLLECTION}
         />
@@ -104,6 +118,9 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchMe, fetchUserDetail, follow }, dispatch);
+  return bindActionCreators(
+    { fetchMe, fetchUserDetail, follow, toggleCardSelection },
+    dispatch
+  );
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);

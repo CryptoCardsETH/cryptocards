@@ -114,6 +114,13 @@ export function saveCardDetail(cardId) {
   };
 }
 
+export const TOGGLE_CARD_SELECTION = 'TOGGLE_CARD_SELECTION';
+export function toggleCardSelection(cardId) {
+  return {
+    type: TOGGLE_CARD_SELECTION,
+    cardId
+  };
+}
 export const REQUEST_CARD_TRANSACTIONS = 'REQUEST_CARD_TRANSACTIONS';
 export const RECEIVE_CARD_TRANSACTIONS = 'RECEIVE_CARD_TRANSACTIONS';
 

@@ -5,6 +5,7 @@ import {
   SET_CARD_FILTER_TEXT,
   SET_CARD_SORT_OPTION,
   EDIT_CARD_DETAIL,
+  TOGGLE_CARD_SELECTION,
   REQUEST_CARD_TRANSACTIONS,
   RECEIVE_CARD_TRANSACTIONS
 } from '../actions/cards';
@@ -15,7 +16,7 @@ const INITIAL_STATE = {
   card_detail: {},
   card_detail_loading: false,
   filters: {},
-
+  selectedCardIDs: [],
   card_transactions: [],
   card_transactions_loading: false
 };
@@ -37,7 +38,19 @@ export default function(state = INITIAL_STATE, action) {
         all_cards: action.cards,
         all_cards_loading: false
       };
-
+    case TOGGLE_CARD_SELECTION:
+      let { selectedCardIDs } = state;
+      let { cardId } = action;
+      let index = selectedCardIDs.indexOf(cardId);
+      if (index === -1) {
+        selectedCardIDs.push(cardId);
+      } else {
+        selectedCardIDs.splice(index, 1);
+      }
+      return {
+        ...state,
+        selectedCardIDs
+      };
     case RECEIVE_CARD_DETAIL:
       return update(state, {
         card_detail: {

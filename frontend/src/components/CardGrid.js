@@ -14,7 +14,7 @@ import {
 
 class CardGrid extends Component {
   render() {
-    let { cards, filter, type } = this.props;
+    let { cards, filter, type, toggleCardSelection } = this.props;
     if (filter && filter.text && filter.text !== '') {
       cards = cards.filter(c => c.name.includes(filter.text));
     }
@@ -40,7 +40,15 @@ class CardGrid extends Component {
     return (
       <div className="row">
         {cards.map((card, index) => {
-          return <Card key={index} card={card} index={index} type={type} />;
+          return (
+            <Card
+              key={index}
+              card={card}
+              index={index}
+              type={type}
+              toggleCardSelection={toggleCardSelection}
+            />
+          );
         })}
       </div>
     );
