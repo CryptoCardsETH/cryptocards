@@ -119,5 +119,29 @@ export function toggleCardSelection(cardId) {
   return {
     type: TOGGLE_CARD_SELECTION,
     cardId
+export const REQUEST_CARD_TRANSACTIONS = 'REQUEST_CARD_TRANSACTIONS';
+export const RECEIVE_CARD_TRANSACTIONS = 'RECEIVE_CARD_TRANSACTIONS';
+
+function requestCardTransactions() {
+  return {
+    type: REQUEST_CARD_TRANSACTIONS
+  };
+}
+
+function receiveCardTransactions(transactions) {
+  return {
+    type: RECEIVE_CARD_TRANSACTIONS,
+    transactions
+  };
+}
+
+export function fetchCardTransactions(cardId) {
+  return dispatch => {
+    dispatch(requestCardTransactions());
+    return apiFetch(`cards/${cardId}/transactions`)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveCardTransactions(json.data));
+      });
   };
 }
