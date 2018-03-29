@@ -59,6 +59,7 @@ class UserDetail extends Component {
             {userDetail.user.nickname ? userDetail.user.nickname : ''}
           </small>
         </h1>
+        <hr />
         {!isViewingMyProfile ? (
           <div className="float-right">
             {!userDetail.isFollowing ? (
@@ -81,7 +82,7 @@ class UserDetail extends Component {
           </div>
         ) : (
           <div>
-            <h1>make a battle group!</h1>
+            <h4>make a battle group!</h4>
             <BattleGroupCreator cardIds={card.selectedCardIDs} />
           </div>
         )}

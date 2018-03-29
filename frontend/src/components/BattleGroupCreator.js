@@ -36,8 +36,7 @@ class BattleGroupCreator extends React.Component {
 
     return (
       <div>
-        hii
-        <pre>{JSON.stringify(truncated, null, 2)}</pre>
+        <pre>selected cards: {JSON.stringify(truncated)}</pre>
         <Button
           disabled={!ready}
           onClick={() =>
