@@ -1,8 +1,9 @@
 package main
 
 import (
-	cb "../contracts/cardbase_contract"
+	cb "GoRpc/contracts/cardbase"
 	pb "GoRpc/rpcServer"
+	"big"
 	"encoding/json"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -10,6 +11,7 @@ import (
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
+	"io/ioutil"
 	"log"
 	"net"
 	"net/http"
@@ -17,10 +19,6 @@ import (
 )
 
 type server struct{}
-
-type Client struct {
-	c *rpc.Client
-}
 
 type ContractAddr struct {
 	ContractName    string `json:"name,omitempty"`
@@ -33,10 +31,20 @@ func (s *server) GetBlank(ctx context.Context, in *pb.BlankRequest) (*pb.BlankRe
 }
 
 func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.CardsReply, error) {
+	conn := Dial()
+	addr := GetCardbaseAddr()
+	cardBase := InitializeCardbaseContract(addr, conn)
+	cardsOwned, err := cardBase.TokensOfOwner(nil, addr)
+	if err != nil {
+		log.Fatalf("Error on TokensOfOwner")
+		panic(err)
+	}
+	log.Printf("%v", cardsOwned)
+
 	return &pb.CardsReply{CreationTime: 5555, BattleCooldownEnd: 5555, CreationBattleID: 10, CurrentBattleID: 10, Attributes: "maybe tokens man idk"}, nil
 }
 
-func testDial() *Client {
+func Dial() *ethclient.Client {
 	//TODO Remove hardcoded address, move to .env
 	conn, err := ethclient.Dial("localhost:8545")
 	if err != nil {
@@ -44,11 +52,10 @@ func testDial() *Client {
 		panic(err)
 	}
 	log.Printf("Connected to Ganache")
-	log.Printf(conn)
 	return conn
 }
 
-func getCardbaseAddr() string {
+func GetCardbaseAddr() string {
 	//TODO: Just pretend this works for right now
 	resp, err := http.Get("localhost:4000/cardbase")
 	if err != nil {
@@ -56,24 +63,24 @@ func getCardbaseAddr() string {
 		panic(err)
 	}
 	defer resp.Body.Close()
-	body, err := ioutil.All(resp.Body)
+	body, err := ioutil.ReadAll(resp.Body)
 	if err != nil {
 		log.Fatalf("Body delivered by Laravel is somehow broken")
 		panic(err)
 	}
 	var contractLocation = new(ContractAddr)
-	err := json.Unmarshal(body, &contractLocation)
-	if err != nil {
+	jsonerr := json.Unmarshal(body, &contractLocation)
+	if jsonerr != nil {
 		log.Fatalf("Json was not as expected format")
 		panic(err)
 	}
 	return contractLocation.Addr
 }
 
-func initializeCardbaseContract(addr string, conn *Client) *cb.Cardbase {
-	contract, err := NewCardBase(common.HexToAddress(addr), conn)
+func InitializeCardbaseContract(addr string, conn *ethclient.Client) *cb.CardOwnership {
+	contract, err := cb.NewCardOwnership(common.HexToAddress(addr), conn)
 	if err != nil {
-		log.FatalF("Could not grab contract from the blockchain")
+		log.Fatalf("Could not grab contract from the blockchain")
 		panic(err)
 	}
 	return contract
