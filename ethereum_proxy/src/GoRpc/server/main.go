@@ -1,8 +1,10 @@
 package main
 
 import (
+	cb "../contracts/cardbase_contract"
 	pb "GoRpc/rpcServer"
 	"encoding/json"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"github.com/ethereum/go-ethereum/rpc"
 	"golang.org/x/net/context"
@@ -66,6 +68,15 @@ func getCardbaseAddr() string {
 		panic(err)
 	}
 	return contractLocation.Addr
+}
+
+func initializeCardbaseContract(addr string, conn *Client) *cb.Cardbase {
+	contract, err := NewCardBase(common.HexToAddress(addr), conn)
+	if err != nil {
+		log.FatalF("Could not grab contract from the blockchain")
+		panic(err)
+	}
+	return contract
 }
 
 func main() {
