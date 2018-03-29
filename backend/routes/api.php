@@ -23,7 +23,9 @@ Route::put('/follow/{id}', 'ProfileController@follow');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
 Route::get('me/followers', 'ProfileController@getFollowers');
 Route::get('me/followings', 'ProfileController@getFollowings');
-Route::get('/test', function () { return Route::list(); });
+Route::get('/test', function () { 
+    return Route::list(); 
+});
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
 Route::get('/cards/{id}', 'MarketplaceController@getCardDetail');
@@ -31,5 +33,5 @@ Route::put('/cards/{id}', 'MarketplaceController@updateCard');
 Route::get('/listings', 'MarketplaceController@getAllListings');
 
 Route::get('/', function () {
-     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
+    return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
 });

@@ -101,25 +101,27 @@ class ProfileController extends Controller
 
     /**
      * authorized user follows user_id.
-     * Get all followers for the user
+     * Get all followers for the user.
      *
      * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
      */
     public function getFollowers()
     {
         $user_id = auth()->user()->id;
+        
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followers);
     }
 
     /**
      * authorized user follows user_id.
-     * Get all followings of the user
+     * Get all followings of the user.
      *
      * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
      */
-    public function getFollowings() 
+    public function getFollowings()
     {
         $user_id = auth()->user()->id;
+
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followings);
     }
 }
