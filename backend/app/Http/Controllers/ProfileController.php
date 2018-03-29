@@ -78,7 +78,7 @@ class ProfileController extends Controller
         $isFollowing = false;
         if (!$isRequestingMe) {
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFollowing = $user->following->contains($user_id);
+            $isFollowing = $user->followings->contains($user_id);
         }
         $cards = $cards->where('user_id', $user_id)->get();
 

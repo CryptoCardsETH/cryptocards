@@ -13,8 +13,6 @@ import AllCards from './pages/AllCards';
 import LoginPage from './pages/Login';
 import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
-import FollowersPage from './components/FollowersList';
-import FollowingsPage from './components/FollowingsList';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
@@ -81,8 +79,6 @@ const App = () => (
           {/*Routes that only logged in Users can access*/}
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/account" component={AccountPage} />
-          <UserRoute path="/followers/:id" component={FollowersPage} />
-          <UserRoute path="/followings/:id" component={FollowingsPage} />
         </Switch>
       </main>
       {/*<Footer />*/}

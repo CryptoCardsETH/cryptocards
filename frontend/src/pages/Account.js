@@ -3,8 +3,7 @@ import '../styles/App.scss';
 import { connect } from 'react-redux';
 import { Button } from 'reactstrap';
 import { bindActionCreators } from 'redux';
-import FollowersList from '../components/FollowersList';
-import FollowingsList from '../components/FollowingsList';
+import FollowList from '../components/FollowList';
 import {
   fetchMe,
   editMeDetails,
@@ -88,11 +87,11 @@ class AccountPage extends Component {
           <div className="col-md-9">
             <div className="float-left col-lg-4">
               <h4> Followers </h4>
-              <FollowersList followers={this.props.user.followers} />
+              <FollowList follow={this.props.user.followers} />
             </div>
             <div className="float-right col-lg-4">
               <h4> Followings </h4>
-              <FollowingsList followings={this.props.user.followings} />
+              <FollowList follow={this.props.user.followings} />
             </div>
           </div>
         </div>

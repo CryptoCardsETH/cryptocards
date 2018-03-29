@@ -58,7 +58,7 @@ class User extends Authenticatable implements JWTSubject
      */
     public function follow($user_id)
     {
-        if (!$this->following->contains($user_id)) {
+        if (!$this->followings->contains($user_id)) {
             $user = self::findOrFail($user_id);
             $user->followers()->attach($this->id);
 
