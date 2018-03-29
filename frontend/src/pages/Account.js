@@ -40,48 +40,66 @@ class AccountPage extends Component {
           <div className="col-md-9">
             <h1>My Account</h1>
             <br />
-            <form className="form-horizontal" onSubmit={this.handleSubmit}>
-              <div className="form-group">
-                <label className="col-lg-3 control-label">Nickname:</label>
-                <div className="col-lg-8">
-                  <input
-                    className="form-control"
-                    placeholder="Nickname"
-                    name="nickname"
-                    type="text"
-                    value={me.nickname}
-                    onChange={e => {
-                      this.props.editMeDetails('nickname', e.target.value);
-                    }}
-                    autoFocus
-                  />
+            <div className="float-left col-lg-8">
+              <form className="form-horizontal" onSubmit={this.handleSubmit}>
+                <div className="form-group">
+                  <h4> Change Account Information </h4>
+                  <br />
+                  <label className="col-lg-3 control-label">Nickname:</label>
+                  <div className="col-lg-8">
+                    <input
+                      className="form-control"
+                      placeholder="Nickname"
+                      name="nickname"
+                      type="text"
+                      value={me.nickname}
+                      onChange={e => {
+                        this.props.editMeDetails('nickname', e.target.value);
+                      }}
+                      autoFocus
+                    />
+                  </div>
                 </div>
-              </div>
 
-              <div className="form-group">
-                <label className="col-lg-3 control-label">Email Address:</label>
-                <div className="col-lg-8">
-                  <input
-                    className="form-control"
-                    placeholder="E-mail"
-                    name="email"
-                    type="email"
-                    value={me.email}
-                    onChange={e => {
-                      this.props.editMeDetails('email', e.target.value);
-                    }}
-                  />
+                <div className="form-group">
+                  <label className="col-lg-5 control-label">
+                    Email Address:
+                  </label>
+                  <div className="col-lg-8">
+                    <input
+                      className="form-control"
+                      placeholder="E-mail"
+                      name="email"
+                      type="email"
+                      value={me.email}
+                      onChange={e => {
+                        this.props.editMeDetails('email', e.target.value);
+                      }}
+                    />
+                  </div>
                 </div>
-              </div>
-              <div className="form-group">
-                <br />
-                <div className="col-md-8">
-                  <Button type="submit" value="submit">
-                    Save Changes
-                  </Button>
+                <div className="form-group">
+                  <br />
+                  <div className="col-md-8">
+                    <Button type="submit" value="submit">
+                      Save Changes
+                    </Button>
+                  </div>
                 </div>
-              </div>
-            </form>
+              </form>
+            </div>
+            <div className="float-right col-lg-4">
+              <h4> Transactions History </h4>
+              <button
+                type="button"
+                className="btn btn-link"
+                onClick={() => {
+                  this.props.history.push('/transactions');
+                }}
+              >
+                Transactions
+              </button>
+            </div>
           </div>
           <br />
           <div className="col-md-9">

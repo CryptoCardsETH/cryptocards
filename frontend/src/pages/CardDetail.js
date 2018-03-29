@@ -4,10 +4,13 @@ import { connect } from 'react-redux';
 import {
   editCardDetail,
   fetchCardDetail,
-  saveCardDetail
+  fetchCardTransactions,
+  saveCardDetail,
+  putTransaction
 } from '../actions/cards';
 import { fetchMe } from '../actions/users';
 import { Button } from 'reactstrap';
+import TransactionList from '../components/TransactionList';
 
 class CardDetail extends Component {
   constructor(props) {
@@ -21,6 +24,7 @@ class CardDetail extends Component {
     let cardIdFromRouter = nextProps.match.params.id;
     if (cardIdFromRouter !== this.state.cardId) {
       this.props.fetchCardDetail(cardIdFromRouter);
+      this.props.fetchCardTransactions(cardIdFromRouter);
       this.setState({ cardId: cardIdFromRouter });
     }
   }
@@ -74,7 +78,19 @@ class CardDetail extends Component {
                       Save Card Preferences
                     </Button>
                   </div>
-                ) : null}
+                ) : (
+                  <div>
+                    <br />
+                    <Button
+                      onClick={e => {
+                        this.props.putTransaction(this.state.cardId);
+                        e.preventDefault();
+                      }}
+                    >
+                      Buy
+                    </Button>
+                  </div>
+                )}
               </div>
               <br />
               <div>
@@ -97,6 +113,15 @@ class CardDetail extends Component {
                 ) : null}
               </div>
             </div>
+            <div className="col-md-12">
+              <br />
+              <h2>Transaction History</h2>
+              <br />
+              <TransactionList
+                transactions={card.card_transactions}
+                showCardId={false}
+              />
+            </div>
           </div>
         </div>
       </div>
@@ -110,7 +135,14 @@ function mapStateToProps(state) {
 
 const mapDispatchToProps = dispatch => {
   return bindActionCreators(
-    { fetchCardDetail, fetchMe, editCardDetail, saveCardDetail },
+    {
+      fetchCardDetail,
+      fetchCardTransactions,
+      fetchMe,
+      editCardDetail,
+      saveCardDetail,
+      putTransaction
+    },
     dispatch
   );
 };

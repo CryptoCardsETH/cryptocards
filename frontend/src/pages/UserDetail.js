@@ -6,39 +6,60 @@ import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMe, follow, fetchUserDetail } from '../actions/users';
+import { toggleCardSelection } from '../actions/cards';
+import { buildProfileURL } from '../actions';
 import { CARD_TYPE_COLLECTION } from '../components/Card';
+import BattleGroup from '../components/BattleGroup';
+import BattleTable from '../components/BattleTable';
+import { Redirect } from 'react-router';
+import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
   FILTER_SORT_PRESET_FULL
 } from '../components/CardFilterSort';
-import '../styles/App.css';
-
+import BattleGroupCreator from '../components/BattleGroupCreator';
+import { Button } from 'reactstrap';
 class UserDetail extends Component {
   constructor(props) {
     super(props);
-    this.state = { userId: null };
+    this.state = { userIdOrNickname: null };
   }
   componentDidMount() {
     this.props.fetchMe();
   }
   componentWillReceiveProps(nextProps) {
-    let userIdFromRouter = parseInt(nextProps.match.params.id, 10);
-    if (userIdFromRouter !== this.state.userId) {
-      this.props.fetchUserDetail(userIdFromRouter);
-      this.setState({ userId: userIdFromRouter });
+    let userIdOrNicknameFromRouter = nextProps.match.params.id;
+    if (userIdOrNicknameFromRouter !== this.state.userIdOrNickname) {
+      this.props.fetchUserDetail(userIdOrNicknameFromRouter);
+      this.setState({ userIdOrNickname: userIdOrNicknameFromRouter });
     }
   }
   render() {
-    let { user } = this.props;
-    let { userId } = this.state;
-    let userDetail = user.user_detail[userId];
+    let { user, toggleCardSelection, card } = this.props;
+    let { userIdOrNickname } = this.state;
+    let userDetail = user.user_detail[userIdOrNickname];
+    // show loading message if user data hasn't loaded yet.
     if (!userDetail) return <h1>Loading</h1>;
+
+    let userCardsWithSelection = userDetail.cards.map(x => {
+      return { ...x, isSelected: card.selectedCardIDs.includes(x.id) };
+    });
+
+    let userId = userDetail.user.id;
     let isViewingMyProfile = user.authenticated && user.me.id === userId;
+    // redirect to username if accessed via ID
+    if (parseInt(userIdOrNickname, 10) === userId && userDetail.user.nickname)
+      return <Redirect to={buildProfileURL(userDetail.user)} />;
     return (
       <div>
         <h1>
-          {isViewingMyProfile ? 'My Collection' : `Viewing User #${userId}`}
+          {isViewingMyProfile ? 'My Collection' : `Viewing User #${userId}`}{' '}
+          &nbsp;
+          <small>
+            {userDetail.user.nickname ? userDetail.user.nickname : ''}
+          </small>
         </h1>
+        <hr />
         {!isViewingMyProfile ? (
           <div className="float-right">
             {!userDetail.isFollowing ? (
@@ -54,9 +75,18 @@ class UserDetail extends Component {
               <div className="btn bg-primary text-white">
                 <FontAwesomeIcon icon={faCheck} /> Following
               </div>
-            )}
+            )}{' '}
+            <CopyToClipboard text={buildProfileURL(userDetail.user, true)}>
+              <Button color="primary">copy profile URL</Button>
+            </CopyToClipboard>
           </div>
-        ) : null}
+        ) : (
+          <div>
+            <h4>make a battle group!</h4>
+            <BattleGroupCreator cardIds={card.selectedCardIDs} />
+          </div>
+        )}
+        <hr />
         <CardFilterSort
           filterSortKey="mycards"
           sortTypes={
@@ -66,10 +96,18 @@ class UserDetail extends Component {
           }
         />
         <CardGrid
-          cards={userDetail.cards}
+          toggleCardSelection={toggleCardSelection}
+          cards={userCardsWithSelection}
           filter={this.props.card.filters['mycards']}
           type={CARD_TYPE_COLLECTION}
         />
+        <hr />
+        <h1>Battle Groups</h1>
+        {userDetail.battleGroups.map(bg => (
+          <BattleGroup key={bg.id} group={bg} />
+        ))}
+        <h2>Battles</h2>
+        <BattleTable battles={userDetail.battles} />
       </div>
     );
   }
@@ -80,6 +118,9 @@ function mapStateToProps(state) {
 }
 
 const mapDispatchToProps = dispatch => {
-  return bindActionCreators({ fetchMe, fetchUserDetail, follow }, dispatch);
+  return bindActionCreators(
+    { fetchMe, fetchUserDetail, follow, toggleCardSelection },
+    dispatch
+  );
 };
 export default connect(mapStateToProps, mapDispatchToProps)(UserDetail);

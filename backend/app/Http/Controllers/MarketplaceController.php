@@ -6,8 +6,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EthereumConverter;
 use App\Models\Card;
 use App\Models\Listing;
+use App\Models\Transaction;
 use Illuminate\Support\Facades\Request;
 
 class MarketplaceController extends Controller
@@ -52,6 +54,37 @@ class MarketplaceController extends Controller
         $card->save();
 
         return $this->getCardDetail($card_id);
+    }
+
+    public function putTransaction($card_id)
+    {
+        //update card user's id with current id
+        $user = auth()->user();
+        $card = Card::find($card_id);
+        $listing = Listing::where('card_id', $card_id)->first();
+        if ($card->isUserOwner($user)) {
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User already owns the card');
+        }
+
+        $data = json_decode(Request::getContent(), true);
+        $card->user_id = $user->id;
+
+        $card->save();
+
+        $transaction = new Transaction();
+        $transaction->card_id = $card_id;
+        $transaction->user_id = $user->id;
+        $price = EthereumConverter::convertETHPriceToInt($listing->price);
+        $transaction->price = $price;
+
+        $transaction->save();
+
+        return $this->getCardDetail($card_id);
+    }
+
+    public function getCardTransactions($card_id)
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::find($card_id)->transactions);
     }
 
     public function getAllListings()

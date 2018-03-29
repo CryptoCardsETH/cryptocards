@@ -1,4 +1,4 @@
-import { API_BASE_URL } from '../config';
+import { API_BASE_URL, SITE_URL } from '../config';
 import Cookies from 'js-cookie';
 export default function apiFetch(endpoint, options = {}) {
   options.headers = {};
@@ -15,4 +15,11 @@ export function persistLocally(key, value) {
 export function getLocally(key) {
   let data = Cookies.get(key);
   return data === undefined ? undefined : JSON.parse(data);
+}
+
+export function buildProfileURL(user, full = false) {
+  let { id, nickname } = user;
+  let IdOrNick = id;
+  if (nickname) IdOrNick = nickname;
+  return `${full ? SITE_URL : ''}/user/${IdOrNick}`;
 }

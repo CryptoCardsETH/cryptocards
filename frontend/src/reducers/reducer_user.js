@@ -2,6 +2,8 @@ import {
   LOGIN_FROM_JWT_SUCCESS,
   RECEIVE_ME,
   REMOVE_TOKEN,
+  REQUEST_MY_TRANSACTIONS,
+  RECEIVE_MY_TRANSACTIONS,
   EDIT_ME_DETAILS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
@@ -11,7 +13,8 @@ import {
   REQUEST_MY_FOLLOWERS,
   RECEIVE_MY_FOLLOWERS,
   REQUEST_MY_FOLLOWINGS,
-  RECEIVE_MY_FOLLOWINGS
+  RECEIVE_MY_FOLLOWINGS,
+  RECEIVE_ALL_USERS
 } from '../actions/users';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -25,6 +28,7 @@ const INITIAL_STATE = {
   jwt: null,
   network_id: null,
   accounts_list: [],
+  main_address: null,
 
   cards: [],
   cards_loading: false,
@@ -35,7 +39,13 @@ const INITIAL_STATE = {
   followers_loading: false,
 
   followings: [],
-  followings_loading: false
+  followings_loading: false,
+
+  transactions: [],
+  transactions_loading: false,
+  user_detail: {},
+
+  all_users: []
 };
 
 export default function(state = INITIAL_STATE, action) {
@@ -53,7 +63,8 @@ export default function(state = INITIAL_STATE, action) {
     case SET_ACCOUNTS_LIST:
       return {
         ...state,
-        accounts_list: action.accounts
+        accounts_list: action.accounts,
+        main_address: action.accounts[0]
       };
     case SET_SIGNED_MESSAGES:
       return {
@@ -99,6 +110,17 @@ export default function(state = INITIAL_STATE, action) {
         followings: action.followings,
         followings_loading: false
       };
+    case REQUEST_MY_TRANSACTIONS:
+      return {
+        ...state,
+        transactions_loading: true
+      };
+    case RECEIVE_MY_TRANSACTIONS:
+      return {
+        ...state,
+        transactions: action.transactions,
+        transactions_loading: false
+      };
     case EDIT_ME_DETAILS:
       return update(state, {
         me: {
@@ -111,6 +133,11 @@ export default function(state = INITIAL_STATE, action) {
           [action.userId]: { $set: action.user }
         }
       });
+    case RECEIVE_ALL_USERS:
+      return {
+        ...state,
+        all_users: action.users
+      };
     default:
       return state;
   }

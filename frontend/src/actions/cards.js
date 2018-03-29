@@ -1,4 +1,5 @@
 import apiFetch from './index';
+import { toast } from 'react-toastify';
 
 export const REQUEST_ALL_CARDS = 'REQUEST_ALL_CARDS';
 export const RECEIVE_ALL_CARDS = 'RECEIVE_ALL_CARDS';
@@ -36,6 +37,21 @@ export function fetchCardDetail(cardId) {
       .then(response => response.json())
       .then(json => {
         dispatch(receiveCardDetail(cardId, json.data));
+      });
+  };
+}
+
+export function putTransaction(cardId) {
+  return dispatch => {
+    return apiFetch('cards/' + cardId + '/transaction', {
+      method: 'PUT',
+      body: JSON.stringify(cardId)
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          toast.success('Card successfully purchased!');
+        } else toast.error('Failure purchasing card');
       });
   };
 }
@@ -94,6 +110,40 @@ export function saveCardDetail(cardId) {
         } else {
           console.log('oops');
         }
+      });
+  };
+}
+
+export const TOGGLE_CARD_SELECTION = 'TOGGLE_CARD_SELECTION';
+export function toggleCardSelection(cardId) {
+  return {
+    type: TOGGLE_CARD_SELECTION,
+    cardId
+  };
+}
+export const REQUEST_CARD_TRANSACTIONS = 'REQUEST_CARD_TRANSACTIONS';
+export const RECEIVE_CARD_TRANSACTIONS = 'RECEIVE_CARD_TRANSACTIONS';
+
+function requestCardTransactions() {
+  return {
+    type: REQUEST_CARD_TRANSACTIONS
+  };
+}
+
+function receiveCardTransactions(transactions) {
+  return {
+    type: RECEIVE_CARD_TRANSACTIONS,
+    transactions
+  };
+}
+
+export function fetchCardTransactions(cardId) {
+  return dispatch => {
+    dispatch(requestCardTransactions());
+    return apiFetch(`cards/${cardId}/transactions`)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveCardTransactions(json.data));
       });
   };
 }

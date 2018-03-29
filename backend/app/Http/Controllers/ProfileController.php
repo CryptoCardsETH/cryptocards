@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
 use App\Models\Follow;
+use App\Models\Transaction;
 use App\Models\User;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Request;
@@ -13,7 +14,7 @@ class ProfileController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getUserDetail']]);
+        $this->middleware('jwt.auth', ['except' => ['getUserDetail', 'getAllUsers']]);
     }
 
     /**
@@ -42,24 +43,28 @@ class ProfileController extends Controller
             }
         }
 
-        //todo: integrity constraint check for email and nickname
-        $user->save();
+        //check if there's another user with the nickname that the user wants to set theirs as
+        if (User::where(USER::FIELD_NICKNAME, $user->nickname)->where('id', '!=', $user->id)->first()) {
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_DUPLICATE, 'A user exists with nickname '.$user->nickname);
+        }
 
         //check if email changed
-        if ($oldEmail != $user->email) {
+        if ($user->isDirty(User::FIELD_EMAIL)) {
+            //check for other user having this email
+            if (User::where(USER::FIELD_EMAIL, $user->email)->where('id', '!=', $user->id)->first()) {
+                return response()->build(self::RESPONSE_MESSAGE_ERROR_DUPLICATE, 'A user exists with email '.$user->email);
+            }
+
             if ($oldEmail == null) {
                 //setting email for first time
+                $user->save();
                 Mail::to($user)->send(new WelcomeEmail($user));
-            //todo: confirmation?
             } elseif ($user->email = '') {
-                //bad! setting email to blank
+                //bad! setting email to blank, revert email so we can save the rest
                 $user->email = $oldEmail;
-            //todo: error message
-            } else {
-                //normal changing of email
-                //todo: confirmation?
             }
         }
+        $user->save();
 
         return $this->me();
     }
@@ -70,19 +75,34 @@ class ProfileController extends Controller
      *
      * @return mixed cards
      */
-    public function getUserDetail($user_id)
+    public function getUserDetail($userIdOrNickname)
     {
-        $user = auth()->user();
-        $isRequestingMe = $user && ($user->id == $user_id);
+        $requestorUser = auth()->user();
+        $user = User::where(User::FIELD_NICKNAME, $userIdOrNickname)->orWhere('id', $userIdOrNickname)->first();
+
+        if (!$user) {
+            //user not found
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_NOT_FOUND, "user not found: {$userIdOrNickname}");
+        }
+
+        $isRequestingMe = $requestorUser && ($requestorUser->id == $user->id);
+
         $cards = Card::with('attributes');
         $isFollowing = false;
         if (!$isRequestingMe) {
+            //requesting another user, so hide their hidden cards and calculate if we are following them
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFollowing = $user->followings->contains($user_id);
+            $isFollowing = $requestorUser && $requestorUser->following->contains($user);
         }
-        $cards = $cards->where('user_id', $user_id)->get();
+        $cards = $cards->where('user_id', $user->id)->get();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['cards'=> $cards, 'isFollowing'=> $isFollowing]);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, [
+            'cards'        => $cards,
+            'isFollowing'  => $isFollowing,
+            'user'         => $user,
+            'battleGroups' => $user->getAllBattleGroups(),
+            'battles'      => $user->getAllBattles(),
+        ]);
     }
 
     /**
@@ -123,5 +143,26 @@ class ProfileController extends Controller
         $user_id = auth()->user()->id;
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followings);
+    }
+    
+    /** 
+     * Gets all the transactions of the user's purchases.
+     *
+     * @return mixed transactions
+     */
+    public function getMyTransactions()
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
+    }
+
+    /**
+     * Gets all the users, with their cards.
+     *
+     * @return mixed users
+     */
+    public function getAllUsers()
+    {
+        //TODO: hide hidden cards!
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::with('cards')->get());
     }
 }

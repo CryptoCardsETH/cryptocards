@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class Listing extends Model
 {
+    public $timestamps = false;
+
     /**
      * Defines the relationship between Listings and Cards.
      */

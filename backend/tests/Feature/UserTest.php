@@ -2,6 +2,7 @@
 
 namespace Tests\Feature;
 
+use App\Http\Controllers\Controller;
 use App\Mail\WelcomeEmail;
 use App\Models\Card;
 use App\Models\User;
@@ -27,6 +28,7 @@ class UserTest extends TestCase
         $newNickName = $faker->firstName;
         $data[User::FIELD_NICKNAME] = $newNickName;
         $response = $this->authenticatedJSON('PUT', '/v1/me', $data, $user->getToken());
+
         $response
             ->assertStatus(200)
             ->assertJson(['success' => true]);
@@ -40,11 +42,78 @@ class UserTest extends TestCase
         Mail::fake();
 
         $data[User::FIELD_EMAIL] = $faker->unique()->email;
-        $this->authenticatedJSON('PUT', '/v1/me', $data, $user->getToken());
+        $reponse = $this->authenticatedJSON('PUT', '/v1/me', $data, $user->getToken());
+        $response
+            ->assertStatus(200)
+            ->assertJson(['success' => true]);
 
         Mail::assertSent(WelcomeEmail::class, function ($mail) use ($user) {
             return $mail->user->id === $user->id;
         });
+    }
+
+    public function testGetUpdateUserDuplicateNickname()
+    {
+        $faker = \Faker\Factory::create();
+        $conflictingNickname = $faker->unique()->lastName;
+
+        $conflictingUser = factory(User::class)->create();
+        $conflictingUser->nickname = $conflictingNickname;
+        $conflictingUser->save();
+
+        //get /me on a user
+        $user = factory(User::class)->create();
+        $response = $this->authenticatedJSON('GET', '/v1/me', [], $user->getToken());
+        $response
+            ->assertStatus(200)
+            ->assertJson(['success' => true]);
+        $data = $response->json()['data'];
+        $address = $user->address;
+        $originalNickname = $user->nickname;
+        $this->assertEquals($address, $data['address']);
+
+        //change nickname, ensure it doesn't persist
+        $data[User::FIELD_NICKNAME] = $conflictingNickname;
+        $response = $this->authenticatedJSON('PUT', '/v1/me', $data, $user->getToken());
+        $response
+            ->assertStatus(500)
+            ->assertJson(['success' => false, 'response_id' => Controller::RESPONSE_MESSAGE_ERROR_DUPLICATE[0]]);
+
+        $this->assertDatabaseHas('users', [
+            'id'                => $user->id,
+            User::FIELD_NICKNAME=> $originalNickname,
+        ]);
+    }
+
+    public function testGetUpdateUserDuplicateEmail()
+    {
+        $faker = \Faker\Factory::create();
+        $confictingEmail = $faker->unique()->email;
+
+        $conflictingUser = factory(User::class)->create();
+        $conflictingUser->email = $confictingEmail;
+        $conflictingUser->save();
+
+        //get /me on a user
+        $user = factory(User::class)->create();
+        $response = $this->authenticatedJSON('GET', '/v1/me', [], $user->getToken());
+        $response
+            ->assertStatus(200)
+            ->assertJson(['success' => true]);
+        $data = $response->json()['data'];
+        $originalEmail = $user->email;
+
+        //change email, ensure it doesn't persist
+        $data[User::FIELD_EMAIL] = $confictingEmail;
+        $response = $this->authenticatedJSON('PUT', '/v1/me', $data, $user->getToken());
+        $response
+            ->assertStatus(500)
+            ->assertJson(['success' => false, 'response_id' => Controller::RESPONSE_MESSAGE_ERROR_DUPLICATE[0]]);
+
+        $this->assertDatabaseHas('users', [
+            'id'                => $user->id,
+            User::FIELD_EMAIL   => $originalEmail,
+        ]);
     }
 
     public function testGetUpdateCardHiddenFlag()

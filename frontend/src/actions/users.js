@@ -78,7 +78,7 @@ export function updateMe() {
         if (json.success) {
           toast.success('Changes Saved!');
           dispatch(receiveMe(json.data));
-        } else toast.error('User not updated');
+        } else toast.error('User not updated! ' + json.data);
         //todo: error checking (i.e. expired token)
       });
   };
@@ -157,6 +157,9 @@ export const RECEIVE_MY_FOLLOWINGS = 'RECEIVE_MY_FOLLOWINGS';
 export const REQUEST_MY_FOLLOWERS = 'REQUEST_MY_FOLLOWERS';
 export const RECEIVE_MY_FOLLOWERS = 'RECEIVE_MY_FOLLOWERS';
 
+export const REQUEST_MY_TRANSACTIONS = 'REQUEST_MY_TRANSACTIONS';
+export const RECEIVE_MY_TRANSACTIONS = 'RECEIVE_MY_TRANSACTIONS';
+
 export function fetchUserDetail(userId) {
   return dispatch => {
     dispatch(requestUserDetail());
@@ -165,6 +168,30 @@ export function fetchUserDetail(userId) {
       .then(json => {
         dispatch(receiveUserDetail(userId, json.data));
       });
+  };
+}
+
+export function fetchMyTransactions() {
+  return dispatch => {
+    dispatch(requestMyTransactions());
+    return apiFetch('me/transactions')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveMyTransactions(json.data));
+      });
+  };
+}
+
+function requestMyTransactions() {
+  return {
+    type: REQUEST_MY_TRANSACTIONS
+  };
+}
+
+function receiveMyTransactions(transactions) {
+  return {
+    type: RECEIVE_MY_TRANSACTIONS,
+    transactions
   };
 }
 
@@ -205,6 +232,17 @@ export function fetchMyFollowers() {
       });
   };
 }
+export const RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
+
+export function fetchAllUsers() {
+  return dispatch => {
+    return apiFetch('users')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveAllUsers(json.data));
+      });
+  };
+}
 
 function requestMyFollowers() {
   return {
@@ -240,5 +278,12 @@ function receiveMyFollowings(followings) {
   return {
     type: RECEIVE_MY_FOLLOWINGS,
     followings
+  };
+}
+
+function receiveAllUsers(users) {
+  return {
+    type: RECEIVE_ALL_USERS,
+    users
   };
 }

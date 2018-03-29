@@ -13,6 +13,11 @@ class User extends Authenticatable implements JWTSubject
     const FIELD_NICKNAME = 'nickname';
     protected $guarded = ['id'];
 
+    public function cards()
+    {
+        return $this->hasMany(Card::class);
+    }
+
     /**
      * Get the identifier that will be stored in the subject claim of the JWT.
      *
@@ -66,5 +71,33 @@ class User extends Authenticatable implements JWTSubject
         } else {
             return false;
         }
+    }
+
+    /**
+     * Gets all battles a user has participated in, as per their BattleGroups.
+     */
+    public function getAllBattles()
+    {
+        $user_id = $this->id;
+
+        return Battle::whereHas('group1', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->orWhereHas('group2', function ($query) use ($user_id) {
+            $query->where('user_id', $user_id);
+        })->with(
+            'group1.user',
+            'group1.group_cards.card.user',
+            'group2.user',
+            'group2.group_cards.card.user',
+            'groupwinner.user'
+        )->get();
+    }
+
+    /**
+     * Gets all BattleGroups a user has.
+     */
+    public function getAllBattleGroups()
+    {
+        return BattleGroup::with('group_cards.card.user', 'user')->where('user_id', $this->id)->get();
     }
 }
