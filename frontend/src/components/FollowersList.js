@@ -27,7 +27,7 @@ class FollowersList extends Component {
                   src={`http://via.placeholder.com/350?text=follower+id+${
                     followers.id
                   }`}
-                  alt=""
+                  alt={followers.nickname}
                 />
                 <div className="overlay overlay-background">
                   <Link to={'/user/' + followers.id} title="More Details">

@@ -108,7 +108,7 @@ class ProfileController extends Controller
     public function getFollowers()
     {
         $user_id = auth()->user()->id;
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::with("followers")->find($user_id)->get());
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followers);
     }
 
     /**
@@ -120,6 +120,6 @@ class ProfileController extends Controller
     public function getFollowings() 
     {
         $user_id = auth()->user()->id;
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Follow::with("followings")->where('follower_id', $user_id)->get());
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followings);
     }
 }
