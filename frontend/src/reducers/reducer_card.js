@@ -4,7 +4,8 @@ import {
   RECEIVE_CARD_DETAIL,
   SET_CARD_FILTER_TEXT,
   SET_CARD_SORT_OPTION,
-  EDIT_CARD_DETAIL
+  EDIT_CARD_DETAIL,
+  TOGGLE_CARD_SELECTION
 } from '../actions/cards';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -12,7 +13,8 @@ const INITIAL_STATE = {
   all_cards_loading: false,
   card_detail: {},
   card_detail_loading: false,
-  filters: {}
+  filters: {},
+  selectedCardIDs: []
 };
 
 update.extend('$auto', function(value, object) {
@@ -32,7 +34,19 @@ export default function(state = INITIAL_STATE, action) {
         all_cards: action.cards,
         all_cards_loading: false
       };
-
+    case TOGGLE_CARD_SELECTION:
+      let { selectedCardIDs } = state;
+      let { cardId } = action;
+      let index = selectedCardIDs.indexOf(cardId);
+      if (index === -1) {
+        selectedCardIDs.push(cardId);
+      } else {
+        selectedCardIDs.splice(index, 1);
+      }
+      return {
+        ...state,
+        selectedCardIDs
+      };
     case RECEIVE_CARD_DETAIL:
       return update(state, {
         card_detail: {

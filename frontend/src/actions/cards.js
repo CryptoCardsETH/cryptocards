@@ -113,3 +113,11 @@ export function saveCardDetail(cardId) {
       });
   };
 }
+
+export const TOGGLE_CARD_SELECTION = 'TOGGLE_CARD_SELECTION';
+export function toggleCardSelection(cardId) {
+  return {
+    type: TOGGLE_CARD_SELECTION,
+    cardId
+  };
+}
