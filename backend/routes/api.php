@@ -24,8 +24,8 @@ Route::get('/users', 'ProfileController@getAllUsers');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
 Route::get('me/followers', 'ProfileController@getFollowers');
 Route::get('me/followings', 'ProfileController@getFollowings');
-Route::get('/test', function () { 
-    return Route::list(); 
+Route::get('/test', function () {
+    return Route::list();
 });
 Route::get('/me/transactions', 'ProfileController@getMyTransactions');
 

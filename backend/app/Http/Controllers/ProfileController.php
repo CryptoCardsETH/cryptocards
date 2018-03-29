@@ -128,7 +128,7 @@ class ProfileController extends Controller
     public function getFollowers()
     {
         $user_id = auth()->user()->id;
-        
+
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followers);
     }
 
@@ -144,8 +144,8 @@ class ProfileController extends Controller
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followings);
     }
-    
-    /** 
+
+    /**
      * Gets all the transactions of the user's purchases.
      *
      * @return mixed transactions
