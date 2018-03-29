@@ -1,12 +1,18 @@
-FROM golang:wheezy
+FROM golang
 
-WORKDIR /go
-ADD . /go
 
-# install dep, install the deps as per Gopkg.lock
-RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-RUN cd src/GoRpc && dep ensure -v -vendor-only
+WORKDIR /ethereum_proxy
 
+ADD . /ethereum_proxy
+
+ENV GOPATH=/ethereum_proxy
+ENV PATH=$PATH:/$GOPATH/.bin
+
+WORKDIR /ethereum_proxy/src
+
+
+RUN go get -v ./...
 # run the rpc server
-ENTRYPOINT ["/bin/bash","/go/docker_run.sh"] 
+
+ENTRYPOINT ["/bin/bash","/ethereum_proxy/docker_run.sh"] 
 CMD ["run"]

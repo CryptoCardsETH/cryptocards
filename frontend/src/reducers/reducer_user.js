@@ -24,6 +24,7 @@ const INITIAL_STATE = {
   jwt: null,
   network_id: null,
   accounts_list: [],
+  main_address: null,
 
   cards: [],
   cards_loading: false,
@@ -50,7 +51,8 @@ export default function(state = INITIAL_STATE, action) {
     case SET_ACCOUNTS_LIST:
       return {
         ...state,
-        accounts_list: action.accounts
+        accounts_list: action.accounts,
+        main_address: action.accounts[0]
       };
     case SET_SIGNED_MESSAGES:
       return {

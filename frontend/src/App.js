@@ -9,8 +9,10 @@ import {
 
 import Home from './pages/Home';
 import Debug from './pages/Debug';
+import ContractTest from './pages/ContractTest';
 import AllCards from './pages/AllCards';
 import AllUsers from './pages/AllUsers';
+import AllBattles from './pages/AllBattles';
 import LoginPage from './pages/Login';
 import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
@@ -79,9 +81,10 @@ const App = () => (
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/faq" component={FAQ} />
-
           <Route path="/login" component={LoginPage} />
           <Route path="/debug" component={Debug} />
+          <Route path="/contracttest" component={ContractTest} />
+          <Route path="/battles" component={AllBattles} />
           <Route path="/cards" component={AllCards} />
           <Route path="/card/:id" component={CardDetail} />
           <Route path="/users" component={AllUsers} />

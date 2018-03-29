@@ -20,6 +20,10 @@ class Nav extends React.Component {
     });
   }
   render() {
+    let isAdmin =
+      this.props.user.authenticated &&
+      this.props.user.me &&
+      this.props.user.me.admin;
     return (
       <div>
         <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
@@ -46,7 +50,9 @@ class Nav extends React.Component {
               {this.props.user.authenticated ? (
                 <li className="nav-item">
                   <NavLink
-                    to={'/user/' + this.props.user.me.id}
+                    to={
+                      '/user/' + (this.props.user.me && this.props.user.me.id)
+                    }
                     className="nav-link"
                   >
                     My Collection
@@ -73,7 +79,7 @@ class Nav extends React.Component {
                   FAQ
                 </NavLink>
               </li>
-              {this.props.user.authenticated && this.props.user.me.admin ? (
+              {isAdmin ? (
                 <li className="nav-item">
                   <NavLink to="/admin" className="nav-link">
                     Admin
