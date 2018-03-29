@@ -48,7 +48,7 @@ class BattleGroupCreator extends React.Component {
             )
           }
         >
-          {ready ? 'test contract' : 'loading...'}
+          {ready ? 'create battlegroup' : 'loading...'}
         </Button>
       </div>
     );
