@@ -43,7 +43,6 @@ const INITIAL_STATE = {
 
   transactions: [],
   transactions_loading: false,
-  user_detail: {},
 
   all_users: []
 };

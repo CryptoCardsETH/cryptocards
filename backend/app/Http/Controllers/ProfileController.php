@@ -92,7 +92,7 @@ class ProfileController extends Controller
         if (!$isRequestingMe) {
             //requesting another user, so hide their hidden cards and calculate if we are following them
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFollowing = $requestorUser && $requestorUser->following->contains($user);
+            $isFollowing = $requestorUser && $requestorUser->followings->contains($user);
         }
         $cards = $cards->where('user_id', $user->id)->get();
 
