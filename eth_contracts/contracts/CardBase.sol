@@ -90,8 +90,11 @@ contract CardOwnership is CardBase {
 	// Name and symbol of the ERC token
 	string public constant name = "CryptoCards";
 	string public constant symbol = "CCB";
-        Blacklist blacklist = new Blacklist(); 
+        Blacklist blacklist;
 
+        function setBlacklist(Blacklist _blacklist) {
+          blacklist = _blacklist; 
+        }
 	// Return if address _claimant currently holds card _cardId
 	function _owns(address _claimant, uint256 _cardID) internal view returns (bool) {
 		return cardIndexToOwner[_cardID] == _claimant;
