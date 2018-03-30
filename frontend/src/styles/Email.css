@@ -1,0 +1,37 @@
+body {
+  background-color: #404040;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  text-align: justify;
+  padding: 40px;
+}
+
+body div#letter {
+  background-color: whitesmoke;
+  box-shadow: 0px 10px 100px rgba(24, 24, 24, 0.2);
+  width: 60%;
+  margin: auto;
+  padding: 180px;
+}
+
+body div#lettercontents {
+  float: left;
+  padding-bottom: 50px;
+}
+
+body div h1 {
+  padding: 18px;
+}
+
+body div img {
+  height: 80px;
+  width: 80px;
+  margin: 20px;
+  float: left;
+}
+
+@media (max-width: 600px) {
+  body div {
+    width: 95%;
+    padding: 20px;
+  }
+}
