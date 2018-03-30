@@ -4,14 +4,16 @@ import "truffle/Assert.sol";
 import "truffle/DeployedAddresses.sol";
 import "../contracts/CardBase.sol";
 import "../contracts/GenerateCard.sol";
+import "../contracts/Blacklist.sol"; 
 
 contract TestCardGeneration {
-
     CardOwnership cardOwnership = CardOwnership(DeployedAddresses.CardOwnership());
     GenerateCard generateCard = GenerateCard(DeployedAddresses.GenerateCard());
+    Blacklist blacklist = Blacklist(DeployedAddresses.Blacklist()); 
 
     // Testing the createCard() function
     function testCreateCard() public {
+        cardOwnership.setBlacklist(blacklist); 
         uint256 numCards = 50;
         uint256 expected = cardOwnership.totalSupply() + numCards;
 

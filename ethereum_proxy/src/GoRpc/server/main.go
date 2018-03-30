@@ -3,7 +3,6 @@ package main
 import (
 	cb "GoRpc/contracts/cardbase"
 	pb "GoRpc/rpcServer"
-	"big"
 	"encoding/json"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
@@ -13,6 +12,7 @@ import (
 	"google.golang.org/grpc/reflection"
 	"io/ioutil"
 	"log"
+	"math/big"
 	"net"
 	"net/http"
 	"os"
@@ -42,6 +42,18 @@ func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.
 	log.Printf("%v", cardsOwned)
 
 	return &pb.CardsReply{CreationTime: 5555, BattleCooldownEnd: 5555, CreationBattleID: 10, CurrentBattleID: 10, Attributes: "maybe tokens man idk"}, nil
+}
+
+func (s *server) BlacklistUser(ctx context.Context, in *pb.BlacklistRequest) {
+	conn := Dial()
+	addr := GetBlacklistAddr()
+	blacklist := InitializeBlacklistContract(addr, conn)
+	err := blacklist.AddToBlacklist(nil, common.HexToAddress(in.Address), conn)
+	if err != nil {
+		log.Fatalf("Error on AddToBlacklist")
+		panic(err)
+	}
+	return
 }
 
 func Dial() *ethclient.Client {
@@ -77,6 +89,27 @@ func GetCardbaseAddr() string {
 	return contractLocation.Addr
 }
 
+func GetCardbaseAddr() string {
+	//TODO: Just pretend this works for right now
+	resp, err := http.Get("localhost:4000/blacklist")
+	if err != nil {
+		log.Fatalf("Could not contact Laravel")
+		panic(err)
+	}
+	defer resp.Body.Close()
+	body, err := ioutil.ReadAll(resp.Body)
+	if err != nil {
+		log.Fatalf("Body delivered by Laravel is somehow broken")
+		panic(err)
+	}
+	var contractLocation = new(ContractAddr)
+	jsonerr := json.Unmarshal(body, &contractLocation)
+	if jsonerr != nil {
+		log.Fatalf("Json was not as expected format")
+		panic(err)
+	}
+	return contractLocation.Addr
+}
 func InitializeCardbaseContract(addr string, conn *ethclient.Client) *cb.CardOwnership {
 	contract, err := cb.NewCardOwnership(common.HexToAddress(addr), conn)
 	if err != nil {
@@ -86,6 +119,14 @@ func InitializeCardbaseContract(addr string, conn *ethclient.Client) *cb.CardOwn
 	return contract
 }
 
+func InitializeCardbaseContract(addr string, conn *ethclient.Client) *cb.CardOwnership {
+	contract, err := cb.NewBlacklist(common.HexToAddress(addr), conn)
+	if err != nil {
+		log.Fatalf("Could not grab contract from the blockchain")
+		panic(err)
+	}
+	return contract
+}
 func main() {
 	log.Printf("Attempting to start Go-RPC Server")
 

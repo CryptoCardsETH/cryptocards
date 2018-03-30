@@ -1,4 +1,5 @@
 pragma solidity ^0.4.17;
+import "./Blacklist.sol"; 
 
 contract CardBase {
 	struct GameCard {
@@ -89,7 +90,11 @@ contract CardOwnership is CardBase {
 	// Name and symbol of the ERC token
 	string public constant name = "CryptoCards";
 	string public constant symbol = "CCB";
+        Blacklist blacklist;
 
+        function setBlacklist(Blacklist _blacklist) {
+          blacklist = _blacklist; 
+        }
 	// Return if address _claimant currently holds card _cardId
 	function _owns(address _claimant, uint256 _cardID) internal view returns (bool) {
 		return cardIndexToOwner[_cardID] == _claimant;
@@ -115,12 +120,18 @@ contract CardOwnership is CardBase {
 		// Prevent transfers if card _cardId is not owned by the sender
 		require(_owns(msg.sender, _cardId));
 
+                //make sure neither is blacklisted
+                require(!blacklist.isOnBlacklist(msg.sender)); 
+                require(!blacklist.isOnBlacklist(_to)); 
+
 		// Reassign ownership and emit transfer event
 		_transfer(msg.sender, _to, _cardId);
 	}
 
 	function createCard(address _owner, uint256 _attributes) external returns (uint) {
 		// Prevent ownership by CryptoCards contracts
+                require(!blacklist.isOnBlacklist(_owner)); 
+
 		require(_owner != address(this));
 
 		// Create the card

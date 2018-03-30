@@ -131,11 +131,28 @@ func (m *CardsReply) GetAttributes() string {
 	return ""
 }
 
+type BlacklistRequest struct {
+	Address string `protobuf:"string,1,opt,name=address" json:"address,omitempty"`
+}
+
+func (m *BlacklistRequest) Reset()                   { *m = BlacklistRequest{} }
+func (m *BlacklistRequest) String() string           { return proto.CompactTextString(m) }
+func (*BlacklistRequest) ProtoMessage()              {}
+func (*BlacklistRequest) Desciptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+
+func (m *BlacklistRequest) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
 func init() {
 	proto.RegisterType((*BlankRequest)(nil), "rpcServer.BlankRequest")
 	proto.RegisterType((*BlankReply)(nil), "rpcServer.BlankReply")
 	proto.RegisterType((*CardsRequest)(nil), "rpcServer.CardsRequest")
 	proto.RegisterType((*CardsReply)(nil), "rpcServer.CardsReply")
+	proto.RegisterType((*BlacklistRequest)(nil), "rpcServer.BlacklistRequest")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -184,6 +201,7 @@ func (c *greeterClient) GetCardsByOwner(ctx context.Context, in *CardsRequest, o
 type GreeterServer interface {
 	GetBlank(context.Context, *BlankRequest) (*BlankReply, error)
 	GetCardsByOwner(context.Context, *CardsRequest) (*CardsReply, error)
+	BlacklistUser(context.Context, *BlacklistRequest)
 }
 
 func RegisterGreeterServer(s *grpc.Server, srv GreeterServer) {
@@ -226,6 +244,24 @@ func _Greeter_GetCardsByOwner_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Greeter_BlacklistUser_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BlacklistRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(BlacklistRequest).BlacklistUser(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpcServer.Greeter/BlacklistUser",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(BlacklistRequest).BlacklistUser(ctx, req.(*BlaklistUser))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Greeter_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "rpcServer.Greeter",
 	HandlerType: (*GreeterServer)(nil),
@@ -237,6 +273,10 @@ var _Greeter_serviceDesc = grpc.ServiceDesc{
 		{
 			MethodName: "GetCardsByOwner",
 			Handler:    _Greeter_GetCardsByOwner_Handler,
+		},
+		{
+			MethodName: "BlacklistUser",
+			Handler:    _Greeter_BlacklistUser_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},

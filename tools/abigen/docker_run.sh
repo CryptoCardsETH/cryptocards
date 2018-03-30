@@ -9,6 +9,7 @@ case $1 in
         echo "Generate battlegroups.go"
         abigen --sol=/eth_contracts/contracts/GenerateCard.sol --pkg=contracts --out=/ethereum_proxy/src/GoRpc/contracts/generatecard.go
         echo "Generate generatecard.go"
+        abigen --sol=/eth_contracts/contracts/Blacklist.sol --pkg=contracts --out=/ethereum_proxy/src/GoRpc/contracts/Blacklist.go
 
 
 	      ;;
