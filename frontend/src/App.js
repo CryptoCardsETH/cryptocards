@@ -77,7 +77,7 @@ const App = () => (
       <Web3Initialization />
       <ToastContainer />
       <Nav />
-      <main role="main" className="container" style={{ paddingTop: '80px' }}>
+      <main role="main" className="" style={{ paddingTop: '20px' }}>
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/faq" component={FAQ} />

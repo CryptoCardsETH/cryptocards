@@ -1,3 +1,32 @@
+
+$black: #1A1A1A;
+$gray: #818283; //848484;
+$green: #659486;
+$blue: #221C84;
+$red: #E51B11;
+$gold: #F8C117;
+
+$color1: #1de099;
+$color2: #1dc8cd;
+
+
+.navigation {
+  .navbar {
+    //background-color: $black;
+     background: linear-gradient(45deg, $gray, $black);
+  }
+}
+
+.home {
+  .opening {
+    font-weight: bold;
+    color: $black;
+  }
+  .login {
+    margin-top: 20px;
+  }
+}
+
 body {
   min-height: 75rem;
   padding: 4.5rem 0 0;
