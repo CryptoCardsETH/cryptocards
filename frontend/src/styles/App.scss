@@ -5,31 +5,67 @@ $green: #659486;
 $blue: #221C84;
 $red: #E51B11;
 $gold: #F8C117;
+$white: #fff;
+$off-white: #EFF5F5;
 
 $color1: #1de099;
 $color2: #1dc8cd;
 
+body > #root > div > main {
+  height: 100vh;
+}
 
 .navigation {
   .navbar {
     //background-color: $black;
-     background: linear-gradient(45deg, $gray, $black);
+     background: linear-gradient(45deg, $color1, $color2);
+  }
+  .navbar-brand {
+    color: $white;
+  }
+  .nav-link {
+    color: $white;
+  }
+  .active {
+    background-color: $white;
+    color: $color2;
   }
 }
 
+$intro-height: 100%;
 .home {
-  .opening {
-    font-weight: bold;
-    color: $black;
-  }
+  height: 100vh;
   .login {
     margin-top: 20px;
+  }
+  .intro {
+    text-align: center;
+    align-items: center;
+    padding-top: 100px;
+    min-height: $intro-height;
+    background: linear-gradient(45deg, $color1, $color2);
+  }
+  .intro-text {
+    height: 50%;
+    h1 {
+      font-size: 48px;
+      line-height: 56px;
+      font-weight: 400;
+      color: $white;
+    }
+    p {
+      font-size: 24px;
+      color: $white;
+    }
+  }
+  .secondary {
+    background-color: $off-white;
+    min-height: 400px;
   }
 }
 
 body {
-  min-height: 75rem;
-  padding: 4.5rem 0 0;
+  padding: 3.5rem 0 0;
   margin: 0;
   font-family: sans-serif;
 }
