@@ -25,6 +25,10 @@ class IngestTransactionFromHash implements ShouldQueue
     {
         $this->hash = $hash;
     }
+    public function getHash()
+    {
+        return $this->hash;
+    }
 
     /**
      * Execute the job.

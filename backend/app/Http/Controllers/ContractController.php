@@ -2,14 +2,14 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Contract;
+use Illuminate\Support\Facades\Request;
+use Log;
 use App\Jobs\IngestTransactionFromHash;
+use App\Models\User;
 use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
-use App\Models\Contract;
-use App\Models\User;
-use Illuminate\Support\Facades\Request;
-use Log;
 
 class ContractController extends Controller
 {
@@ -38,21 +38,18 @@ class ContractController extends Controller
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $c);
     }
-
     public function startWatchingTransaction()
     {
         $data = json_decode(Request::getContent(), true);
         $txHash = $data['txHash'];
         IngestTransactionFromHash::dispatch($txHash);
-
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
-    }
 
-    public static function processNewBattleGroupEvent($ownerAddress, $battleGroupId, $cards)
-    {
+    }
+    public static function processNewBattleGroupEvent($ownerAddress, $battleGroupId, $cards) {
         $user = User::getByAddress($ownerAddress);
         $bg = BattleGroup::create(['user_id'=>$user->id, 'token_id'=> $battleGroupId]);
-        foreach ($cards as $c) {
+        foreach($cards as $c) {
             $card = Card::getByTokenId($c);
             BattleGroupCard::create(['group_id'=>$bg->id, 'card_id'=>$card->id]);
         }
