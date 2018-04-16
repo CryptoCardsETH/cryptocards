@@ -105,7 +105,7 @@ class ProfileController extends Controller
         ]);
     }
 
-    /**
+    /** 
      * authorized user follows user_id.
      *
      * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
@@ -128,7 +128,12 @@ class ProfileController extends Controller
     {
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Transaction::where('user_id', auth()->user()->id)->get());
     }
-
+    /**
+     * Gets all notifications for a user.
+     */
+    public function getMyNotifications() {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, auth()->user()->notifications);
+    }
     /**
      * Gets all the users, with their cards.
      *
