@@ -37,6 +37,24 @@ services:
       - fpm
     volumes:
       - ./backend/vhost-docker.conf:/etc/nginx/conf.d/laravel.conf
+  laravel_queue_worker:
+    env_file: ./backend/.env.docker
+    build: ./tools/php-queue-worker
+    volumes:
+      - ./backend/:/var/www/laravel
+    links:
+      - db 
+      - redis
+      - ethereum_proxy 
+  laravel_cron_worker:
+    env_file: ./backend/.env.docker
+    build: ./tools/php-cron-worker
+    volumes:
+      - ./backend/:/var/www/laravel
+    links:
+      - db 
+      - redis
+      - ethereum_proxy 
 
   fpm:  
      build: ./backend
@@ -49,17 +67,7 @@ services:
      volumes:
          - ./backend/:/var/www/laravel
      working_dir: /var/www/laravel
-     environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_CONNECTION: mysql
-      DB_DATABASE: cryptocards
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      REDIS_HOST: redis
-      QUEUE_DRIVER: redis
-      RPC_SERVER_ADDRESS: ethereum_proxy:50051
-
+     env_file: ./backend/.env.docker
   frontend:
     build: ./frontend
     volumes:

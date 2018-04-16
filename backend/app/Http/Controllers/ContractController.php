@@ -43,7 +43,7 @@ class ContractController extends Controller
         $data = json_decode(Request::getContent(), true);
         $txHash = $data['txHash'];
         IngestTransactionFromHash::dispatch($txHash);
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS,$txHash);
 
     }
     public static function processNewBattleGroupEvent($ownerAddress, $battleGroupId, $cards) {
