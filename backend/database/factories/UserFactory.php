@@ -24,9 +24,8 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 });
 
 $factory->define(Card::class, function (Faker $faker) {
-    $nextTokenId = Card::max('token_id')+1;
     return [
-        'token_id'   => $nextTokenId, 
+        'token_id'   => Card::max('token_id')+1, 
         'name'       => $faker->word,
         'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
     ];

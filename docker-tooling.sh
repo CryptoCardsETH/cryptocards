@@ -16,6 +16,9 @@ case "$1" in
     backend-test)
         docker-compose exec fpm vendor/bin/phpunit
         ;;
+    backend-freshdb)
+        docker-compose exec fpm php artisan migrate:refresh --seed
+        ;;
     generate)
         docker-compose up codegen_tools_abigen
         docker-compose up codegen_tools_abigen_js
