@@ -23,6 +23,8 @@ Route::put('/follow/{id}', 'ProfileController@follow');
 Route::get('/users', 'ProfileController@getAllUsers');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');
 Route::get('/me/transactions', 'ProfileController@getMyTransactions');
+Route::get('/me/notifications', 'ProfileController@getMyNotifications'); pf
+
 
 Route::get('/battles', 'BattlegroundController@getAllBattles');
 
