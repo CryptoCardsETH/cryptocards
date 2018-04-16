@@ -2,10 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Models\User;
 use App\Notifications\BattleCompletion;
+use Illuminate\Console\Command;
 use Notification;
+
 class BattleNotificationTest extends Command
 {
     /**
@@ -39,6 +40,6 @@ class BattleNotificationTest extends Command
      */
     public function handle()
     {
-        Notification::send(User::all(), new BattleCompletion()); 
+        Notification::send(User::all(), new BattleCompletion());
     }
 }
