@@ -25,7 +25,6 @@ Route::get('/users/{id}', 'ProfileController@getUserDetail');
 Route::get('/me/transactions', 'ProfileController@getMyTransactions');
 Route::get('/me/notifications', 'ProfileController@getMyNotifications');
 
-
 Route::get('/battles', 'BattlegroundController@getAllBattles');
 
 Route::get('/cards', 'MarketplaceController@getAllCards');
