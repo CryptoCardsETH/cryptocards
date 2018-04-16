@@ -45,6 +45,7 @@ class Nav extends React.Component {
               <NavbarItem to="/cards" text="All Cards" />
               <NavbarItem to="/debug" text="Debug" />
               <NavbarItem to="/faq" text="FAQ" />
+              <NavbarItem to="/notifications" text="Notifications" />
               {isAdmin ? <NavbarItem to="/admin" text="Admin" /> : null}
               {this.props.user.authenticated ? (
                 <li className="nav-item">
