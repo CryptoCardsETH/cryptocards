@@ -22,7 +22,10 @@ services:
       MYSQL_DATABASE: cryptocards 
     ports:
       - "3307:3306" #expose 3306 on a nonstandard port so that it doesn't conflict with mysql on the host
-
+  redis:
+    image: redis:latest
+    ports:
+    - "6379:6379"
   nginx:
     image: nginx:latest
     ports:
@@ -41,6 +44,7 @@ services:
          - "9000:9000"
      links: 
          - db
+         - redis
          - ethereum_proxy
      volumes:
          - ./backend/:/var/www/laravel
@@ -52,6 +56,8 @@ services:
       DB_DATABASE: cryptocards
       DB_USERNAME: root
       DB_PASSWORD: root
+      REDIS_HOST: redis
+      QUEUE_DRIVER: redis
       RPC_SERVER_ADDRESS: ethereum_proxy:50051
 
   frontend:
