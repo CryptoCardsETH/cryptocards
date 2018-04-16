@@ -41,7 +41,8 @@ class AuthController extends Controller
         }
 
         //Get user based on address
-        $user = User::firstOrCreate(['address'=>$signerAddress]);
+
+        $user = User::getByAddress($signerAddress);
         $token = auth()->login($user);
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, ['token'=>$token]);

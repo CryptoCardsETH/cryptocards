@@ -2,6 +2,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setCardFilterText, setCardSortOption } from '../actions/cards';
+import { startWatchingTransaction } from '../actions/contracts';
 import PropTypes from 'prop-types';
 import { CONTRACT_NAME_BATTLEGROUPS } from './../contracts';
 import {
@@ -11,7 +12,12 @@ import {
 } from '../selectors';
 import { Button } from 'reactstrap';
 class BattleGroupCreator extends React.Component {
-  doContract = (senderAddress, contractInstance, cardIds) => {
+  doContract = (
+    senderAddress,
+    contractInstance,
+    cardIds,
+    startWatchingTransaction
+  ) => {
     //todo: web3 check
     contractInstance
       .createBattleGroup(senderAddress, cardIds, {
@@ -21,15 +27,20 @@ class BattleGroupCreator extends React.Component {
         console.log('Transaction sent');
         console.dir(txHash);
         waitForTxToBeMined(txHash);
+        startWatchingTransaction(txHash);
       })
       .catch(console.error);
   };
 
   render() {
-    let { cardIds } = this.props;
-    let truncated = cardIds.slice(0, 5);
-    let { ready, contractInstance } = this.props;
+    let {
+      ready,
+      contractInstance,
+      startWatchingTransaction,
+      cardIds
+    } = this.props;
 
+    let truncated = cardIds.slice(0, 5);
     while (truncated.length !== 5) {
       truncated.push(0);
     }
@@ -43,7 +54,8 @@ class BattleGroupCreator extends React.Component {
             this.doContract(
               this.props.user.main_address,
               contractInstance,
-              truncated
+              truncated,
+              startWatchingTransaction
             )
           }
         >
@@ -75,6 +87,7 @@ const mapDispatchToProps = dispatch => {
   return bindActionCreators(
     {
       setCardFilterText,
+      startWatchingTransaction,
       setCardSortOption
     },
     dispatch
