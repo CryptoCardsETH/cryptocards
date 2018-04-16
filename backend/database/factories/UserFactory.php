@@ -1,8 +1,9 @@
 <?php
 
 use App\Helpers\EthereumConverter;
-use Faker\Generator as Faker;
 use App\Models\Card;
+use Faker\Generator as Faker;
+
 /*
 |--------------------------------------------------------------------------
 | Model Factories
@@ -25,7 +26,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 
 $factory->define(Card::class, function (Faker $faker) {
     return [
-        'token_id'   => Card::max('token_id')+1, 
+        'token_id'   => Card::max('token_id') + 1,
         'name'       => $faker->word,
         'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
     ];

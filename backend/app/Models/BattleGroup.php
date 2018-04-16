@@ -8,6 +8,7 @@ class BattleGroup extends Model
 {
     const FIELD_TOKEN_ID = 'token_id';
     protected $guarded = ['id'];
+
     public function group_cards()
     {
         return $this->hasMany(BattleGroupCard::class, 'group_id');

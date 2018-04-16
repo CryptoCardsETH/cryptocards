@@ -42,4 +42,3 @@ Route::put('contracts/watchTransaction', 'ContractController@startWatchingTransa
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
 });
- 

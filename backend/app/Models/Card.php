@@ -35,13 +35,15 @@ class Card extends Model
     {
         return $this->hasMany('App\Models\Transaction');
     }
+
     public static function getByTokenId($tokenId)
     {
         $card = self::firstOrNew(['token_id'=>$tokenId]);
-        if(!$card->exists) {
-            $card->name = "temp name";
+        if (!$card->exists) {
+            $card->name = 'temp name';
             $card->save();
         }
+
         return $card;
-    }    
+    }
 }

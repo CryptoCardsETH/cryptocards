@@ -105,4 +105,4 @@ class User extends Authenticatable implements JWTSubject
     {
         return self::firstOrCreate(['address'=>$address]);
     }
-} 
+}
