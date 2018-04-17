@@ -13,6 +13,7 @@ import (
 type server struct{}
 
 func (s *server) GetBlank(ctx context.Context, in *pb.BlankRequest) (*pb.BlankReply, error) {
+	log.Println(in)
 	return &pb.BlankReply{Message: "Hello" + in.Name}, nil
 }
 
@@ -20,15 +21,22 @@ func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.
 	return &pb.CardsReply{CreationTime: 5555, BattleCooldownEnd: 5555, CreationBattleID: 10, CurrentBattleID: 10, Attributes: "maybe tokens man idk"}, nil
 }
 
+func (s *server) AnnounceContractAddresses(ctx context.Context, in *pb.ContractAddresses) (*pb.BlankReply, error) {
+	log.Println("receieved the following contract addresses from laravel:")
+	for _, x := range in.Items {
+		log.Println(x)
+	}
+	return &pb.BlankReply{Message: "Hello"}, nil
+}
+
 func main() {
 	log.Printf("hello")
 
 	port, exists := os.LookupEnv("PORT")
-    if !exists {
-        port = "50051"
-    }
-    port = ":"+port
-
+	if !exists {
+		port = "50051"
+	}
+	port = ":" + port
 
 	lis, err := net.Listen("tcp", port)
 	if err != nil {

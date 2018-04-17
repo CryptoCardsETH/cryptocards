@@ -3,6 +3,7 @@
 namespace App\Console;
 
 use App\Console\Commands\ProtoTest;
+use App\Console\Commands\AnnounceContractAddresses;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -15,6 +16,7 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ProtoTest::class,
+        AnnounceContractAddresses::class,
     ];
 
     /**
@@ -31,7 +33,7 @@ class Kernel extends ConsoleKernel
     }
 
     /**
-     * Register the commands for the application.
+     * Register  the commands for the application.
      *
      * @return void
      */

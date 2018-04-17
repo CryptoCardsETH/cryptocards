@@ -10,7 +10,9 @@ use App\Models\User;
 use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
-
+use RpcServer\ContractAddresses;
+use RpcServer\ContractAddress;
+use RpcServer\GreeterClient;
 class ContractController extends Controller
 {
     public function contractAddressIngest()
@@ -29,7 +31,33 @@ class ContractController extends Controller
             Contract::updateAddress($contractName, $address, $data['transactionHash']);
         }
 
+        self::announceContractAddressesToProxy();
+
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
+    }
+    /*
+     * Announce contract addresses to the RPC server
+     */
+    public static function announceContractAddressesToProxy() {
+        $addresses = [];
+        foreach(Contract::all()->keyBy(Contract::FIELD_NAME) as $k => $v) {
+            $ca = new ContractAddress();
+            $ca->setName($k);
+            $ca->setAddress($v['address']);
+            array_push($addresses,$ca);
+        }
+
+        $msg = new ContractAddresses();
+        $msg->setItems($addresses);
+
+        $client = new GreeterClient(env('RPC_SERVER_ADDRESS'), [
+            'credentials' => \Grpc\ChannelCredentials::createInsecure(),
+        ]);
+
+
+        list($reply, $status) = $client->AnnounceContractAddresses($msg)->wait();
+        Log::info('announce received:'.$reply->getMessage());
+
     }
 
     public function getContractAddresses()

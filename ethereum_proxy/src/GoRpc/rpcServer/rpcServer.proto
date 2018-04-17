@@ -8,6 +8,8 @@ service Greeter {
 
   rpc GetCardsByOwner(CardsRequest) returns (CardsReply) {}
 
+  rpc AnnounceContractAddresses(ContractAddresses) returns (BlankReply) {}
+
 }
 
 message BlankRequest {
@@ -30,3 +32,11 @@ message CardsReply {
   string attributes = 5;
 }
 
+message ContractAddresses {
+  repeated ContractAddress items = 1;
+}
+
+message ContractAddress {
+  string name = 1;
+  string address = 2;
+}

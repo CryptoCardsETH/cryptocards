@@ -2,6 +2,7 @@ version: '3.2'
 
 # Docker Services breakdown:
 # db - mysql DB, used by backend
+# redis - KV store, used by laravel queues
 # nginx - webserver the backend, uses fpm as a backing
 # fpm - is called by nginx to actually execute the php for the backendd
 # frontend - runs React in dev mode with hot reloading 
@@ -11,6 +12,8 @@ version: '3.2'
 # codegen_tools_proto - ephemeral, generates the golang + php stubs based on RpcServer.proto
 # codegen_tools_abigen - ephemeral, generates the golang stubs based on solidity
 # codegen_tools_abigen_js - ephemeral, generates the js ABI for React to consume based on solidity
+# laravel_queue_worker - supervisord process that runs laravel queues
+# laravel_cron_worker - supervisord process that runs laravel scheduler on cron
 services:
   db:
     image: mysql:5.7
