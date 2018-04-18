@@ -2,12 +2,12 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
-use App\Http\Controllers\ContractController;
-use RpcServer\BattleGroupInfoRequest;
 use App\Helpers\EthereumHelper;
+use App\Http\Controllers\ContractController;
 use App\Models\Contract;
-use Log;
+use Illuminate\Console\Command;
+use RpcServer\BattleGroupInfoRequest;
+
 class IngestBattleGroupsFromBlockchain extends Command
 {
     /**
@@ -41,7 +41,7 @@ class IngestBattleGroupsFromBlockchain extends Command
      */
     public function handle()
     {
-        $contract = Contract::where("name","BattleGroups")->first();
+        $contract = Contract::where('name', 'BattleGroups')->first();
         $ca = $contract->getRpcContractAddressMessage();
 
         $client = EthereumHelper::getRpcClient();
@@ -52,14 +52,12 @@ class IngestBattleGroupsFromBlockchain extends Command
         //ask ethereum_proxy for the BattleGroupInfo, providing it with the BattleGroup contract address.
 
         list($reply, $status) = $client->RequestBattleGroupInfo($msg)->wait();
-        foreach($reply->getItems() as $item) {
+        foreach ($reply->getItems() as $item) {
             $cardIds = [];
-            foreach($item->getCards() as $id) {
+            foreach ($item->getCards() as $id) {
                 array_push($cardIds, $id);
             }
-            ContractController::processNewBattleGroupEvent($item->getOwnerAddress(),$item->getId(),$cardIds);
+            ContractController::processNewBattleGroupEvent($item->getOwnerAddress(), $item->getId(), $cardIds);
         }
-
-        
     }
 }

@@ -2,8 +2,8 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Http\Controllers\ContractController;
+use Illuminate\Console\Command;
 
 class AnnounceContractAddresses extends Command
 {
