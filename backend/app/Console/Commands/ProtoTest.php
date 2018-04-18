@@ -2,9 +2,9 @@
 
 namespace App\Console\Commands;
 
+use App\Helpers\EthereumHelper;
 use Illuminate\Console\Command;
 use RpcServer\BlankRequest;
-use App\Helpers\EthereumHelper;
 
 class ProtoTest extends Command
 {

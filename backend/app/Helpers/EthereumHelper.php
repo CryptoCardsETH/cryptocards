@@ -1,12 +1,15 @@
 <?php
 
 namespace App\Helpers;
+
 use RpcServer\GreeterClient;
-class EthereumHelper 
+
+class EthereumHelper
 {
-    public static function getRpcClient() {
+    public static function getRpcClient()
+    {
         return new GreeterClient(env('RPC_SERVER_ADDRESS'), [
             'credentials' => \Grpc\ChannelCredentials::createInsecure(),
-        ]); 
+        ]);
     }
 }

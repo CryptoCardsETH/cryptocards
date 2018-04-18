@@ -2,16 +2,16 @@
 
 namespace App\Http\Controllers;
 
+use App\Helpers\EthereumHelper;
 use App\Jobs\IngestTransactionFromHash;
 use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
-use RpcServer\ContractAddresses;
-use App\Helpers\EthereumHelper;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Log;
+use RpcServer\ContractAddresses;
 
 class ContractController extends Controller
 {
@@ -35,13 +35,15 @@ class ContractController extends Controller
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
     }
+
     /*
      * Announce contract addresses to the RPC server
      */
-    public static function announceContractAddressesToProxy() {
+    public static function announceContractAddressesToProxy()
+    {
         $addresses = [];
-        foreach(Contract::all() as $c) {
-            array_push($addresses,$c->getRpcContractAddressMessage());
+        foreach (Contract::all() as $c) {
+            array_push($addresses, $c->getRpcContractAddressMessage());
         }
 
         $msg = new ContractAddresses();
@@ -51,7 +53,6 @@ class ContractController extends Controller
 
         list($reply, $status) = $client->AnnounceContractAddresses($msg)->wait();
         Log::info('announce received:'.$reply->getMessage());
-
     }
 
     public function getContractAddresses()
@@ -82,8 +83,8 @@ class ContractController extends Controller
             $card = Card::getByTokenId($c);
             BattleGroupCard::firstOrCreate(['group_id'=>$bg->id, 'card_id'=>$card->id]);
         }
-        if($bg->wasRecentlyCreated) {
-            Log::info("ingested new BattleGroup: user_id",["data"=>$bgData, "cardIds"=>$cards]);
+        if ($bg->wasRecentlyCreated) {
+            Log::info('ingested new BattleGroup: user_id', ['data'=>$bgData, 'cardIds'=>$cards]);
         }
     }
 }
