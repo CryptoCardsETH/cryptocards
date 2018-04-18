@@ -1,6 +1,5 @@
 import React from 'react';
 import Card, { CARD_TYPE_COLLECTION } from './Card';
-import { Button } from 'reactstrap';
 import BattleCreator from './BattleCreator';
 const BattleGroup = ({ group }) => {
   let { user, group_cards } = group;
