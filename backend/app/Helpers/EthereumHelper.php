@@ -28,16 +28,16 @@ class EthereumHelper
      */
     public static function didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)
     {
+        if(env('ENABLE_ETHEREUM_PROXY')!="true") {
+            //hack so that this doesn't break other people who aren't running in docker yet
+            return true;
+        }
         $client = self::getRpcClient();
-
-
 
         $msg = new ECRecoverRequest();
         $msg->setAddress($signerAddress);
         $msg->setSigned($signedMessage);
         $msg->setPlaintext($plainTextMessage);
-
-        //ask ethereum_proxy for the BattleGroupInfo, providing it with the BattleGroup contract address.
 
         list($reply, $status) = $client->PerformECRecover($msg)->wait();
 
