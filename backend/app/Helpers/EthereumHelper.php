@@ -2,10 +2,8 @@
 
 namespace App\Helpers;
 
-use RpcServer\GreeterClient;
 use RpcServer\ECRecoverRequest;
-use RpcServer\ECRecoverReply;
-use Log;
+use RpcServer\GreeterClient;
 
 class EthereumHelper
 {
@@ -15,6 +13,7 @@ class EthereumHelper
             'credentials' => \Grpc\ChannelCredentials::createInsecure(),
         ]);
     }
+
     /**
      * TODO:
      * This needs to verify that the message was properly signed.
@@ -28,7 +27,7 @@ class EthereumHelper
      */
     public static function didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)
     {
-        if(env('ENABLE_ETHEREUM_PROXY')!="true") {
+        if (env('ENABLE_ETHEREUM_PROXY') != 'true') {
             //hack so that this doesn't break other people who aren't running in docker yet
             return true;
         }
@@ -43,7 +42,5 @@ class EthereumHelper
 
         //to dat ECrecover
         return $reply;
-
     }
-    
 }

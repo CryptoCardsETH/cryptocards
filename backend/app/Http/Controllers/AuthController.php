@@ -2,15 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\User;
 use App\Helpers\EthereumHelper;
+use App\Models\User;
+
 class AuthController extends Controller
 {
     public function __construct()
     {
         $this->middleware('jwt.auth', ['except' => ['auth']]);
     }
-
 
     public function auth()
     {
