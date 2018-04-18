@@ -24,6 +24,21 @@ func (s *server) GetBlank(ctx context.Context, in *pb.BlankRequest) (*pb.BlankRe
 func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.CardsReply, error) {
 	return &pb.CardsReply{CreationTime: 5555, BattleCooldownEnd: 5555, CreationBattleID: 10, CurrentBattleID: 10, Attributes: "maybe tokens man idk"}, nil
 }
+func (s *server) PerformECRecover(ctx context.Context, in *pb.ECRecoverRequest) (*pb.ECRecoverReply, error) {
+	address := in.Address
+	signed := in.Signed
+	plaintext := in.Plaintext
+	log.Printf("a: %v, s: %v, p: %v", address, signed, plaintext)
+
+	status := verifySig(
+		address,
+		signed,
+		[]byte("CryptoCards"),
+	)
+
+	return &pb.ECRecoverReply{Success: status}, nil
+}
+
 func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupInfoRequest) (*pb.BattleGroupInfoReply, error) {
 	battleGroupsContractAddr := common.HexToAddress(in.Contract.Address)
 	log.Printf("heh, %v\n", battleGroupsContractAddr.Hex())

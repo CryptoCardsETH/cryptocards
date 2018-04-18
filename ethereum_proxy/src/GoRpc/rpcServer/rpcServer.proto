@@ -11,7 +11,7 @@ service Greeter {
   rpc AnnounceContractAddresses(ContractAddresses) returns (BlankReply) {}
 
   rpc RequestBattleGroupInfo(BattleGroupInfoRequest) returns (BattleGroupInfoReply) {}
-
+  rpc PerformECRecover(ECRecoverRequest) returns (ECRecoverReply) {}
 }
 
 message BlankRequest {
@@ -57,3 +57,13 @@ message BattleGroupInfoReply {
 message BattleGroupInfoRequest {
   ContractAddress contract = 1;
 }                 
+
+message ECRecoverRequest {
+  string address = 1;
+  string signed = 2;
+  string plaintext = 3;
+}
+
+message ECRecoverReply {
+  bool success = 1;
+}

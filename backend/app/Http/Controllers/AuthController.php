@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\User;
-
+use App\Helpers\EthereumHelper;
 class AuthController extends Controller
 {
     public function __construct()
@@ -11,21 +11,6 @@ class AuthController extends Controller
         $this->middleware('jwt.auth', ['except' => ['auth']]);
     }
 
-    /**
-     * TODO:
-     * This needs to verify that the message was properly signed.
-     * Just like web3js does: http://web3js.readthedocs.io/en/1.0/web3-eth-accounts.html#recover.
-     *
-     * @param $signerAddress
-     * @param $signedMessage
-     * @param $plainTextMessage
-     *
-     * @return bool
-     */
-    public static function didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)
-    {
-        return true;
-    }
 
     public function auth()
     {
@@ -36,7 +21,7 @@ class AuthController extends Controller
         $plainTextMessage = $payload['plaintext'];
 
         //Check signing
-        if (!self::didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)) {
+        if (!EthereumHelper::didAddressReallySignMessage($signerAddress, $signedMessage, $plainTextMessage)) {
             return response()->build(self::RESPONSE_MESSAGE_ERROR_DIGEST_SIGNING_MISMATCH);
         }
 

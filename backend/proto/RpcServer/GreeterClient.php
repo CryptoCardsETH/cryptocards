@@ -68,4 +68,17 @@ class GreeterClient extends \Grpc\BaseStub {
         $metadata, $options);
     }
 
+    /**
+     * @param \RpcServer\ECRecoverRequest $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     */
+    public function PerformECRecover(\RpcServer\ECRecoverRequest $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/rpcServer.Greeter/PerformECRecover',
+        $argument,
+        ['\RpcServer\ECRecoverReply', 'decode'],
+        $metadata, $options);
+    }
+
 }
