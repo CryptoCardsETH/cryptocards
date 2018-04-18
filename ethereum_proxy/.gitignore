@@ -3,4 +3,7 @@
 /pkg
 /src/github.com
 /src/golang.org
-
+/src/cloud.google.com
+/src/go.opencensus.io
+/src/gopkg.in
+/src/google.golang.org
