@@ -4,6 +4,7 @@ namespace App\Console;
 
 use App\Console\Commands\ProtoTest;
 use App\Console\Commands\AnnounceContractAddresses;
+use App\Console\Commands\IngestBattleGroupsFromBlockchain;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -17,6 +18,7 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         ProtoTest::class,
         AnnounceContractAddresses::class,
+        IngestBattleGroupsFromBlockchain::class,
     ];
 
     /**
@@ -30,6 +32,7 @@ class Kernel extends ConsoleKernel
     {
         // $schedule->command('inspire')
         //          ->hourly();
+        $schedule->command(IngestBattleGroupsFromBlockchain::class)->everyMinute();
     }
 
     /**

@@ -1,7 +1,11 @@
 package main
 
 import (
+	conts "GoRpc/contracts"
 	pb "GoRpc/rpcServer"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
@@ -20,13 +24,71 @@ func (s *server) GetBlank(ctx context.Context, in *pb.BlankRequest) (*pb.BlankRe
 func (s *server) GetCardsByOwner(ctx context.Context, in *pb.CardsRequest) (*pb.CardsReply, error) {
 	return &pb.CardsReply{CreationTime: 5555, BattleCooldownEnd: 5555, CreationBattleID: 10, CurrentBattleID: 10, Attributes: "maybe tokens man idk"}, nil
 }
+func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupInfoRequest) (*pb.BattleGroupInfoReply, error) {
+	battleGroupsContractAddr := common.HexToAddress(in.Contract.Address)
+	log.Printf("heh, %v\n", battleGroupsContractAddr.Hex())
 
+	client := getEthClientConnection()
+	battleGroupsContract, err := conts.NewBattleGroups(battleGroupsContractAddr, client)
+
+	opt := &bind.FilterOpts{}
+	it, err := battleGroupsContract.BattleGroupsFilterer.FilterNewBattleGroup(opt)
+	if err != nil {
+		log.Fatalf("error filtering events: %v", err)
+	}
+
+	var groups []*pb.BattleGroupInfo
+
+	notEmpty := true
+	for notEmpty {
+		notEmpty = it.Next()
+		if notEmpty {
+			log.Println("event log:", it)
+			newBattleGroupEvent := it.Event
+			log.Printf("owner: %v\n", newBattleGroupEvent.Owner.Hex())
+			log.Printf("BG id: %v\n", newBattleGroupEvent.BattleGroupID)
+			log.Printf("Cards: %v\n", newBattleGroupEvent.Cards)
+
+			cardsField := make([]uint64, len(newBattleGroupEvent.Cards))
+			for i, card := range newBattleGroupEvent.Cards {
+				cardsField[i] = card.Uint64()
+			}
+
+			groups = append(
+				groups,
+				&pb.BattleGroupInfo{
+					OwnerAddress: newBattleGroupEvent.Owner.Hex(),
+					Id:           newBattleGroupEvent.BattleGroupID.Uint64(),
+					Cards:        cardsField,
+				},
+			)
+		}
+	}
+
+	return &pb.BattleGroupInfoReply{Items: groups}, nil
+
+}
 func (s *server) AnnounceContractAddresses(ctx context.Context, in *pb.ContractAddresses) (*pb.BlankReply, error) {
 	log.Println("receieved the following contract addresses from laravel:")
 	for _, x := range in.Items {
-		log.Println(x)
+		log.Printf("\t %v \n", x)
 	}
+	//TODO: save in.Items somewhere in memory?
+
 	return &pb.BlankReply{Message: "Hello"}, nil
+}
+
+func getEthClientConnection() *ethclient.Client {
+	RPCHOST, _ := os.LookupEnv("RPC_HOST")
+	RPCPORT, _ := os.LookupEnv("RPC_PORT")
+
+	client, err := ethclient.Dial("http://" + RPCHOST + ":" + RPCPORT)
+	if err != nil {
+		log.Fatalf("Could not dial RPC server: %v", err)
+		panic(err)
+	}
+	return client
+
 }
 
 func main() {

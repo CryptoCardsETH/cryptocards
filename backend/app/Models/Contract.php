@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use RpcServer\ContractAddress;
 use Illuminate\Database\Eloquent\Model;
 
 class Contract extends Model
@@ -17,5 +17,15 @@ class Contract extends Model
         $c[self::FIELD_ADDRESS] = $address;
         $c[self::FIELD_TRANSACTION_HASH] = $transactionHash;
         $c->save();
+    }
+    /*
+     * Package the Model isntance into an Rpc Message
+     */
+    public function getRpcContractAddressMessage()
+    {
+        $ca = new ContractAddress();
+        $ca->setName($this->name);
+        $ca->setAddress($this->address);
+        return $ca;
     }
 }

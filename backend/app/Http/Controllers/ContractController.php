@@ -7,8 +7,7 @@ use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
 use RpcServer\ContractAddresses;
-use RpcServer\ContractAddress;
-use RpcServer\GreeterClient;
+use App\Helpers\EthereumHelper;
 use App\Models\Contract;
 use App\Models\User;
 use Illuminate\Support\Facades\Request;
@@ -41,20 +40,14 @@ class ContractController extends Controller
      */
     public static function announceContractAddressesToProxy() {
         $addresses = [];
-        foreach(Contract::all()->keyBy(Contract::FIELD_NAME) as $k => $v) {
-            $ca = new ContractAddress();
-            $ca->setName($k);
-            $ca->setAddress($v['address']);
-            array_push($addresses,$ca);
+        foreach(Contract::all() as $c) {
+            array_push($addresses,$c->getRpcContractAddressMessage());
         }
 
         $msg = new ContractAddresses();
         $msg->setItems($addresses);
 
-        $client = new GreeterClient(env('RPC_SERVER_ADDRESS'), [
-            'credentials' => \Grpc\ChannelCredentials::createInsecure(),
-        ]);
-
+        $client = EthereumHelper::getRpcClient();
 
         list($reply, $status) = $client->AnnounceContractAddresses($msg)->wait();
         Log::info('announce received:'.$reply->getMessage());
@@ -77,13 +70,20 @@ class ContractController extends Controller
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $txHash);
     }
 
+    /*
+     * Save the results of a BattleGroup contract Event into the DB.
+     */
     public static function processNewBattleGroupEvent($ownerAddress, $battleGroupId, $cards)
     {
         $user = User::getByAddress($ownerAddress);
-        $bg = BattleGroup::create(['user_id'=>$user->id, 'token_id'=> $battleGroupId]);
+        $bgData = ['user_id'=>$user->id, 'token_id'=> $battleGroupId];
+        $bg = BattleGroup::firstOrCreate($bgData);
         foreach ($cards as $c) {
             $card = Card::getByTokenId($c);
-            BattleGroupCard::create(['group_id'=>$bg->id, 'card_id'=>$card->id]);
+            BattleGroupCard::firstOrCreate(['group_id'=>$bg->id, 'card_id'=>$card->id]);
+        }
+        if($bg->wasRecentlyCreated) {
+            Log::info("ingested new BattleGroup: user_id",["data"=>$bgData, "cardIds"=>$cards]);
         }
     }
 }

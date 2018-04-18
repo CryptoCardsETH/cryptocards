@@ -4,7 +4,7 @@ namespace App\Console\Commands;
 
 use Illuminate\Console\Command;
 use RpcServer\BlankRequest;
-use RpcServer\GreeterClient;
+use App\Helpers\EthereumHelper;
 
 class ProtoTest extends Command
 {
@@ -42,10 +42,8 @@ class ProtoTest extends Command
         $msg = new BlankRequest();
         $msg->setName('test');
         $this->info('sending:'.$msg->getName());
+        $client = EthereumHelper::getRpcClient();
 
-        $client = new GreeterClient(env('RPC_SERVER_ADDRESS'), [
-            'credentials' => \Grpc\ChannelCredentials::createInsecure(),
-        ]);
         list($reply, $status) = $client->GetBlank($msg)->wait();
         $this->info('received:'.$reply->getMessage());
     }
