@@ -52,9 +52,11 @@ class Card extends Component {
           {type === CARD_TYPE_COLLECTION ? (
             <div>
               <p className="card-text">
-                <Button onClick={() => toggleCardSelection(card.id)}>
-                  {isSelected ? 'deselect' : 'select'}
-                </Button>
+                {toggleCardSelection !== null ? (
+                  <Button onClick={() => toggleCardSelection(card.id)}>
+                    {isSelected ? 'deselect' : 'select'}
+                  </Button>
+                ) : null}
                 <br />
                 owner: {card.user ? card.user.nickname : 'n/a'}
               </p>
@@ -66,6 +68,9 @@ class Card extends Component {
     );
   }
 }
+Card.defaultProps = {
+  toggleCardSelection: null
+};
 
 export const CARD_TYPE_MARKETPLACE = 'marketplace';
 export const CARD_TYPE_COLLECTION = 'collection';
