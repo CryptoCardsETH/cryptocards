@@ -21,12 +21,6 @@ class HomePage extends Component {
             <img src="http://files.harrischristiansen.com/0L1R2p3G2s05/cryptocards_logo.png" />
           </div>
         </div>
-        <div className="row secondary">
-          <div className="col-md-12">
-            <h1 className="text-center">Ownership Backed By the Blockchain</h1>
-            <p className="text-center">Lorem Ipsum</p>
-          </div>
-        </div>
       </div>
     );
   }

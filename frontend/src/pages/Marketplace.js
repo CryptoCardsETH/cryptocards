@@ -11,8 +11,10 @@ class MarketplacePage extends Component {
   }
   render() {
     return (
-      <div className="marketplace">
-        <h1>Marketplace</h1>
+      <div className="container">
+        <br />
+        <h3>Marketplace</h3>
+        <br />
         <CardGrid
           cards={this.props.listing.all_listings}
           type={CARD_TYPE_MARKETPLACE}

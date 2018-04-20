@@ -65,7 +65,7 @@ class Web3Login extends React.Component {
     }
   };
   render() {
-    return <Button onClick={this.doLogin}>Login (aka. sign message)</Button>;
+    return <Button onClick={this.doLogin}>Login</Button>;
   }
 }
 

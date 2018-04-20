@@ -44,12 +44,14 @@ class CardFilterSort extends React.Component {
     let { filterSortKey, sortTypes } = this.props;
     let filter = this.props.card.filters[filterSortKey];
     return (
-      <div>
+      <div className="row card-filter-sort">
         <input
           value={(filter && filter.text) || ''}
+          placeholder="Search"
           onChange={e => {
             this.props.setCardFilterText(filterSortKey, e.target.value);
           }}
+          className="col-md-5 search-box"
         />
         <Select
           name="form-field-name"
@@ -58,6 +60,7 @@ class CardFilterSort extends React.Component {
             this.props.setCardSortOption(filterSortKey, e.value);
           }}
           options={sortTypes}
+          className="col-md-4"
         />
       </div>
     );

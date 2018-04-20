@@ -1,24 +1,110 @@
-
-$black: #1A1A1A;
-$gray: #818283; //848484;
-$green: #659486;
-$blue: #221C84;
-$red: #E51B11;
-$gold: #F8C117;
 $white: #fff;
 $off-white: #EFF5F5;
-
-$color1: #1de099;
-$color2: #1dc8cd;
+$green: #1de099;
+$blue: #1dc8cd;
 
 body > #root > div > main {
   height: 100vh;
 }
 
+body {
+  padding: 3.5rem 0 0;
+  margin: 0;
+  font-family: sans-serif;
+}
+
+.divider {
+  display: block;
+  width: 60px;
+  height: 3px;
+  background: $blue;
+  background: linear-gradient(0deg, $blue 0%, $green 100%);
+  margin: 0 auto;
+  margin-bottom: 20px;
+}
+
+.btn-blue {
+  color: $white;
+  border: 2px solid $white;
+  border-radius: 20px;
+  padding: 6px 30px;
+  background-color: $blue;
+  font-size: 16px;
+  letter-spacing: 1px;
+  font-weight: 400;
+}
+
+.btn-blue:hover {
+  background-color: $green;
+  cursor: pointer;
+}
+
+/*-------------------------------------------------------------------------------------------------
+ * Component Styles
+ *-------------------------------------------------------------------------------------------------*/
+ .card {
+  padding: 0;
+  .overlay-container {
+    position: relative;
+  }
+  .overlay-container:hover .overlay {
+    opacity: 1;
+  }
+  .overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    top: 0;
+    transition: 0.5s ease;
+    font-size: 20px;
+  }
+  .overlay-background {
+    background: #000000;
+    background: rgba(0, 0, 0, 0.5);
+    opacity: 0;
+    text-align: center;
+    padding: 20px;
+  }
+  .overlay-price {
+    text-align: right;
+    font-weight: bold;
+  }
+  .details {
+    color: white;
+    position: relative;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+  .details:hover {
+    color: #0000ff;
+  }
+}
+
+.card-filter-sort {
+  .search-box {
+    margin-left: 8px;
+    outline: 0;
+    border-radius: 25px;
+    border: 1px solid #ccc;
+  }
+  .search-box:focus {
+    border-color: $blue;
+  }
+  .Select-control {
+    border-radius: 25px;
+  }
+}
+
+.ether-price {
+  .price-icon {
+    margin: 0 5px;
+  }
+}
+
 .navigation {
   .navbar {
-    //background-color: $black;
-     background: linear-gradient(45deg, $color1, $color2);
+     background: linear-gradient(45deg, $green, $blue);
   }
   .navbar-brand {
     color: $white;
@@ -28,9 +114,13 @@ body > #root > div > main {
   }
   .active {
     background-color: $white;
-    color: $color2;
+    color: $blue;
   }
 }
+
+/*-------------------------------------------------------------------------------------------------
+ * Page Styles
+ *-------------------------------------------------------------------------------------------------*/
 
 $intro-height: 100%;
 .home {
@@ -43,7 +133,7 @@ $intro-height: 100%;
     align-items: center;
     padding-top: 100px;
     min-height: $intro-height;
-    background: linear-gradient(45deg, $color1, $color2);
+    background: linear-gradient(45deg, $green, $blue);
   }
   .intro-text {
     height: 50%;
@@ -58,68 +148,6 @@ $intro-height: 100%;
       color: $white;
     }
   }
-  .secondary {
-    background-color: $off-white;
-    min-height: 400px;
-  }
-}
-
-body {
-  padding: 3.5rem 0 0;
-  margin: 0;
-  font-family: sans-serif;
-}
-
-.card {
-  padding: 0;
-}
-
-.overlay-container {
-  position: relative;
-}
-
-.overlay-container:hover .overlay {
-  opacity: 1;
-}
-
-.overlay {
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  top: 0;
-  transition: 0.5s ease;
-  font-size: 20px;
-}
-
-.overlay-background {
-  background: #000000;
-  background: rgba(0, 0, 0, 0.5);
-  opacity: 0;
-  text-align: center;
-  padding: 20px;
-}
-
-.overlay-price {
-  text-align: right;
-  font-weight: bold;
-}
-
-.details {
-  color: white;
-  position: relative;
-  top: 50%;
-  transform: translateY(-50%);
-}
-
-.details:hover {
-  color: #0000ff;
-}
-
-.ether-price {
-  .price-icon {
-    margin: 0 5px;
-  }
 }
 
 .transaction-report {
@@ -129,4 +157,9 @@ body {
   .chart {
     margin-top: 30px;
   }
+}
+
+.faq {
+  background-color: $off-white;
+  min-height: 100%;
 }
