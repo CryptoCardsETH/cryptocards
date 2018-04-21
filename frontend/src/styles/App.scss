@@ -125,9 +125,6 @@ body {
 $intro-height: 100%;
 .home {
   height: 100vh;
-  .login {
-    margin-top: 20px;
-  }
   .intro {
     text-align: center;
     align-items: center;
@@ -137,6 +134,7 @@ $intro-height: 100%;
   }
   .intro-text {
     height: 50%;
+    margin-bottom: 30px;
     h1 {
       font-size: 48px;
       line-height: 56px;

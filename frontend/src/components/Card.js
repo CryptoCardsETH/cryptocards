@@ -7,7 +7,6 @@ import EtherPrice from './EtherPrice.js';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
 import {
-  Button,
   Card as BootstrapCard,
   CardBody,
   CardTitle,

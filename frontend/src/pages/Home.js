@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import '../styles/App.scss';
-import { Jumbotron } from 'reactstrap';
 import { APP_NAME } from '../config';
 import Web3Login from '../components/Web3Login';
 import 'animate.css';
@@ -18,7 +17,10 @@ class HomePage extends Component {
             className="col-md-12 intro-image animated fadeInUp"
             style={{ animationDelay: '0.5s' }}
           >
-            <img src="http://files.harrischristiansen.com/0L1R2p3G2s05/cryptocards_logo.png" />
+            <img
+              src="http://files.harrischristiansen.com/0L1R2p3G2s05/cryptocards_logo.png"
+              alt="crypto cards"
+            />
           </div>
         </div>
       </div>
