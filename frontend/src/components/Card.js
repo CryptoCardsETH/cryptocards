@@ -73,6 +73,9 @@ class Card extends Component {
     );
   }
 }
+Card.defaultProps = {
+  toggleCardSelection: null
+};
 
 export const CARD_TYPE_MARKETPLACE = 'marketplace';
 export const CARD_TYPE_COLLECTION = 'collection';

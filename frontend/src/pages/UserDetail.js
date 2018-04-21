@@ -1,8 +1,5 @@
 import React, { Component } from 'react';
 import CardGrid from '../components/CardGrid';
-import FontAwesomeIcon from '@fortawesome/react-fontawesome';
-import faUserPlus from '@fortawesome/fontawesome-free-solid/faUserPlus';
-import faCheck from '@fortawesome/fontawesome-free-solid/faCheck';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMe, follow, fetchUserDetail } from '../actions/users';
@@ -12,13 +9,13 @@ import { CARD_TYPE_COLLECTION } from '../components/Card';
 import BattleGroup from '../components/BattleGroup';
 import BattleTable from '../components/BattleTable';
 import { Redirect } from 'react-router';
-import { CopyToClipboard } from 'react-copy-to-clipboard';
 import CardFilterSort, {
   FILTER_SORT_PRESET_BASE,
   FILTER_SORT_PRESET_FULL
 } from '../components/CardFilterSort';
 import BattleGroupCreator from '../components/BattleGroupCreator';
-import { Button } from 'reactstrap';
+import UserDetailFollowing from '../components/UserDetailFollowing';
+import CopyToClipboardButton from '../components/CopyToClipboardButton';
 class UserDetail extends Component {
   constructor(props) {
     super(props);
@@ -41,9 +38,10 @@ class UserDetail extends Component {
     // show loading message if user data hasn't loaded yet.
     if (!userDetail) return <h1>Loading</h1>;
 
-    let userCardsWithSelection = userDetail.cards.map(x => {
-      return { ...x, isSelected: card.selectedCardIDs.includes(x.id) };
-    });
+    let userCardsWithSelection = userDetail.cards.map(x => ({
+      ...x,
+      isSelected: card.selectedCardIDs.includes(x.id)
+    }));
 
     let userId = userDetail.user.id;
     let isViewingMyProfile = user.authenticated && user.me.id === userId;
@@ -62,23 +60,14 @@ class UserDetail extends Component {
         <hr />
         {!isViewingMyProfile ? (
           <div className="float-right">
-            {!userDetail.isFollowing ? (
-              <button
-                className="btn btn-success"
-                onClick={() => {
-                  this.props.follow(userId);
-                }}
-              >
-                <FontAwesomeIcon icon={faUserPlus} /> Follow
-              </button>
-            ) : (
-              <div className="btn bg-primary text-white">
-                <FontAwesomeIcon icon={faCheck} /> Following
-              </div>
-            )}{' '}
-            <CopyToClipboard text={buildProfileURL(userDetail.user, true)}>
-              <Button color="primary">copy profile URL</Button>
-            </CopyToClipboard>
+            <UserDetailFollowing
+              follow={() => this.props.follow(userId)}
+              isFollowing={userDetail.isFollowing}
+            />
+            <CopyToClipboardButton
+              copyText={buildProfileURL(userDetail.user, true)}
+              buttonText="Copy Profile URL"
+            />
           </div>
         ) : (
           <div>
