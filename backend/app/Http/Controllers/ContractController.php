@@ -12,6 +12,8 @@ use App\Models\User;
 use Illuminate\Support\Facades\Request;
 use Log;
 use RpcServer\ContractAddresses;
+use App\Notifications\BattleGroupCreationNotification;
+use Notification;
 
 class ContractController extends Controller
 {
@@ -86,5 +88,7 @@ class ContractController extends Controller
         if ($bg->wasRecentlyCreated) {
             Log::info('ingested new BattleGroup: user_id', ['data'=>$bgData, 'cardIds'=>$cards]);
         }
+
+        Notification::send($user, new BattleGroupCreationNotification($bg->fresh()));
     }
 }
