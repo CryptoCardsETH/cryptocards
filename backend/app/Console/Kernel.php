@@ -2,7 +2,6 @@
 
 namespace App\Console;
 
-use App\Console\Commands\AnnounceContractAddresses;
 use App\Console\Commands\IngestBattleGroupsFromBlockchain;
 use App\Console\Commands\ProtoTest;
 use Illuminate\Console\Scheduling\Schedule;
@@ -17,7 +16,6 @@ class Kernel extends ConsoleKernel
      */
     protected $commands = [
         ProtoTest::class,
-        AnnounceContractAddresses::class,
         IngestBattleGroupsFromBlockchain::class,
     ];
 
