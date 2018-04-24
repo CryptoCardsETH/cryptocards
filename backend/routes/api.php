@@ -39,7 +39,6 @@ Route::get('/stats/transactionReport', 'StatsController@getTransactionReport');
 
 Route::get('/contracts', 'ContractController@getContractAddresses');
 Route::put('/contracts/ingest', 'ContractController@contractAddressIngest');
-Route::put('contracts/watchTransaction', 'ContractController@startWatchingTransaction');
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
 });

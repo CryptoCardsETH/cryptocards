@@ -12,13 +12,3 @@ const receiveContractAddresses = contracts => ({
   type: RECEIVE_CONTRACT_ADDRESSES,
   contracts
 });
-
-export const startWatchingTransaction = txHash => dispatch =>
-  apiFetch('contracts/watchTransaction', {
-    method: 'PUT',
-    body: JSON.stringify({ txHash })
-  })
-    .then(response => response.json())
-    .then(json => {
-      console.log(json.data);
-    });

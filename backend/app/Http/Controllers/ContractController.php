@@ -3,7 +3,6 @@
 namespace App\Http\Controllers;
 
 use App\Helpers\EthereumHelper;
-use App\Jobs\IngestTransactionFromHash;
 use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
@@ -42,15 +41,6 @@ class ContractController extends Controller
         $c = Contract::all()->keyBy(Contract::FIELD_NAME);
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $c);
-    }
-
-    public function startWatchingTransaction()
-    {
-        $data = json_decode(Request::getContent(), true);
-        $txHash = $data['txHash'];
-        IngestTransactionFromHash::dispatch($txHash);
-
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $txHash);
     }
 
     /*
