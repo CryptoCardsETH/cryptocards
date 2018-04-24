@@ -20,6 +20,7 @@ class Nav extends React.Component {
     });
   }
   render() {
+    let { authenticated } = this.props.user;
     let isAdmin =
       this.props.user.authenticated &&
       this.props.user.me &&
@@ -32,10 +33,10 @@ class Nav extends React.Component {
             <ul className="navbar-nav mr-auto">
               <NavbarItem to="/" text="Home" />
               <NavbarItem to="/marketplace" text="Marketplace" />
-              {this.props.user.authenticated ? (
+              {authenticated ? (
                 <NavbarItem to="/account" text="Account" />
               ) : null}
-              {this.props.user.authenticated ? (
+              {authenticated ? (
                 <NavbarItem
                   to={'/user/' + (this.props.user.me && this.props.user.me.id)}
                   text="My Collection"
@@ -45,8 +46,11 @@ class Nav extends React.Component {
               <NavbarItem to="/cards" text="All Cards" />
               <NavbarItem to="/debug" text="Debug" />
               <NavbarItem to="/faq" text="FAQ" />
+              {authenticated ? (
+                <NavbarItem to="/notifications" text="Notifications" />
+              ) : null}
               {isAdmin ? <NavbarItem to="/admin" text="Admin" /> : null}
-              {this.props.user.authenticated ? (
+              {authenticated ? (
                 <li className="nav-item">
                   <div onClick={() => this.props.logout()} className="nav-link">
                     Logout

@@ -17,6 +17,7 @@ import LoginPage from './pages/Login';
 import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
 import TransactionPage from './pages/AllTransactions';
+import Notifications from './pages/Notifications';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
@@ -95,7 +96,7 @@ const App = () => (
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/account" component={AccountPage} />
           <UserRoute path="/transactions" component={TransactionPage} />
-
+          <UserRoute path="/notifications" component={Notifications} />
           {/*Routes that only admins can access*/}
           <AdminRoute path="/admin" component={AdminPage} />
           <AdminRoute

@@ -130,6 +130,14 @@ class ProfileController extends Controller
     }
 
     /**
+     * Gets all notifications for a user.
+     */
+    public function getMyNotifications()
+    {
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, auth()->user()->notifications);
+    }
+
+    /**
      * Gets all the users, with their cards.
      *
      * @return mixed users
