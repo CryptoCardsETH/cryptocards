@@ -83,15 +83,6 @@ func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupI
 	return &pb.BattleGroupInfoReply{Items: groups}, nil
 
 }
-func (s *server) AnnounceContractAddresses(ctx context.Context, in *pb.ContractAddresses) (*pb.BlankReply, error) {
-	log.Println("receieved the following contract addresses from laravel:")
-	for _, x := range in.Items {
-		log.Printf("\t %v \n", x)
-	}
-	//TODO: save in.Items somewhere in memory?
-
-	return &pb.BlankReply{Message: "Hello"}, nil
-}
 
 func getEthClientConnection() *ethclient.Client {
 	RPCHOST, _ := os.LookupEnv("RPC_HOST")

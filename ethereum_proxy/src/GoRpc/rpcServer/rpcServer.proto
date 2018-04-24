@@ -8,8 +8,6 @@ service Greeter {
 
   rpc GetCardsByOwner(CardsRequest) returns (CardsReply) {}
 
-  rpc AnnounceContractAddresses(ContractAddresses) returns (BlankReply) {}
-
   rpc RequestBattleGroupInfo(BattleGroupInfoRequest) returns (BattleGroupInfoReply) {}
   rpc PerformECRecover(ECRecoverRequest) returns (ECRecoverReply) {}
 }

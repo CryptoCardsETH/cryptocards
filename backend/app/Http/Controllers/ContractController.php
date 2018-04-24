@@ -25,6 +25,7 @@ class ContractController extends Controller
         }
 
         $data = json_decode(Request::getContent(), true);
+        Log::info("ingested contract addresses");
         Log::info($data);
 
         foreach ($data as $contractName => $data) {
@@ -33,28 +34,7 @@ class ContractController extends Controller
             Contract::updateAddress($contractName, $address, $data['transactionHash']);
         }
 
-        self::announceContractAddressesToProxy();
-
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
-    }
-
-    /*
-     * Announce contract addresses to the RPC server
-     */
-    public static function announceContractAddressesToProxy()
-    {
-        $addresses = [];
-        foreach (Contract::all() as $c) {
-            array_push($addresses, $c->getRpcContractAddressMessage());
-        }
-
-        $msg = new ContractAddresses();
-        $msg->setItems($addresses);
-
-        $client = EthereumHelper::getRpcClient();
-
-        list($reply, $status) = $client->AnnounceContractAddresses($msg)->wait();
-        Log::info('announce received:'.$reply->getMessage());
     }
 
     public function getContractAddresses()

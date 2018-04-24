@@ -43,19 +43,6 @@ class GreeterClient extends \Grpc\BaseStub {
     }
 
     /**
-     * @param \RpcServer\ContractAddresses $argument input argument
-     * @param array $metadata metadata
-     * @param array $options call options
-     */
-    public function AnnounceContractAddresses(\RpcServer\ContractAddresses $argument,
-      $metadata = [], $options = []) {
-        return $this->_simpleRequest('/rpcServer.Greeter/AnnounceContractAddresses',
-        $argument,
-        ['\RpcServer\BlankReply', 'decode'],
-        $metadata, $options);
-    }
-
-    /**
      * @param \RpcServer\BattleGroupInfoRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options

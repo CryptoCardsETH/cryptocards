@@ -19,9 +19,6 @@ case "$1" in
     backend-freshdb)
         docker-compose exec fpm php artisan migrate:refresh --seed
         ;;
-    contract-announce)
-        docker-compose exec fpm php artisan contract:announce
-        ;;
     generate)
         docker-compose up codegen_tools_abigen
         docker-compose up codegen_tools_abigen_js
