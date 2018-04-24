@@ -7,7 +7,7 @@ class HomePage extends Component {
   render() {
     return (
       <div className="container-fluid home">
-        <div className="row intro">
+        <div className="row intro gradient">
           <div className="col-md-12 intro-text">
             <h1> Welcome to {APP_NAME} </h1>
             <p>Collect, Trade, Battle</p>

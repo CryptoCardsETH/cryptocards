@@ -26,7 +26,7 @@ class Nav extends React.Component {
       this.props.user.me.admin;
     return (
       <div className="navigation">
-        <nav className="navbar navbar-expand-md fixed-top">
+        <nav className="navbar navbar-expand-md fixed-top gradient">
           <div className="navbar-brand">{APP_NAME}</div>
           <div className="collapse navbar-collapse" id="navbarCollapse">
             <ul className="navbar-nav ml-auto">

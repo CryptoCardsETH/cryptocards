@@ -77,7 +77,7 @@ const App = () => (
       <Web3Initialization />
       <ToastContainer />
       <Nav />
-      <main role="main" className="" style={{}}>
+      <main role="main">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/faq" component={FAQ} />

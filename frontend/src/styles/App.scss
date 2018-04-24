@@ -13,6 +13,10 @@ body {
   font-family: sans-serif;
 }
 
+.gradient {
+  background: linear-gradient(90deg, $green, $blue);
+}
+
 .divider {
   display: block;
   width: 60px;
@@ -103,9 +107,6 @@ body {
 }
 
 .navigation {
-  .navbar {
-     background: linear-gradient(45deg, $green, $blue);
-  }
   .navbar-brand {
     color: $white;
   }
@@ -130,7 +131,6 @@ $intro-height: 100%;
     align-items: center;
     padding-top: 100px;
     min-height: $intro-height;
-    background: linear-gradient(45deg, $green, $blue);
   }
   .intro-text {
     height: 50%;
