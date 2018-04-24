@@ -9,11 +9,11 @@ use App\Models\BattleGroupCard;
 use App\Models\Card;
 use App\Models\Contract;
 use App\Models\User;
+use App\Notifications\BattleGroupCreationNotification;
 use Illuminate\Support\Facades\Request;
 use Log;
-use RpcServer\ContractAddresses;
-use App\Notifications\BattleGroupCreationNotification;
 use Notification;
+use RpcServer\ContractAddresses;
 
 class ContractController extends Controller
 {
