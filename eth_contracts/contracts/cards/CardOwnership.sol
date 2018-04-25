@@ -11,12 +11,6 @@ contract CardOwnership is CardBase {
 		require (cardID < totalSupply());
 	}
 
-	// Return a GameCard if it exists
-	function getCard(uint256 cardID) public view returns (GameCard) {
-		requireCardExists(cardID);
-		return cards[cardID];
-	}
-
 	// Return if address _claimant currently holds card _cardId
 	function _owns(address _claimant, uint256 _cardID) internal view returns (bool) {
 		return cardIndexToOwner[_cardID] == _claimant;

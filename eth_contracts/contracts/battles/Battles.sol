@@ -7,7 +7,7 @@ contract Battles {
 		uint256 op1BattleGroup;		// Opponent 1 BattleGroup
 		uint256 op2BattleGroup;		// Opponent 2 BattleGroup
 		uint256 winnerBattleGroup;	// Winner BattleGroup
-		uint256 loserBattleGroup;	// Winner BattleGroup
+		uint256 loserBattleGroup;	// Loser BattleGroup
 	}
 	
 	Battle[] battles; // Array of all existing Battles
