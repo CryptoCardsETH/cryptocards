@@ -24,6 +24,7 @@ class ContractIngestionTest extends TestCase
 
     public function testIngestCoreContractAddress()
     {
+        putenv('APP_DEBUG=true');
         $faker = \Faker\Factory::create();
         //test ingesting the adddress (truffle hits this endpoint)
         $address = '0xfakex'.$faker->sha1;

@@ -64,30 +64,26 @@ func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupI
 
 	var groups []*pb.BattleGroupInfo
 
-	notEmpty := true
-	for notEmpty {
-		notEmpty = it.Next()
-		if notEmpty {
-			log.Println("NewBattleGroup Event log:")
-			newBattleGroupEvent := it.Event
-			log.Printf("\towner: %v\n", newBattleGroupEvent.Owner.Hex())
-			log.Printf("\tBG id: %v\n", newBattleGroupEvent.BattleGroupID)
-			log.Printf("\tCards: %v\n", newBattleGroupEvent.Cards)
+	for it.Next() {
+		log.Println("NewBattleGroup Event log:")
+		newBattleGroupEvent := it.Event
+		log.Printf("\towner: %v\n", newBattleGroupEvent.Owner.Hex())
+		log.Printf("\tBG id: %v\n", newBattleGroupEvent.BattleGroupID)
+		log.Printf("\tCards: %v\n", newBattleGroupEvent.Cards)
 
-			cardsField := make([]uint64, len(newBattleGroupEvent.Cards))
-			for i, card := range newBattleGroupEvent.Cards {
-				cardsField[i] = card.Uint64()
-			}
-
-			groups = append(
-				groups,
-				&pb.BattleGroupInfo{
-					OwnerAddress: newBattleGroupEvent.Owner.Hex(),
-					Id:           newBattleGroupEvent.BattleGroupID.Uint64(),
-					Cards:        cardsField,
-				},
-			)
+		cardsField := make([]uint64, len(newBattleGroupEvent.Cards))
+		for i, card := range newBattleGroupEvent.Cards {
+			cardsField[i] = card.Uint64()
 		}
+
+		groups = append(
+			groups,
+			&pb.BattleGroupInfo{
+				OwnerAddress: newBattleGroupEvent.Owner.Hex(),
+				Id:           newBattleGroupEvent.BattleGroupID.Uint64(),
+				Cards:        cardsField,
+			},
+		)
 	}
 
 	return &pb.BattleGroupInfoReply{Items: groups}, nil
