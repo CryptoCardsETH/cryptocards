@@ -91,6 +91,9 @@ services:
       PORT: 50051
       RPC_HOST: eth_rpc
       RPC_PORT: 8545
+      #this keypair is ganache-cli deterministic mode account #1
+      ADMIN_PUBKEY: "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1"
+      ADMIN_PRIVKEY: "4f3edf983ac636a65a842ce7c78d9aa706d3b113bce9c46f30d7d21715b23b1d"
     links: 
        - eth_rpc
 
