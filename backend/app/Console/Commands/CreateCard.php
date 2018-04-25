@@ -2,12 +2,11 @@
 
 namespace App\Console\Commands;
 
-use Illuminate\Console\Command;
 use App\Helpers\EthereumHelper;
 use App\Models\Contract;
-use RpcServer\CardInfoRequest;
-
+use Illuminate\Console\Command;
 use RpcServer\CreateCardRequest;
+
 class CreateCard extends Command
 {
     /**
@@ -54,8 +53,6 @@ class CreateCard extends Command
         $makeCardMsg->setCoreAddress($ca);
         $makeCardMsg->setOwnerAddress($ownerAddress);
         list($reply, $status) = $client->CreateCard($makeCardMsg)->wait();
-        $this->info("created Card with txn: ".$reply->getMessage()." for user ".$ownerAddress);
-
-
+        $this->info('created Card with txn: '.$reply->getMessage().' for user '.$ownerAddress);
     }
 }
