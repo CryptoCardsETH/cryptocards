@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Request;
 use Log;
 use Notification;
 use RpcServer\CardInfo;
+
 class ContractController extends Controller
 {
     public function contractAddressIngest()
@@ -59,7 +60,9 @@ class ContractController extends Controller
 
         Notification::send($user, new BattleGroupCreationNotification($bg->fresh()));
     }
-    public static function processCardInfoRpc(CardInfo $ci) {
+
+    public static function processCardInfoRpc(CardInfo $ci)
+    {
         self::processNewCardEvent($ci->getOwnerAddress(), $ci->getId(), $ci->getCreationBattleID(), $ci->getOwnerAddress());
     }
 
@@ -67,13 +70,13 @@ class ContractController extends Controller
      * Save a new card from the blockchain to the DB
      * TODO: persist name, creation battle id, attributes
      */
-    public static function processNewCardEvent($ownerAddress, $tokenId, $creationBattleId, $attributes) {
-       
+    public static function processNewCardEvent($ownerAddress, $tokenId, $creationBattleId, $attributes)
+    {
         $user = User::getByAddress($ownerAddress);
         $card = Card::getByTokenId($tokenId);
         $card->user_id = $user->id;
         $card->save();
-        if($card->wasRecentlyCreated) {
+        if ($card->wasRecentlyCreated) {
             Log::info('ingest new Card: token_id is '.$tokenId);
         }
     }

@@ -2,9 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CreateCard;
 use App\Console\Commands\IngestBattleGroupsFromBlockchain;
 use App\Console\Commands\IngestCardsFromBlockchain;
-use App\Console\Commands\CreateCard;
 use App\Console\Commands\ProtoTest;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;

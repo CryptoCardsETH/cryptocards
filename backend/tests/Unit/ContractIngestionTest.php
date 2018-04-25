@@ -4,8 +4,8 @@ namespace Tests\Unit;
 
 use App\Http\Controllers\ContractController;
 use App\Models\BattleGroup;
-use App\Models\Contract;
 use App\Models\Card;
+use App\Models\Contract;
 use RpcServer\CardInfo;
 use Tests\TestCase;
 
@@ -28,7 +28,7 @@ class ContractIngestionTest extends TestCase
     {
         $faker = \Faker\Factory::create();
         $address = '0xfakex'.$faker->sha1;
-        $tokenId = Card::max('token_id')+ 100;
+        $tokenId = Card::max('token_id') + 100;
         $ci = new CardInfo();
         $ci->setOwnerAddress($address);
         $ci->setId($tokenId);

@@ -51,7 +51,7 @@ class IngestCardsFromBlockchain extends Command
 
         list($reply, $status) = $client->RequestCardInfo($msg)->wait();
         foreach ($reply->getItems() as $item) {
-            ContractController::processCardInfoRpc($item); 
+            ContractController::processCardInfoRpc($item);
         }
     }
 }
