@@ -4,7 +4,6 @@ namespace Tests\Unit;
 
 use App\Http\Controllers\ContractController;
 use App\Models\BattleGroup;
-use Illuminate\Support\Facades\Queue;
 use Tests\TestCase;
 
 class ContractIngestionTest extends TestCase

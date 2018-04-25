@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Helpers\EthereumHelper;
 use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
@@ -12,7 +11,6 @@ use App\Notifications\BattleGroupCreationNotification;
 use Illuminate\Support\Facades\Request;
 use Log;
 use Notification;
-use RpcServer\ContractAddresses;
 
 class ContractController extends Controller
 {
@@ -24,7 +22,7 @@ class ContractController extends Controller
         }
 
         $data = json_decode(Request::getContent(), true);
-        Log::info("ingested contract addresses");
+        Log::info('ingested contract addresses');
         Log::info($data);
 
         foreach ($data as $contractName => $data) {
