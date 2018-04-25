@@ -20,8 +20,6 @@ class BattleCreator extends React.Component {
         from: senderAddress
       })
       .then(txHash => {
-        console.log('Transaction sent');
-        console.dir(txHash);
         waitForTxToBeMined(txHash);
       })
       .catch(console.error);

@@ -53,7 +53,7 @@ export function getContractInstance(ABI, contractAddress) {
 
 export const waitForTxToBeMined = async txHash => {
   const eth = new Eth(window.web3.currentProvider);
-
+  console.log('Transaction Sent!', txHash);
   let txReceipt;
   while (!txReceipt) {
     try {
