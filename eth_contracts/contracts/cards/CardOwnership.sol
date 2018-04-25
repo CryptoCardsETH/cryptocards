@@ -6,6 +6,17 @@ contract CardOwnership is CardBase {
 	string public constant name = "CryptoCards";
 	string public constant symbol = "CCB";
 
+	// Require that a game card exists
+	function requireCardExists(uint256 cardID) public view {
+		require (cardID < totalSupply());
+	}
+
+	// Return a GameCard if it exists
+	function getCard(uint256 cardID) public view returns (GameCard) {
+		requireCardExists(cardID);
+		return cards[cardID];
+	}
+
 	// Return if address _claimant currently holds card _cardId
 	function _owns(address _claimant, uint256 _cardID) internal view returns (bool) {
 		return cardIndexToOwner[_cardID] == _claimant;
@@ -35,19 +46,19 @@ contract CardOwnership is CardBase {
 		_transfer(msg.sender, _to, _cardId);
 	}
 
-	function createCard(address _owner, uint256 _attributes) public returns (uint) {
+	function createCard(address _owner, uint256 _attributes) public returns (uint256) {
 		// Prevent ownership by CryptoCards contracts
 		require(_owner != address(this));
 
 		// Create the card
-		uint cardID = _createCard(0, _attributes, _owner);
+		uint256 cardID = _createCard(0, _attributes, _owner);
 
 		return cardID;
 	}
 
 	function ownerOf(uint256 _tokenId) external view returns (address owner) {
 		owner = cardIndexToOwner[_tokenId];
-		require(owner != address(0));
+		require (owner != address(0));
 	}
 
 	// NOTE: Do not call from within smartcontracts - too expensive to loop through all cards

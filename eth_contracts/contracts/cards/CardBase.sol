@@ -54,7 +54,7 @@ contract CardBase {
 	// New Card Event: Emitted every time a new card is created
 	event NewCard(address owner, uint256 cardID, uint128 creationBattleID, uint256 attributes);
 
-	function _createCard(uint128 _battleID, uint256 _attributes, address _owner) internal returns (uint) {
+	function _createCard(uint128 _battleID, uint256 _attributes, address _owner) internal returns (uint256) {
 		GameCard memory _card = GameCard({
 			creationTime: uint64(now),
 			battleCooldownEnd: 0,
