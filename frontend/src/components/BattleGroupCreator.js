@@ -11,8 +11,9 @@ import {
 } from '../selectors';
 import { Button } from 'reactstrap';
 class BattleGroupCreator extends React.Component {
-  doContract = (senderAddress, contractInstance, cardIds) => {
+  doContract = async (senderAddress, ci, cardIds) => {
     //todo: web3 check
+    let contractInstance = await ci;
     contractInstance
       .createBattleGroup(senderAddress, cardIds, {
         from: senderAddress
