@@ -56,10 +56,56 @@ contract CardBase {
 	}
 
 	// Generate name of card
-	function _name() internal {
+	function _name() internal returns (bytes32) {
 
 		bytes32[] firstname = {
+			Dave,
+			Jason,
+			Harris,
+			Ben,
+			Lena,
+			Nicky,
 			Shelton,
+			Salty,
+			Ricky,
+			Nate,
+			Arnold,
+			Dick,
+			Richard,
+			Matthew,
+			Noah,
+			Connor,
+			Wayne,
+			Chronos
+			Walton,
+			Olympus,
+			Jarman,
+			Oliver,
+			Tenenan,
+			Quasim,
+			Fear,
+			Saxton,
+			Arland,
+			Maxwell,
+			Kemp,
+			Patamon,
+			Sigmund,
+			Rory,
+			Mason,
+			Sylvester,
+			Ketan,
+			Flunkey,
+			Kaniel,
+			Charm,
+			Jeff,
+			Nils,
+			Jude,
+			Jacob,
+			Fane,
+			Ferran,
+			Benedict,
+			Zephan,
+			Harith,
 			Adan,
 			Lawrence,
 			Merle,
@@ -67,6 +113,7 @@ contract CardBase {
 			Willie,
 			Hubert,
 			Donny,
+			Rehoboam,
 			Tory,
 			Brandon,
 			Carmen,
@@ -102,6 +149,16 @@ contract CardBase {
 			Cameron,
 			Nathan,
 			Sam,
+			Isaac,
+			Merrill,
+			Ove,
+			Vid,
+			Pumba,
+			Aitan,
+			Ross,
+			John,
+			Thorfinn,
+			Holt,
 			Sol,
 			Del,
 			Coleman,
@@ -109,7 +166,7 @@ contract CardBase {
 			Winston,
 			Austin,
 			Carlos
-		}
+		};
 
 		bytes32[] adjectives = {
 			repulsive,
@@ -215,7 +272,7 @@ contract CardBase {
 			giant,
 			gigantic,
 			good
-		}
+		};
 
 		bytes32[] lastname = {
 			Architect,
@@ -351,7 +408,13 @@ contract CardBase {
 			Exchange,
 			Steel,
 			Road
-		}
+		};
+
+		// "weak seeding" pseudorandom from Apple's FreeBSD 'do_rand' func
+		uint32 hashval = 16807 * (123459876 % 127773) - (2836 * (123459876 / 127773));
+		bytes32 cardName = firtname[hashVal % firstname.length] + adjectives[hashVal % adjectives.length] + lastname[hashVal % lastname.length];
+
+		return cardName;
 
 	}
 
