@@ -167,7 +167,7 @@ function receiveCardValue(value) {
 export function fetchCardValue(cardId) {
   return dispatch => {
     dispatch(requestCardValue());
-    return apiFetch(`cardValue/${cardId}`)
+    return apiFetch(`card/${cardId}/value`)
       .then(response => response.json())
       .then(json => {
         dispatch(receiveCardValue(json.data));
