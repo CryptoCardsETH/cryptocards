@@ -16,10 +16,19 @@ glob(BASE + "**/*.sol", function(er, files) {
     });
 
     function findImports(path) {
-        if(path == "contracts/CardBase.sol") {
+        let aa = {
+            "cards/CardMinting.sol": BASE+"cards/CardMinting.sol",
+            "cards/CardOwnership.sol": BASE+"cards/CardOwnership.sol",
+            "battles/Battles.sol": BASE+"battles/Battles.sol",
+            "battles/BattleGroups.sol": BASE+"battles/BattleGroups.sol",
+            "cards/CardBase.sol": BASE+"cards/CardBase.sol"
+        };
+
+        if(path in aa) {
             //hacky but referential import fix...
-            path = BASE+"CardBase.sol";
+            path = aa[path];
         }
+
         return {
             'contents': fs.readFileSync(path).toString()
         };

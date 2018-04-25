@@ -11,9 +11,10 @@ import {
 } from '../selectors';
 import { Button } from 'reactstrap';
 class BattleCreator extends React.Component {
-  doContract = (senderAddress, contractInstance, test1, test2) => {
+  doContract = async (senderAddress, ci, test1, test2) => {
     //todo: web3 check
     //TODO: this needs to be rewritten when the Battles.sol contract is finished, right now it just sends the specified group as both sides for the battle.
+    let contractInstance = await ci;
     contractInstance
       .createBattle(test1, test2, {
         from: senderAddress
