@@ -3,13 +3,14 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use RpcServer\ContractAddress;
+use RpcServer\CoreContractAddress;
 
 class Contract extends Model
 {
     const FIELD_NAME = 'name';
     const FIELD_ADDRESS = 'address';
     const FIELD_TRANSACTION_HASH = 'transaction_hash';
+    const CONTRACT_NAME_CORE = 'CryptoCardsCore';
     protected $fillable = ['name'];
 
     public static function updateAddress($name, $address, $transactionHash)
@@ -23,11 +24,11 @@ class Contract extends Model
     /*
      * Package the Model isntance into an Rpc Message
      */
-    public function getRpcContractAddressMessage()
+    public static function getRpcCoreContractAddressMessage($name = self::CONTRACT_NAME_CORE)
     {
-        $ca = new ContractAddress();
-        $ca->setName($this->name);
-        $ca->setAddress($this->address);
+        $core = self::where('name', $name)->first();
+        $ca = new CoreContractAddress();
+        $ca->setAddress($core->address);
 
         return $ca;
     }

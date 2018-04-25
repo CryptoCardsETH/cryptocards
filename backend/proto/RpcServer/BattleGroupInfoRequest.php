@@ -14,7 +14,7 @@ use Google\Protobuf\Internal\GPBUtil;
 class BattleGroupInfoRequest extends \Google\Protobuf\Internal\Message
 {
     /**
-     * Generated from protobuf field <code>.rpcServer.ContractAddress contract = 1;</code>
+     * Generated from protobuf field <code>.rpcServer.CoreContractAddress contract = 1;</code>
      */
     private $contract = null;
 
@@ -24,8 +24,8 @@ class BattleGroupInfoRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.rpcServer.ContractAddress contract = 1;</code>
-     * @return \RpcServer\ContractAddress
+     * Generated from protobuf field <code>.rpcServer.CoreContractAddress contract = 1;</code>
+     * @return \RpcServer\CoreContractAddress
      */
     public function getContract()
     {
@@ -33,13 +33,13 @@ class BattleGroupInfoRequest extends \Google\Protobuf\Internal\Message
     }
 
     /**
-     * Generated from protobuf field <code>.rpcServer.ContractAddress contract = 1;</code>
-     * @param \RpcServer\ContractAddress $var
+     * Generated from protobuf field <code>.rpcServer.CoreContractAddress contract = 1;</code>
+     * @param \RpcServer\CoreContractAddress $var
      * @return $this
      */
     public function setContract($var)
     {
-        GPBUtil::checkMessage($var, \RpcServer\ContractAddress::class);
+        GPBUtil::checkMessage($var, \RpcServer\CoreContractAddress::class);
         $this->contract = $var;
 
         return $this;

@@ -38,46 +38,52 @@ func (s *server) PerformECRecover(ctx context.Context, in *pb.ECRecoverRequest) 
 
 	return &pb.ECRecoverReply{Success: status}, nil
 }
+func getCoreContractInstance(a *pb.CoreContractAddress) *conts.CryptoCardsCore {
+	client := getEthClientConnection()
+	coreContractAddr := common.HexToAddress(a.Address)
+	log.Printf("info: core addr, %v\n", coreContractAddr.Hex())
+	core, err := conts.NewCryptoCardsCore(coreContractAddr, client)
+	if err != nil {
+		log.Fatalf("Error getting Core Contract instance %v", err)
+	}
+	return core
 
+}
 func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupInfoRequest) (*pb.BattleGroupInfoReply, error) {
-	battleGroupsContractAddr := common.HexToAddress(in.Contract.Address)
-	log.Printf("heh, %v\n", battleGroupsContractAddr.Hex())
+
+	core := getCoreContractInstance(in.Contract)
+	battleGroupsContractAddr, err := core.BattleGroupContract(&bind.CallOpts{})
 
 	client := getEthClientConnection()
 	battleGroupsContract, err := conts.NewBattleGroups(battleGroupsContractAddr, client)
 
-	opt := &bind.FilterOpts{}
-	it, err := battleGroupsContract.BattleGroupsFilterer.FilterNewBattleGroup(opt)
+	it, err := battleGroupsContract.BattleGroupsFilterer.FilterNewBattleGroup(&bind.FilterOpts{})
 	if err != nil {
 		log.Fatalf("error filtering events: %v", err)
 	}
 
 	var groups []*pb.BattleGroupInfo
 
-	notEmpty := true
-	for notEmpty {
-		notEmpty = it.Next()
-		if notEmpty {
-			log.Println("event log:", it)
-			newBattleGroupEvent := it.Event
-			log.Printf("owner: %v\n", newBattleGroupEvent.Owner.Hex())
-			log.Printf("BG id: %v\n", newBattleGroupEvent.BattleGroupID)
-			log.Printf("Cards: %v\n", newBattleGroupEvent.Cards)
+	for it.Next() {
+		log.Println("NewBattleGroup Event log:")
+		newBattleGroupEvent := it.Event
+		log.Printf("\towner: %v\n", newBattleGroupEvent.Owner.Hex())
+		log.Printf("\tBG id: %v\n", newBattleGroupEvent.BattleGroupID)
+		log.Printf("\tCards: %v\n", newBattleGroupEvent.Cards)
 
-			cardsField := make([]uint64, len(newBattleGroupEvent.Cards))
-			for i, card := range newBattleGroupEvent.Cards {
-				cardsField[i] = card.Uint64()
-			}
-
-			groups = append(
-				groups,
-				&pb.BattleGroupInfo{
-					OwnerAddress: newBattleGroupEvent.Owner.Hex(),
-					Id:           newBattleGroupEvent.BattleGroupID.Uint64(),
-					Cards:        cardsField,
-				},
-			)
+		cardsField := make([]uint64, len(newBattleGroupEvent.Cards))
+		for i, card := range newBattleGroupEvent.Cards {
+			cardsField[i] = card.Uint64()
 		}
+
+		groups = append(
+			groups,
+			&pb.BattleGroupInfo{
+				OwnerAddress: newBattleGroupEvent.Owner.Hex(),
+				Id:           newBattleGroupEvent.BattleGroupID.Uint64(),
+				Cards:        cardsField,
+			},
+		)
 	}
 
 	return &pb.BattleGroupInfoReply{Items: groups}, nil

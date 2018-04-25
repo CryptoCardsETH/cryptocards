@@ -32,13 +32,8 @@ message CardsReply {
   string attributes = 5;
 }
 
-message ContractAddresses {
-  repeated ContractAddress items = 1;
-}
-
-message ContractAddress {
-  string name = 1;
-  string address = 2;
+message CoreContractAddress {
+  string address = 1;
 }
 
 
@@ -53,7 +48,7 @@ message BattleGroupInfoReply {
 }
 
 message BattleGroupInfoRequest {
-  ContractAddress contract = 1;
+  CoreContractAddress contract = 1;
 }                 
 
 message ECRecoverRequest {
