@@ -27,7 +27,7 @@ class BattleGroupCreator extends React.Component {
 
   render() {
     let { ready, contractInstance, cardIds } = this.props;
-
+    let isValidSize = [1, 3, 5].includes(cardIds.length);
     let truncated = cardIds.slice(0, 5);
     while (truncated.length !== 5) {
       truncated.push(0);
@@ -35,9 +35,9 @@ class BattleGroupCreator extends React.Component {
 
     return (
       <div>
-        <pre>selected cards: {JSON.stringify(truncated)}</pre>
+        <pre>selected cards: {JSON.stringify({ truncated, cardIds })}</pre>
         <Button
-          disabled={!ready}
+          disabled={!ready || !isValidSize}
           onClick={() =>
             this.doContract(
               this.props.user.main_address,
