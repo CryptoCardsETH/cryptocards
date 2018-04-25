@@ -16,7 +16,7 @@ class MarketplaceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getAllCards', 'getCardDetail', 'getAllListings','estimateValue']]);
+        $this->middleware('jwt.auth', ['except' => ['getAllCards', 'getCardDetail', 'getAllListings', 'estimateValue']]);
     }
 
     /**
@@ -97,15 +97,13 @@ class MarketplaceController extends Controller
     public function estimateValue($card_id)
     {
         $card = Card::findOrFail($card_id);
-        if ( $card->transactions()->count() >= 1){
+        if ($card->transactions()->count() >= 1) {
             $avg_price = $card->transactions()->orderBy('created_at', 'DESC')->limit(5)->avg('price');
-            $value = EthereumConverter::convertETHPriceToFloat( round( $avg_price + ($avg_price *.5), 13) );
+            $value = EthereumConverter::convertETHPriceToFloat(round($avg_price + ($avg_price * .5), 13));
         } else {
-            $value = EthereumConverter::convertETHPriceToFloat( rand(250000000, 1250000000) * pow(10, 4) );
+            $value = EthereumConverter::convertETHPriceToFloat(rand(250000000, 1250000000) * pow(10, 4));
         }
-        
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $value);
-
     }
 }
