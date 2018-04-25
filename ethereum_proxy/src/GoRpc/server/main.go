@@ -40,10 +40,17 @@ func (s *server) PerformECRecover(ctx context.Context, in *pb.ECRecoverRequest) 
 }
 
 func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupInfoRequest) (*pb.BattleGroupInfoReply, error) {
-	battleGroupsContractAddr := common.HexToAddress(in.Contract.Address)
-	log.Printf("heh, %v\n", battleGroupsContractAddr.Hex())
 
 	client := getEthClientConnection()
+
+	coreContractAddr := common.HexToAddress(in.Contract.Address)
+	log.Printf("core addr, %v\n", coreContractAddr.Hex())
+
+	core, err := conts.NewCryptoCardsCore(coreContractAddr, client)
+
+	a := &bind.CallOpts{}
+	battleGroupsContractAddr, err := core.BattleGroupContract(a)
+
 	battleGroupsContract, err := conts.NewBattleGroups(battleGroupsContractAddr, client)
 
 	opt := &bind.FilterOpts{}

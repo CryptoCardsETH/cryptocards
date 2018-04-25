@@ -41,8 +41,7 @@ class IngestBattleGroupsFromBlockchain extends Command
      */
     public function handle()
     {
-        $contract = Contract::where('name', 'BattleGroups')->first();
-        $ca = $contract->getRpcContractAddressMessage();
+        $ca = Contract::getRpcCoreContractAddressMessage();
 
         $client = EthereumHelper::getRpcClient();
 

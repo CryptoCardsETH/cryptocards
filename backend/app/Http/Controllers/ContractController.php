@@ -25,10 +25,10 @@ class ContractController extends Controller
         Log::info('ingested contract addresses');
         Log::info($data);
 
-        foreach ($data as $contractName => $data) {
-            $address = $data['address'];
+        foreach ($data as $contractName => $v) {
+            $address = $v['address'];
             Log::info($contractName.' @ '.$address);
-            Contract::updateAddress($contractName, $address, $data['transactionHash']);
+            Contract::updateAddress($contractName, $address, $v['transactionHash']);
         }
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS);
