@@ -8,12 +8,7 @@ glob(BASE + "**/*.sol", function(er, files) {
     //read all the files in the contracts directory
 
     console.log(files);
-    var inputs = {};
-    files.forEach(f => {
-        let contractName = path.basename(f).slice(0, -4);
-        console.log("processing contract " + contractName);
-        inputs[path.basename(f)] = fs.readFileSync(f).toString();
-    });
+    var inputs = {"CryptoCardsCore.sol": fs.readFileSync(BASE+"CryptoCardsCore.sol").toString()};
 
     function findImports(path) {
         let aa = {
@@ -21,6 +16,7 @@ glob(BASE + "**/*.sol", function(er, files) {
             "cards/CardOwnership.sol": BASE+"cards/CardOwnership.sol",
             "battles/Battles.sol": BASE+"battles/Battles.sol",
             "battles/BattleGroups.sol": BASE+"battles/BattleGroups.sol",
+            "cards/CardBattles.sol": BASE+"cards/CardBattles.sol",
             "cards/CardBase.sol": BASE+"cards/CardBase.sol"
         };
 

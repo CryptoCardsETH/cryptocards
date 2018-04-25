@@ -16,10 +16,10 @@ import (
 )
 
 // BattleGroupsABI is the input ABI used to generate the binding from.
-const BattleGroupsABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"countBattleGroups\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MAX_CARDS_PER_GROUP\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_cards\",\"type\":\"uint256[5]\"}],\"name\":\"createBattleGroup\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"battleGroupID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"cards\",\"type\":\"uint256[5]\"}],\"name\":\"NewBattleGroup\",\"type\":\"event\"}]"
+const BattleGroupsABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"cryptoCardsContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"countBattleGroups\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"groupID\",\"type\":\"uint256\"}],\"name\":\"setGroupOnBattleCooldown\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"MAX_CARDS_PER_GROUP\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"groupID\",\"type\":\"uint256\"}],\"name\":\"isGroupReadyForBattle\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_cards\",\"type\":\"uint256[5]\"}],\"name\":\"createBattleGroup\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"battleGroupID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"cards\",\"type\":\"uint256[5]\"}],\"name\":\"NewBattleGroup\",\"type\":\"event\"}]"
 
 // BattleGroupsBin is the compiled bytecode used for deploying new contracts.
-const BattleGroupsBin = `0x6060604052341561000f57600080fd5b6103ed8061001e6000396000f300606060405263ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416637bf13d828114610052578063bfeea70814610077578063fa74efc11461008a57600080fd5b341561005d57600080fd5b6100656100b8565b60405190815260200160405180910390f35b341561008257600080fd5b6100656100bf565b341561009557600080fd5b61006573ffffffffffffffffffffffffffffffffffffffff6004351660246100c4565b6000545b90565b600581565b60006100ce61027c565b60006060604051908101604052804267ffffffffffffffff1681526020018673ffffffffffffffffffffffffffffffffffffffff168152602001856005806020026040519081016040529190828260a0808284375050509190925250506000805491935060019180830161014283826102a2565b600092835260209092208591600602018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815473ffffffffffffffffffffffffffffffffffffffff9190911668010000000000000000027fffffffff0000000000000000000000000000000000000000ffffffffffffffff90911617815560408201516101d890600183019060056102d3565b50505003905063ffffffff811681146101f057600080fd5b7ff7841da7904048ca49ded1df3a41ff46907a4db7880f86ebde13572a7154f59d8582846040015160405173ffffffffffffffffffffffffffffffffffffffff8416815260208101839052604081018260a080838360005b83811015610260578082015183820152602001610248565b50505050905001935050505060405180910390a1949350505050565b60e0604051908101604090815260008083526020830152810161029d610311565b905290565b8154818355818115116102ce576006028160060283600052602060002091820191016102ce9190610338565b505050565b8260058101928215610301579160200282015b828111156103015782518255916020019190600101906102e6565b5061030d929150610384565b5090565b60a06040519081016040526005815b60008152602001906001900390816103205790505090565b6100bc91905b8082111561030d5780547fffffffff00000000000000000000000000000000000000000000000000000000168155600061037b600183018261039e565b5060060161033e565b6100bc91905b8082111561030d576000815560010161038a565b5060008155600101600081556001016000815560010160008155600101600090555600a165627a7a72305820eef3b01b12bd3f266c2f504ccc7120c574c8718b546256a3989165c9605814120029`
+const BattleGroupsBin = `0x6060604052341561000f57600080fd5b60018054600160a060020a03191633600160a060020a03161790556106ff806100396000396000f3006060604052361561005c5763ffffffff60e060020a600035041663624fe81f81146100615780637bf13d8214610090578063b42cb37d146100b5578063bfeea708146100df578063ecf9036b146100f2578063fa74efc114610108575b600080fd5b341561006c57600080fd5b610074610129565b604051600160a060020a03909116815260200160405180910390f35b341561009b57600080fd5b6100a3610138565b60405190815260200160405180910390f35b34156100c057600080fd5b6100cb60043561013f565b604051901515815260200160405180910390f35b34156100ea57600080fd5b6100a361029a565b34156100fd57600080fd5b6100cb60043561029f565b341561011357600080fd5b6100a3600160a060020a036004351660246103fd565b600154600160a060020a031681565b6000545b90565b600061014961058e565b6000610153610138565b841061015e57600080fd5b600080548590811061016c57fe5b906000526020600020906006020160606040519081016040908152825467ffffffffffffffff81168352680100000000000000009004600160a060020a0316602083015290919080830190600183019060059060a09051908101604052919060a0830182845b8154815260200190600101908083116101d25750505091909252509193506000925050505b816040015150600581101561028e57600154600160a060020a031663685b7a5e6040840151836005811061022757fe5b602002015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b151561026b57600080fd5b6102c65a03f1151561027c57600080fd5b505050604051805150506001016101f7565b600192505b5050919050565b600581565b60006102a961058e565b60006102b3610138565b84106102be57600080fd5b60008054859081106102cc57fe5b906000526020600020906006020160606040519081016040908152825467ffffffffffffffff81168352680100000000000000009004600160a060020a0316602083015290919080830190600183019060059060a09051908101604052919060a0830182845b8154815260200190600101908083116103325750505091909252509193506000925050505b816040015150600581101561028e57600154600160a060020a0316632109f89d6040840151836005811061038757fe5b602002015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156103cb57600080fd5b6102c65a03f115156103dc57600080fd5b5050506040518051905015156103f55760009250610293565b600101610357565b600061040761058e565b60006060604051908101604052804267ffffffffffffffff16815260200186600160a060020a03168152602001856005806020026040519081016040529190828260a0808284375050509190925250506000805491935060019180830161046e83826105b4565b600092835260209092208591600602018151815467ffffffffffffffff191667ffffffffffffffff9190911617815560208201518154600160a060020a039190911668010000000000000000027fffffffff0000000000000000000000000000000000000000ffffffffffffffff90911617815560408201516104f790600183019060056105e5565b50505003905063ffffffff8116811461050f57600080fd5b7ff7841da7904048ca49ded1df3a41ff46907a4db7880f86ebde13572a7154f59d85828460400151604051600160a060020a038416815260208101839052604081018260a080838360005b8381101561057257808201518382015260200161055a565b50505050905001935050505060405180910390a1949350505050565b60e060405190810160409081526000808352602083015281016105af610623565b905290565b8154818355818115116105e0576006028160060283600052602060002091820191016105e0919061064a565b505050565b8260058101928215610613579160200282015b828111156106135782518255916020019190600101906105f8565b5061061f929150610696565b5090565b60a06040519081016040526005815b60008152602001906001900390816106325790505090565b61013c91905b8082111561061f5780547fffffffff00000000000000000000000000000000000000000000000000000000168155600061068d60018301826106b0565b50600601610650565b61013c91905b8082111561061f576000815560010161069c565b5060008155600101600081556001016000815560010160008155600101600090555600a165627a7a72305820c9b094726ed2fd954eaf242b65f3032b152bd0459faea2141e672f0eb468c3f50029`
 
 // DeployBattleGroups deploys a new Ethereum contract, binding an instance of BattleGroups to it.
 func DeployBattleGroups(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *BattleGroups, error) {
@@ -228,6 +228,58 @@ func (_BattleGroups *BattleGroupsCallerSession) CountBattleGroups() (*big.Int, e
 	return _BattleGroups.Contract.CountBattleGroups(&_BattleGroups.CallOpts)
 }
 
+// CryptoCardsContract is a free data retrieval call binding the contract method 0x624fe81f.
+//
+// Solidity: function cryptoCardsContract() constant returns(address)
+func (_BattleGroups *BattleGroupsCaller) CryptoCardsContract(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _BattleGroups.contract.Call(opts, out, "cryptoCardsContract")
+	return *ret0, err
+}
+
+// CryptoCardsContract is a free data retrieval call binding the contract method 0x624fe81f.
+//
+// Solidity: function cryptoCardsContract() constant returns(address)
+func (_BattleGroups *BattleGroupsSession) CryptoCardsContract() (common.Address, error) {
+	return _BattleGroups.Contract.CryptoCardsContract(&_BattleGroups.CallOpts)
+}
+
+// CryptoCardsContract is a free data retrieval call binding the contract method 0x624fe81f.
+//
+// Solidity: function cryptoCardsContract() constant returns(address)
+func (_BattleGroups *BattleGroupsCallerSession) CryptoCardsContract() (common.Address, error) {
+	return _BattleGroups.Contract.CryptoCardsContract(&_BattleGroups.CallOpts)
+}
+
+// IsGroupReadyForBattle is a free data retrieval call binding the contract method 0xecf9036b.
+//
+// Solidity: function isGroupReadyForBattle(groupID uint256) constant returns(bool)
+func (_BattleGroups *BattleGroupsCaller) IsGroupReadyForBattle(opts *bind.CallOpts, groupID *big.Int) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _BattleGroups.contract.Call(opts, out, "isGroupReadyForBattle", groupID)
+	return *ret0, err
+}
+
+// IsGroupReadyForBattle is a free data retrieval call binding the contract method 0xecf9036b.
+//
+// Solidity: function isGroupReadyForBattle(groupID uint256) constant returns(bool)
+func (_BattleGroups *BattleGroupsSession) IsGroupReadyForBattle(groupID *big.Int) (bool, error) {
+	return _BattleGroups.Contract.IsGroupReadyForBattle(&_BattleGroups.CallOpts, groupID)
+}
+
+// IsGroupReadyForBattle is a free data retrieval call binding the contract method 0xecf9036b.
+//
+// Solidity: function isGroupReadyForBattle(groupID uint256) constant returns(bool)
+func (_BattleGroups *BattleGroupsCallerSession) IsGroupReadyForBattle(groupID *big.Int) (bool, error) {
+	return _BattleGroups.Contract.IsGroupReadyForBattle(&_BattleGroups.CallOpts, groupID)
+}
+
 // CreateBattleGroup is a paid mutator transaction binding the contract method 0xfa74efc1.
 //
 // Solidity: function createBattleGroup(_owner address, _cards uint256[5]) returns(uint256)
@@ -247,6 +299,27 @@ func (_BattleGroups *BattleGroupsSession) CreateBattleGroup(_owner common.Addres
 // Solidity: function createBattleGroup(_owner address, _cards uint256[5]) returns(uint256)
 func (_BattleGroups *BattleGroupsTransactorSession) CreateBattleGroup(_owner common.Address, _cards [5]*big.Int) (*types.Transaction, error) {
 	return _BattleGroups.Contract.CreateBattleGroup(&_BattleGroups.TransactOpts, _owner, _cards)
+}
+
+// SetGroupOnBattleCooldown is a paid mutator transaction binding the contract method 0xb42cb37d.
+//
+// Solidity: function setGroupOnBattleCooldown(groupID uint256) returns(bool)
+func (_BattleGroups *BattleGroupsTransactor) SetGroupOnBattleCooldown(opts *bind.TransactOpts, groupID *big.Int) (*types.Transaction, error) {
+	return _BattleGroups.contract.Transact(opts, "setGroupOnBattleCooldown", groupID)
+}
+
+// SetGroupOnBattleCooldown is a paid mutator transaction binding the contract method 0xb42cb37d.
+//
+// Solidity: function setGroupOnBattleCooldown(groupID uint256) returns(bool)
+func (_BattleGroups *BattleGroupsSession) SetGroupOnBattleCooldown(groupID *big.Int) (*types.Transaction, error) {
+	return _BattleGroups.Contract.SetGroupOnBattleCooldown(&_BattleGroups.TransactOpts, groupID)
+}
+
+// SetGroupOnBattleCooldown is a paid mutator transaction binding the contract method 0xb42cb37d.
+//
+// Solidity: function setGroupOnBattleCooldown(groupID uint256) returns(bool)
+func (_BattleGroups *BattleGroupsTransactorSession) SetGroupOnBattleCooldown(groupID *big.Int) (*types.Transaction, error) {
+	return _BattleGroups.Contract.SetGroupOnBattleCooldown(&_BattleGroups.TransactOpts, groupID)
 }
 
 // BattleGroupsNewBattleGroupIterator is returned from FilterNewBattleGroup and is used to iterate over the raw logs and unpacked data for NewBattleGroup events raised by the BattleGroups contract.
@@ -374,10 +447,10 @@ func (_BattleGroups *BattleGroupsFilterer) WatchNewBattleGroup(opts *bind.WatchO
 }
 
 // BattlesABI is the input ABI used to generate the binding from.
-const BattlesABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"countBattles\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_op1\",\"type\":\"uint256\"},{\"name\":\"_op2\",\"type\":\"uint256\"}],\"name\":\"createBattle\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"battleID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"winnerBattleGroup\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loserBattleGroup\",\"type\":\"uint256\"}],\"name\":\"BattleResult\",\"type\":\"event\"}]"
+const BattlesABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"cryptoCardsContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"countBattles\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_op1\",\"type\":\"uint256\"},{\"name\":\"_op2\",\"type\":\"uint256\"}],\"name\":\"createBattle\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"battleID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"winnerBattleGroup\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"loserBattleGroup\",\"type\":\"uint256\"}],\"name\":\"BattleResult\",\"type\":\"event\"}]"
 
 // BattlesBin is the compiled bytecode used for deploying new contracts.
-const BattlesBin = `0x6060604052341561000f57600080fd5b61027a8061001e6000396000f300606060405263ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166363c785aa8114610047578063df73c49f1461006c57600080fd5b341561005257600080fd5b61005a610085565b60405190815260200160405180910390f35b341561007757600080fd5b61005a60043560243561008c565b6000545b90565b60006100966101b0565b60006080604051908101604052804267ffffffffffffffff168152602001868152602001858152602001600063ffffffff1681525091506001600080548060010182816100e391906101d7565b600092835260209092208591600402018151815467ffffffffffffffff191667ffffffffffffffff9190911617815560208201518160010155604082015181600201556060820151600391909101805463ffffffff191663ffffffff928316179055929091039250508116811461015957600080fd5b7f17a28617c80116086701f1712a79248bbe6e8e30c63a1e4735995ec3b0170a8b818360200151846040015160405180848152602001838152602001828152602001935050505060405180910390a1949350505050565b60806040519081016040908152600080835260208301819052908201819052606082015290565b815481835581811511610203576004028160040283600052602060002091820191016102039190610208565b505050565b61008991905b8082111561024a57805467ffffffffffffffff19168155600060018201819055600282015560038101805463ffffffff1916905560040161020e565b50905600a165627a7a72305820cce188ef7fa62d34e1e0776202dbee41aa398af8f94daa9713794cd801d44ea50029`
+const BattlesBin = `0x6060604052341561000f57600080fd5b60018054600160a060020a03191633600160a060020a031617905561059e806100396000396000f300606060405263ffffffff60e060020a600035041663624fe81f811461003957806363c785aa14610068578063df73c49f1461008d57600080fd5b341561004457600080fd5b61004c6100a6565b604051600160a060020a03909116815260200160405180910390f35b341561007357600080fd5b61007b6100b5565b60405190815260200160405180910390f35b341561009857600080fd5b61007b6004356024356100bc565b600154600160a060020a031681565b6000545b90565b60006100c66104c2565b60008060006100d487610231565b15806100e657506100e486610231565b155b156100f45760009450610227565b60a0604051908101604052804267ffffffffffffffff168152602001888152602001878152602001600081526020016000815250935060016000805480600101828161014091906104fc565b600092835260209092208791600502018151815467ffffffffffffffff191667ffffffffffffffff9190911617815560208201518160010155604082015181600201556060820151816003015560808201516004909101555003925063ffffffff831683146101ae57600080fd5b6101b784610304565b606086018290526080860181905290925090506101d38461031a565b507f17a28617c80116086701f1712a79248bbe6e8e30c63a1e4735995ec3b0170a8b838560600151866080015160405180848152602001838152602001828152602001935050505060405180910390a18294505b5050505092915050565b600154600090600160a060020a031663e77dad5c82604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561027b57600080fd5b6102c65a03f1151561028c57600080fd5b50505060405180519050600160a060020a031663ecf9036b8360006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156102e457600080fd5b6102c65a03f115156102f557600080fd5b50505060405180519392505050565b6000808260400151836020015191509150915091565b600154600090600160a060020a031663e77dad5c82604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561036457600080fd5b6102c65a03f1151561037557600080fd5b50505060405180519050600160a060020a031663b42cb37d836020015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156103d157600080fd5b6102c65a03f115156103e257600080fd5b50505060405180515050600154600160a060020a031663e77dad5c6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561043457600080fd5b6102c65a03f1151561044557600080fd5b50505060405180519050600160a060020a031663b42cb37d836040015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156104a157600080fd5b6102c65a03f115156104b257600080fd5b5050506040518051905050919050565b60a060405190810160405280600067ffffffffffffffff168152602001600081526020016000815260200160008152602001600081525090565b81548183558181151161052857600502816005028360005260206000209182019101610528919061052d565b505050565b6100b991905b8082111561056e57805467ffffffffffffffff1916815560006001820181905560028201819055600382018190556004820155600501610533565b50905600a165627a7a723058202c6bf5e2d926e26e4e09f1017d5d7a54a739e051d5fa6943943b49e79759f9cb0029`
 
 // DeployBattles deploys a new Ethereum contract, binding an instance of Battles to it.
 func DeployBattles(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *Battles, error) {
@@ -560,6 +633,32 @@ func (_Battles *BattlesCallerSession) CountBattles() (*big.Int, error) {
 	return _Battles.Contract.CountBattles(&_Battles.CallOpts)
 }
 
+// CryptoCardsContract is a free data retrieval call binding the contract method 0x624fe81f.
+//
+// Solidity: function cryptoCardsContract() constant returns(address)
+func (_Battles *BattlesCaller) CryptoCardsContract(opts *bind.CallOpts) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _Battles.contract.Call(opts, out, "cryptoCardsContract")
+	return *ret0, err
+}
+
+// CryptoCardsContract is a free data retrieval call binding the contract method 0x624fe81f.
+//
+// Solidity: function cryptoCardsContract() constant returns(address)
+func (_Battles *BattlesSession) CryptoCardsContract() (common.Address, error) {
+	return _Battles.Contract.CryptoCardsContract(&_Battles.CallOpts)
+}
+
+// CryptoCardsContract is a free data retrieval call binding the contract method 0x624fe81f.
+//
+// Solidity: function cryptoCardsContract() constant returns(address)
+func (_Battles *BattlesCallerSession) CryptoCardsContract() (common.Address, error) {
+	return _Battles.Contract.CryptoCardsContract(&_Battles.CallOpts)
+}
+
 // CreateBattle is a paid mutator transaction binding the contract method 0xdf73c49f.
 //
 // Solidity: function createBattle(_op1 uint256, _op2 uint256) returns(uint256)
@@ -709,7 +808,7 @@ func (_Battles *BattlesFilterer) WatchBattleResult(opts *bind.WatchOpts, sink ch
 const CardBaseABI = "[{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
 
 // CardBaseBin is the compiled bytecode used for deploying new contracts.
-const CardBaseBin = `0x6060604052341561000f57600080fd5b6101498061001e6000396000f300606060405263ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312c2debf811461004757806378d0df501461008857600080fd5b341561005257600080fd5b61007673ffffffffffffffffffffffffffffffffffffffff600435166024356100c7565b60405190815260200160405180910390f35b341561009357600080fd5b61009e6004356100f5565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b6002602052816000526040600020818154811015156100e257fe5b6000918252602090912001549150829050565b60016020526000908152604090205473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820da9ee75630dd5dab3be6ce7cd7ecdf9c6a743c4f329476d73630c00f1b67d4800029`
+const CardBaseBin = `0x6060604052341561000f57600080fd5b6101498061001e6000396000f300606060405263ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166312c2debf811461004757806378d0df501461008857600080fd5b341561005257600080fd5b61007673ffffffffffffffffffffffffffffffffffffffff600435166024356100c7565b60405190815260200160405180910390f35b341561009357600080fd5b61009e6004356100f5565b60405173ffffffffffffffffffffffffffffffffffffffff909116815260200160405180910390f35b6002602052816000526040600020818154811015156100e257fe5b6000918252602090912001549150829050565b60016020526000908152604090205473ffffffffffffffffffffffffffffffffffffffff16815600a165627a7a72305820a8bebfb55a461d76791332a2f7cacbe9b98fa8c13ee86e0cdfed08c645fce8850029`
 
 // DeployCardBase deploys a new Ethereum contract, binding an instance of CardBase to it.
 func DeployCardBase(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *CardBase, error) {
@@ -1167,11 +1266,768 @@ func (_CardBase *CardBaseFilterer) WatchTransfer(opts *bind.WatchOpts, sink chan
 	}), nil
 }
 
+// CardBattlesABI is the input ABI used to generate the binding from.
+const CardBattlesABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_cardID\",\"type\":\"uint256\"}],\"name\":\"isReadyForBattle\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"cardID\",\"type\":\"uint256\"}],\"name\":\"requireCardExists\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_cardID\",\"type\":\"uint256\"}],\"name\":\"setOnBattleCooldown\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BATTLE_COOLDOWN_TIME\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
+
+// CardBattlesBin is the compiled bytecode used for deploying new contracts.
+const CardBattlesBin = `0x6060604052341561000f57600080fd5b610ab68061001e6000396000f300606060405236156100cd5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde0381146100d257806312c2debf1461015c57806318160ddd146101905780632109f89d146101a357806330259720146101cd5780635de038b1146101e55780636352211e14610207578063685b7a5e1461023957806370a082311461024f57806378d0df501461026e5780638462151c1461028457806395d89b41146102f65780639db0225714610309578063a9059cbb14610339575b600080fd5b34156100dd57600080fd5b6100e561035b565b60405160208082528190810183818151815260200191508051906020019080838360005b83811015610121578082015183820152602001610109565b50505050905090810190601f16801561014e5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561016757600080fd5b61017e600160a060020a0360043516602435610392565b60405190815260200160405180910390f35b341561019b57600080fd5b61017e6103c0565b34156101ae57600080fd5b6101b96004356103c7565b604051901515815260200160405180910390f35b34156101d857600080fd5b6101e360043561042a565b005b34156101f057600080fd5b61017e600160a060020a0360043516602435610440565b341561021257600080fd5b61021d600435610478565b604051600160a060020a03909116815260200160405180910390f35b341561024457600080fd5b6101b960043561049c565b341561025a57600080fd5b61017e600160a060020a03600435166104fb565b341561027957600080fd5b61021d600435610516565b341561028f57600080fd5b6102a3600160a060020a0360043516610531565b60405160208082528190810183818151815260200191508051906020019060200280838360005b838110156102e25780820151838201526020016102ca565b505050509050019250505060405180910390f35b341561030157600080fd5b6100e5610612565b341561031457600080fd5b61031c610649565b60405167ffffffffffffffff909116815260200160405180910390f35b341561034457600080fd5b6101e3600160a060020a036004351660243561064f565b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b6002602052816000526040600020818154811015156103ad57fe5b6000918252602090912001549150829050565b6000545b90565b60006103d28261042a565b4267ffffffffffffffff166000838154811015156103ec57fe5b600091825260209091206003909102015468010000000000000000900467ffffffffffffffff16111561042157506000610425565b5060015b919050565b6104326103c0565b811061043d57600080fd5b50565b60008030600160a060020a031684600160a060020a03161415151561046457600080fd5b610470600084866106a9565b949350505050565b600081815260016020526040902054600160a060020a031680151561042557600080fd5b60006104a78261042a565b610e1042016000838154811015156104bb57fe5b906000526020600020906003020160000160086101000a81548167ffffffffffffffff021916908367ffffffffffffffff16021790555060019050919050565b600160a060020a031660009081526003602052604090205490565b600160205260009081526040902054600160a060020a031681565b6105396109e7565b60006105436109e7565b6000806000610551876104fb565b94508415156105815760006040518059106105695750595b90808252806020026020018201604052509550610608565b8460405180591061058f5750595b908082528060200260200182016040525093506105aa6103c0565b925060009150600190505b82811161060457600081815260016020526040902054600160a060020a03888116911614156105fc57808483815181106105eb57fe5b602090810290910101526001909101905b6001016105b5565b8395505b5050505050919050565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b610e1081565b600160a060020a038216151561066457600080fd5b30600160a060020a031682600160a060020a03161415151561068557600080fd5b61068f33826108fe565b151561069a57600080fd5b6106a533838361091e565b5050565b60006106b36109f9565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff1681526020018681525091506001600080548060010182816107489190610a2e565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff8116811461087557600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a16108f56000858361091e565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff1916909117905583161561099257600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b815481835581811511610a5a57600302816003028360005260206000209182019101610a5a9190610a5f565b505050565b6103c491905b80821115610a86576000808255600182018190556002820155600301610a65565b50905600a165627a7a72305820b747caeb6cd08135648d531ecc29b1aacf7c03b1c0115a6df0f76357bf461c950029`
+
+// DeployCardBattles deploys a new Ethereum contract, binding an instance of CardBattles to it.
+func DeployCardBattles(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *CardBattles, error) {
+	parsed, err := abi.JSON(strings.NewReader(CardBattlesABI))
+	if err != nil {
+		return common.Address{}, nil, nil, err
+	}
+	address, tx, contract, err := bind.DeployContract(auth, parsed, common.FromHex(CardBattlesBin), backend)
+	if err != nil {
+		return common.Address{}, nil, nil, err
+	}
+	return address, tx, &CardBattles{CardBattlesCaller: CardBattlesCaller{contract: contract}, CardBattlesTransactor: CardBattlesTransactor{contract: contract}, CardBattlesFilterer: CardBattlesFilterer{contract: contract}}, nil
+}
+
+// CardBattles is an auto generated Go binding around an Ethereum contract.
+type CardBattles struct {
+	CardBattlesCaller     // Read-only binding to the contract
+	CardBattlesTransactor // Write-only binding to the contract
+	CardBattlesFilterer   // Log filterer for contract events
+}
+
+// CardBattlesCaller is an auto generated read-only Go binding around an Ethereum contract.
+type CardBattlesCaller struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// CardBattlesTransactor is an auto generated write-only Go binding around an Ethereum contract.
+type CardBattlesTransactor struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// CardBattlesFilterer is an auto generated log filtering Go binding around an Ethereum contract events.
+type CardBattlesFilterer struct {
+	contract *bind.BoundContract // Generic contract wrapper for the low level calls
+}
+
+// CardBattlesSession is an auto generated Go binding around an Ethereum contract,
+// with pre-set call and transact options.
+type CardBattlesSession struct {
+	Contract     *CardBattles      // Generic contract binding to set the session for
+	CallOpts     bind.CallOpts     // Call options to use throughout this session
+	TransactOpts bind.TransactOpts // Transaction auth options to use throughout this session
+}
+
+// CardBattlesCallerSession is an auto generated read-only Go binding around an Ethereum contract,
+// with pre-set call options.
+type CardBattlesCallerSession struct {
+	Contract *CardBattlesCaller // Generic contract caller binding to set the session for
+	CallOpts bind.CallOpts      // Call options to use throughout this session
+}
+
+// CardBattlesTransactorSession is an auto generated write-only Go binding around an Ethereum contract,
+// with pre-set transact options.
+type CardBattlesTransactorSession struct {
+	Contract     *CardBattlesTransactor // Generic contract transactor binding to set the session for
+	TransactOpts bind.TransactOpts      // Transaction auth options to use throughout this session
+}
+
+// CardBattlesRaw is an auto generated low-level Go binding around an Ethereum contract.
+type CardBattlesRaw struct {
+	Contract *CardBattles // Generic contract binding to access the raw methods on
+}
+
+// CardBattlesCallerRaw is an auto generated low-level read-only Go binding around an Ethereum contract.
+type CardBattlesCallerRaw struct {
+	Contract *CardBattlesCaller // Generic read-only contract binding to access the raw methods on
+}
+
+// CardBattlesTransactorRaw is an auto generated low-level write-only Go binding around an Ethereum contract.
+type CardBattlesTransactorRaw struct {
+	Contract *CardBattlesTransactor // Generic write-only contract binding to access the raw methods on
+}
+
+// NewCardBattles creates a new instance of CardBattles, bound to a specific deployed contract.
+func NewCardBattles(address common.Address, backend bind.ContractBackend) (*CardBattles, error) {
+	contract, err := bindCardBattles(address, backend, backend, backend)
+	if err != nil {
+		return nil, err
+	}
+	return &CardBattles{CardBattlesCaller: CardBattlesCaller{contract: contract}, CardBattlesTransactor: CardBattlesTransactor{contract: contract}, CardBattlesFilterer: CardBattlesFilterer{contract: contract}}, nil
+}
+
+// NewCardBattlesCaller creates a new read-only instance of CardBattles, bound to a specific deployed contract.
+func NewCardBattlesCaller(address common.Address, caller bind.ContractCaller) (*CardBattlesCaller, error) {
+	contract, err := bindCardBattles(address, caller, nil, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &CardBattlesCaller{contract: contract}, nil
+}
+
+// NewCardBattlesTransactor creates a new write-only instance of CardBattles, bound to a specific deployed contract.
+func NewCardBattlesTransactor(address common.Address, transactor bind.ContractTransactor) (*CardBattlesTransactor, error) {
+	contract, err := bindCardBattles(address, nil, transactor, nil)
+	if err != nil {
+		return nil, err
+	}
+	return &CardBattlesTransactor{contract: contract}, nil
+}
+
+// NewCardBattlesFilterer creates a new log filterer instance of CardBattles, bound to a specific deployed contract.
+func NewCardBattlesFilterer(address common.Address, filterer bind.ContractFilterer) (*CardBattlesFilterer, error) {
+	contract, err := bindCardBattles(address, nil, nil, filterer)
+	if err != nil {
+		return nil, err
+	}
+	return &CardBattlesFilterer{contract: contract}, nil
+}
+
+// bindCardBattles binds a generic wrapper to an already deployed contract.
+func bindCardBattles(address common.Address, caller bind.ContractCaller, transactor bind.ContractTransactor, filterer bind.ContractFilterer) (*bind.BoundContract, error) {
+	parsed, err := abi.JSON(strings.NewReader(CardBattlesABI))
+	if err != nil {
+		return nil, err
+	}
+	return bind.NewBoundContract(address, parsed, caller, transactor, filterer), nil
+}
+
+// Call invokes the (constant) contract method with params as input values and
+// sets the output to result. The result type might be a single field for simple
+// returns, a slice of interfaces for anonymous returns and a struct for named
+// returns.
+func (_CardBattles *CardBattlesRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+	return _CardBattles.Contract.CardBattlesCaller.contract.Call(opts, result, method, params...)
+}
+
+// Transfer initiates a plain transaction to move funds to the contract, calling
+// its default method if one is available.
+func (_CardBattles *CardBattlesRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _CardBattles.Contract.CardBattlesTransactor.contract.Transfer(opts)
+}
+
+// Transact invokes the (paid) contract method with params as input values.
+func (_CardBattles *CardBattlesRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _CardBattles.Contract.CardBattlesTransactor.contract.Transact(opts, method, params...)
+}
+
+// Call invokes the (constant) contract method with params as input values and
+// sets the output to result. The result type might be a single field for simple
+// returns, a slice of interfaces for anonymous returns and a struct for named
+// returns.
+func (_CardBattles *CardBattlesCallerRaw) Call(opts *bind.CallOpts, result interface{}, method string, params ...interface{}) error {
+	return _CardBattles.Contract.contract.Call(opts, result, method, params...)
+}
+
+// Transfer initiates a plain transaction to move funds to the contract, calling
+// its default method if one is available.
+func (_CardBattles *CardBattlesTransactorRaw) Transfer(opts *bind.TransactOpts) (*types.Transaction, error) {
+	return _CardBattles.Contract.contract.Transfer(opts)
+}
+
+// Transact invokes the (paid) contract method with params as input values.
+func (_CardBattles *CardBattlesTransactorRaw) Transact(opts *bind.TransactOpts, method string, params ...interface{}) (*types.Transaction, error) {
+	return _CardBattles.Contract.contract.Transact(opts, method, params...)
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CardBattles *CardBattlesCaller) BATTLECOOLDOWNTIME(opts *bind.CallOpts) (uint64, error) {
+	var (
+		ret0 = new(uint64)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "BATTLE_COOLDOWN_TIME")
+	return *ret0, err
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CardBattles *CardBattlesSession) BATTLECOOLDOWNTIME() (uint64, error) {
+	return _CardBattles.Contract.BATTLECOOLDOWNTIME(&_CardBattles.CallOpts)
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CardBattles *CardBattlesCallerSession) BATTLECOOLDOWNTIME() (uint64, error) {
+	return _CardBattles.Contract.BATTLECOOLDOWNTIME(&_CardBattles.CallOpts)
+}
+
+// BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
+//
+// Solidity: function balanceOf(_owner address) constant returns(count uint256)
+func (_CardBattles *CardBattlesCaller) BalanceOf(opts *bind.CallOpts, _owner common.Address) (*big.Int, error) {
+	var (
+		ret0 = new(*big.Int)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "balanceOf", _owner)
+	return *ret0, err
+}
+
+// BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
+//
+// Solidity: function balanceOf(_owner address) constant returns(count uint256)
+func (_CardBattles *CardBattlesSession) BalanceOf(_owner common.Address) (*big.Int, error) {
+	return _CardBattles.Contract.BalanceOf(&_CardBattles.CallOpts, _owner)
+}
+
+// BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
+//
+// Solidity: function balanceOf(_owner address) constant returns(count uint256)
+func (_CardBattles *CardBattlesCallerSession) BalanceOf(_owner common.Address) (*big.Int, error) {
+	return _CardBattles.Contract.BalanceOf(&_CardBattles.CallOpts, _owner)
+}
+
+// CardIndexToOwner is a free data retrieval call binding the contract method 0x78d0df50.
+//
+// Solidity: function cardIndexToOwner( uint256) constant returns(address)
+func (_CardBattles *CardBattlesCaller) CardIndexToOwner(opts *bind.CallOpts, arg0 *big.Int) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "cardIndexToOwner", arg0)
+	return *ret0, err
+}
+
+// CardIndexToOwner is a free data retrieval call binding the contract method 0x78d0df50.
+//
+// Solidity: function cardIndexToOwner( uint256) constant returns(address)
+func (_CardBattles *CardBattlesSession) CardIndexToOwner(arg0 *big.Int) (common.Address, error) {
+	return _CardBattles.Contract.CardIndexToOwner(&_CardBattles.CallOpts, arg0)
+}
+
+// CardIndexToOwner is a free data retrieval call binding the contract method 0x78d0df50.
+//
+// Solidity: function cardIndexToOwner( uint256) constant returns(address)
+func (_CardBattles *CardBattlesCallerSession) CardIndexToOwner(arg0 *big.Int) (common.Address, error) {
+	return _CardBattles.Contract.CardIndexToOwner(&_CardBattles.CallOpts, arg0)
+}
+
+// CardsHeldByOwner is a free data retrieval call binding the contract method 0x12c2debf.
+//
+// Solidity: function cardsHeldByOwner( address,  uint256) constant returns(uint256)
+func (_CardBattles *CardBattlesCaller) CardsHeldByOwner(opts *bind.CallOpts, arg0 common.Address, arg1 *big.Int) (*big.Int, error) {
+	var (
+		ret0 = new(*big.Int)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "cardsHeldByOwner", arg0, arg1)
+	return *ret0, err
+}
+
+// CardsHeldByOwner is a free data retrieval call binding the contract method 0x12c2debf.
+//
+// Solidity: function cardsHeldByOwner( address,  uint256) constant returns(uint256)
+func (_CardBattles *CardBattlesSession) CardsHeldByOwner(arg0 common.Address, arg1 *big.Int) (*big.Int, error) {
+	return _CardBattles.Contract.CardsHeldByOwner(&_CardBattles.CallOpts, arg0, arg1)
+}
+
+// CardsHeldByOwner is a free data retrieval call binding the contract method 0x12c2debf.
+//
+// Solidity: function cardsHeldByOwner( address,  uint256) constant returns(uint256)
+func (_CardBattles *CardBattlesCallerSession) CardsHeldByOwner(arg0 common.Address, arg1 *big.Int) (*big.Int, error) {
+	return _CardBattles.Contract.CardsHeldByOwner(&_CardBattles.CallOpts, arg0, arg1)
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CardBattles *CardBattlesCaller) IsReadyForBattle(opts *bind.CallOpts, _cardID *big.Int) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "isReadyForBattle", _cardID)
+	return *ret0, err
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CardBattles *CardBattlesSession) IsReadyForBattle(_cardID *big.Int) (bool, error) {
+	return _CardBattles.Contract.IsReadyForBattle(&_CardBattles.CallOpts, _cardID)
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CardBattles *CardBattlesCallerSession) IsReadyForBattle(_cardID *big.Int) (bool, error) {
+	return _CardBattles.Contract.IsReadyForBattle(&_CardBattles.CallOpts, _cardID)
+}
+
+// Name is a free data retrieval call binding the contract method 0x06fdde03.
+//
+// Solidity: function name() constant returns(string)
+func (_CardBattles *CardBattlesCaller) Name(opts *bind.CallOpts) (string, error) {
+	var (
+		ret0 = new(string)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "name")
+	return *ret0, err
+}
+
+// Name is a free data retrieval call binding the contract method 0x06fdde03.
+//
+// Solidity: function name() constant returns(string)
+func (_CardBattles *CardBattlesSession) Name() (string, error) {
+	return _CardBattles.Contract.Name(&_CardBattles.CallOpts)
+}
+
+// Name is a free data retrieval call binding the contract method 0x06fdde03.
+//
+// Solidity: function name() constant returns(string)
+func (_CardBattles *CardBattlesCallerSession) Name() (string, error) {
+	return _CardBattles.Contract.Name(&_CardBattles.CallOpts)
+}
+
+// OwnerOf is a free data retrieval call binding the contract method 0x6352211e.
+//
+// Solidity: function ownerOf(_tokenId uint256) constant returns(owner address)
+func (_CardBattles *CardBattlesCaller) OwnerOf(opts *bind.CallOpts, _tokenId *big.Int) (common.Address, error) {
+	var (
+		ret0 = new(common.Address)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "ownerOf", _tokenId)
+	return *ret0, err
+}
+
+// OwnerOf is a free data retrieval call binding the contract method 0x6352211e.
+//
+// Solidity: function ownerOf(_tokenId uint256) constant returns(owner address)
+func (_CardBattles *CardBattlesSession) OwnerOf(_tokenId *big.Int) (common.Address, error) {
+	return _CardBattles.Contract.OwnerOf(&_CardBattles.CallOpts, _tokenId)
+}
+
+// OwnerOf is a free data retrieval call binding the contract method 0x6352211e.
+//
+// Solidity: function ownerOf(_tokenId uint256) constant returns(owner address)
+func (_CardBattles *CardBattlesCallerSession) OwnerOf(_tokenId *big.Int) (common.Address, error) {
+	return _CardBattles.Contract.OwnerOf(&_CardBattles.CallOpts, _tokenId)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardBattles *CardBattlesCaller) RequireCardExists(opts *bind.CallOpts, cardID *big.Int) error {
+	var ()
+	out := &[]interface{}{}
+	err := _CardBattles.contract.Call(opts, out, "requireCardExists", cardID)
+	return err
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardBattles *CardBattlesSession) RequireCardExists(cardID *big.Int) error {
+	return _CardBattles.Contract.RequireCardExists(&_CardBattles.CallOpts, cardID)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardBattles *CardBattlesCallerSession) RequireCardExists(cardID *big.Int) error {
+	return _CardBattles.Contract.RequireCardExists(&_CardBattles.CallOpts, cardID)
+}
+
+// Symbol is a free data retrieval call binding the contract method 0x95d89b41.
+//
+// Solidity: function symbol() constant returns(string)
+func (_CardBattles *CardBattlesCaller) Symbol(opts *bind.CallOpts) (string, error) {
+	var (
+		ret0 = new(string)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "symbol")
+	return *ret0, err
+}
+
+// Symbol is a free data retrieval call binding the contract method 0x95d89b41.
+//
+// Solidity: function symbol() constant returns(string)
+func (_CardBattles *CardBattlesSession) Symbol() (string, error) {
+	return _CardBattles.Contract.Symbol(&_CardBattles.CallOpts)
+}
+
+// Symbol is a free data retrieval call binding the contract method 0x95d89b41.
+//
+// Solidity: function symbol() constant returns(string)
+func (_CardBattles *CardBattlesCallerSession) Symbol() (string, error) {
+	return _CardBattles.Contract.Symbol(&_CardBattles.CallOpts)
+}
+
+// TokensOfOwner is a free data retrieval call binding the contract method 0x8462151c.
+//
+// Solidity: function tokensOfOwner(_owner address) constant returns(ownerTokens uint256[])
+func (_CardBattles *CardBattlesCaller) TokensOfOwner(opts *bind.CallOpts, _owner common.Address) ([]*big.Int, error) {
+	var (
+		ret0 = new([]*big.Int)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "tokensOfOwner", _owner)
+	return *ret0, err
+}
+
+// TokensOfOwner is a free data retrieval call binding the contract method 0x8462151c.
+//
+// Solidity: function tokensOfOwner(_owner address) constant returns(ownerTokens uint256[])
+func (_CardBattles *CardBattlesSession) TokensOfOwner(_owner common.Address) ([]*big.Int, error) {
+	return _CardBattles.Contract.TokensOfOwner(&_CardBattles.CallOpts, _owner)
+}
+
+// TokensOfOwner is a free data retrieval call binding the contract method 0x8462151c.
+//
+// Solidity: function tokensOfOwner(_owner address) constant returns(ownerTokens uint256[])
+func (_CardBattles *CardBattlesCallerSession) TokensOfOwner(_owner common.Address) ([]*big.Int, error) {
+	return _CardBattles.Contract.TokensOfOwner(&_CardBattles.CallOpts, _owner)
+}
+
+// TotalSupply is a free data retrieval call binding the contract method 0x18160ddd.
+//
+// Solidity: function totalSupply() constant returns(uint256)
+func (_CardBattles *CardBattlesCaller) TotalSupply(opts *bind.CallOpts) (*big.Int, error) {
+	var (
+		ret0 = new(*big.Int)
+	)
+	out := ret0
+	err := _CardBattles.contract.Call(opts, out, "totalSupply")
+	return *ret0, err
+}
+
+// TotalSupply is a free data retrieval call binding the contract method 0x18160ddd.
+//
+// Solidity: function totalSupply() constant returns(uint256)
+func (_CardBattles *CardBattlesSession) TotalSupply() (*big.Int, error) {
+	return _CardBattles.Contract.TotalSupply(&_CardBattles.CallOpts)
+}
+
+// TotalSupply is a free data retrieval call binding the contract method 0x18160ddd.
+//
+// Solidity: function totalSupply() constant returns(uint256)
+func (_CardBattles *CardBattlesCallerSession) TotalSupply() (*big.Int, error) {
+	return _CardBattles.Contract.TotalSupply(&_CardBattles.CallOpts)
+}
+
+// CreateCard is a paid mutator transaction binding the contract method 0x5de038b1.
+//
+// Solidity: function createCard(_owner address, _attributes uint256) returns(uint256)
+func (_CardBattles *CardBattlesTransactor) CreateCard(opts *bind.TransactOpts, _owner common.Address, _attributes *big.Int) (*types.Transaction, error) {
+	return _CardBattles.contract.Transact(opts, "createCard", _owner, _attributes)
+}
+
+// CreateCard is a paid mutator transaction binding the contract method 0x5de038b1.
+//
+// Solidity: function createCard(_owner address, _attributes uint256) returns(uint256)
+func (_CardBattles *CardBattlesSession) CreateCard(_owner common.Address, _attributes *big.Int) (*types.Transaction, error) {
+	return _CardBattles.Contract.CreateCard(&_CardBattles.TransactOpts, _owner, _attributes)
+}
+
+// CreateCard is a paid mutator transaction binding the contract method 0x5de038b1.
+//
+// Solidity: function createCard(_owner address, _attributes uint256) returns(uint256)
+func (_CardBattles *CardBattlesTransactorSession) CreateCard(_owner common.Address, _attributes *big.Int) (*types.Transaction, error) {
+	return _CardBattles.Contract.CreateCard(&_CardBattles.TransactOpts, _owner, _attributes)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CardBattles *CardBattlesTransactor) SetOnBattleCooldown(opts *bind.TransactOpts, _cardID *big.Int) (*types.Transaction, error) {
+	return _CardBattles.contract.Transact(opts, "setOnBattleCooldown", _cardID)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CardBattles *CardBattlesSession) SetOnBattleCooldown(_cardID *big.Int) (*types.Transaction, error) {
+	return _CardBattles.Contract.SetOnBattleCooldown(&_CardBattles.TransactOpts, _cardID)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CardBattles *CardBattlesTransactorSession) SetOnBattleCooldown(_cardID *big.Int) (*types.Transaction, error) {
+	return _CardBattles.Contract.SetOnBattleCooldown(&_CardBattles.TransactOpts, _cardID)
+}
+
+// Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
+//
+// Solidity: function transfer(_to address, _cardId uint256) returns()
+func (_CardBattles *CardBattlesTransactor) Transfer(opts *bind.TransactOpts, _to common.Address, _cardId *big.Int) (*types.Transaction, error) {
+	return _CardBattles.contract.Transact(opts, "transfer", _to, _cardId)
+}
+
+// Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
+//
+// Solidity: function transfer(_to address, _cardId uint256) returns()
+func (_CardBattles *CardBattlesSession) Transfer(_to common.Address, _cardId *big.Int) (*types.Transaction, error) {
+	return _CardBattles.Contract.Transfer(&_CardBattles.TransactOpts, _to, _cardId)
+}
+
+// Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
+//
+// Solidity: function transfer(_to address, _cardId uint256) returns()
+func (_CardBattles *CardBattlesTransactorSession) Transfer(_to common.Address, _cardId *big.Int) (*types.Transaction, error) {
+	return _CardBattles.Contract.Transfer(&_CardBattles.TransactOpts, _to, _cardId)
+}
+
+// CardBattlesNewCardIterator is returned from FilterNewCard and is used to iterate over the raw logs and unpacked data for NewCard events raised by the CardBattles contract.
+type CardBattlesNewCardIterator struct {
+	Event *CardBattlesNewCard // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *CardBattlesNewCardIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(CardBattlesNewCard)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(CardBattlesNewCard)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *CardBattlesNewCardIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *CardBattlesNewCardIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// CardBattlesNewCard represents a NewCard event raised by the CardBattles contract.
+type CardBattlesNewCard struct {
+	Owner            common.Address
+	CardID           *big.Int
+	CreationBattleID *big.Int
+	Attributes       *big.Int
+	Raw              types.Log // Blockchain specific contextual infos
+}
+
+// FilterNewCard is a free log retrieval operation binding the contract event 0xc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4.
+//
+// Solidity: event NewCard(owner address, cardID uint256, creationBattleID uint128, attributes uint256)
+func (_CardBattles *CardBattlesFilterer) FilterNewCard(opts *bind.FilterOpts) (*CardBattlesNewCardIterator, error) {
+
+	logs, sub, err := _CardBattles.contract.FilterLogs(opts, "NewCard")
+	if err != nil {
+		return nil, err
+	}
+	return &CardBattlesNewCardIterator{contract: _CardBattles.contract, event: "NewCard", logs: logs, sub: sub}, nil
+}
+
+// WatchNewCard is a free log subscription operation binding the contract event 0xc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4.
+//
+// Solidity: event NewCard(owner address, cardID uint256, creationBattleID uint128, attributes uint256)
+func (_CardBattles *CardBattlesFilterer) WatchNewCard(opts *bind.WatchOpts, sink chan<- *CardBattlesNewCard) (event.Subscription, error) {
+
+	logs, sub, err := _CardBattles.contract.WatchLogs(opts, "NewCard")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(CardBattlesNewCard)
+				if err := _CardBattles.contract.UnpackLog(event, "NewCard", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
+// CardBattlesTransferIterator is returned from FilterTransfer and is used to iterate over the raw logs and unpacked data for Transfer events raised by the CardBattles contract.
+type CardBattlesTransferIterator struct {
+	Event *CardBattlesTransfer // Event containing the contract specifics and raw log
+
+	contract *bind.BoundContract // Generic contract to use for unpacking event data
+	event    string              // Event name to use for unpacking event data
+
+	logs chan types.Log        // Log channel receiving the found contract events
+	sub  ethereum.Subscription // Subscription for errors, completion and termination
+	done bool                  // Whether the subscription completed delivering logs
+	fail error                 // Occurred error to stop iteration
+}
+
+// Next advances the iterator to the subsequent event, returning whether there
+// are any more events found. In case of a retrieval or parsing error, false is
+// returned and Error() can be queried for the exact failure.
+func (it *CardBattlesTransferIterator) Next() bool {
+	// If the iterator failed, stop iterating
+	if it.fail != nil {
+		return false
+	}
+	// If the iterator completed, deliver directly whatever's available
+	if it.done {
+		select {
+		case log := <-it.logs:
+			it.Event = new(CardBattlesTransfer)
+			if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+				it.fail = err
+				return false
+			}
+			it.Event.Raw = log
+			return true
+
+		default:
+			return false
+		}
+	}
+	// Iterator still in progress, wait for either a data or an error event
+	select {
+	case log := <-it.logs:
+		it.Event = new(CardBattlesTransfer)
+		if err := it.contract.UnpackLog(it.Event, it.event, log); err != nil {
+			it.fail = err
+			return false
+		}
+		it.Event.Raw = log
+		return true
+
+	case err := <-it.sub.Err():
+		it.done = true
+		it.fail = err
+		return it.Next()
+	}
+}
+
+// Error returns any retrieval or parsing error occurred during filtering.
+func (it *CardBattlesTransferIterator) Error() error {
+	return it.fail
+}
+
+// Close terminates the iteration process, releasing any pending underlying
+// resources.
+func (it *CardBattlesTransferIterator) Close() error {
+	it.sub.Unsubscribe()
+	return nil
+}
+
+// CardBattlesTransfer represents a Transfer event raised by the CardBattles contract.
+type CardBattlesTransfer struct {
+	From    common.Address
+	To      common.Address
+	TokenID *big.Int
+	Raw     types.Log // Blockchain specific contextual infos
+}
+
+// FilterTransfer is a free log retrieval operation binding the contract event 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef.
+//
+// Solidity: event Transfer(from address, to address, tokenID uint256)
+func (_CardBattles *CardBattlesFilterer) FilterTransfer(opts *bind.FilterOpts) (*CardBattlesTransferIterator, error) {
+
+	logs, sub, err := _CardBattles.contract.FilterLogs(opts, "Transfer")
+	if err != nil {
+		return nil, err
+	}
+	return &CardBattlesTransferIterator{contract: _CardBattles.contract, event: "Transfer", logs: logs, sub: sub}, nil
+}
+
+// WatchTransfer is a free log subscription operation binding the contract event 0xddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef.
+//
+// Solidity: event Transfer(from address, to address, tokenID uint256)
+func (_CardBattles *CardBattlesFilterer) WatchTransfer(opts *bind.WatchOpts, sink chan<- *CardBattlesTransfer) (event.Subscription, error) {
+
+	logs, sub, err := _CardBattles.contract.WatchLogs(opts, "Transfer")
+	if err != nil {
+		return nil, err
+	}
+	return event.NewSubscription(func(quit <-chan struct{}) error {
+		defer sub.Unsubscribe()
+		for {
+			select {
+			case log := <-logs:
+				// New log arrived, parse the event and forward to the user
+				event := new(CardBattlesTransfer)
+				if err := _CardBattles.contract.UnpackLog(event, "Transfer", log); err != nil {
+					return err
+				}
+				event.Raw = log
+
+				select {
+				case sink <- event:
+				case err := <-sub.Err():
+					return err
+				case <-quit:
+					return nil
+				}
+			case err := <-sub.Err():
+				return err
+			case <-quit:
+				return nil
+			}
+		}
+	}), nil
+}
+
 // CardMintingABI is the input ABI used to generate the binding from.
-const CardMintingABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"createGen0Card\",\"outputs\":[{\"name\":\"isSuccess\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
+const CardMintingABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_cardID\",\"type\":\"uint256\"}],\"name\":\"isReadyForBattle\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"cardID\",\"type\":\"uint256\"}],\"name\":\"requireCardExists\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"createGen0Card\",\"outputs\":[{\"name\":\"newCardID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_cardID\",\"type\":\"uint256\"}],\"name\":\"setOnBattleCooldown\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BATTLE_COOLDOWN_TIME\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
 
 // CardMintingBin is the compiled bytecode used for deploying new contracts.
-const CardMintingBin = `0x6060604052341561000f57600080fd5b6109618061001e6000396000f300606060405236156100ac5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde0381146100b157806312c2debf1461013b57806318160ddd1461016f57806345812958146101825780635de038b1146101955780636352211e146101b757806370a08231146101e957806378d0df50146102085780638462151c1461021e57806395d89b4114610290578063a9059cbb146102a3575b600080fd5b34156100bc57600080fd5b6100c46102c7565b60405160208082528190810183818151815260200191508051906020019080838360005b838110156101005780820151838201526020016100e8565b50505050905090810190601f16801561012d5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561014657600080fd5b61015d600160a060020a03600435166024356102fe565b60405190815260200160405180910390f35b341561017a57600080fd5b61015d61032c565b341561018d57600080fd5b61015d610333565b34156101a057600080fd5b61015d600160a060020a036004351660243561034b565b34156101c257600080fd5b6101cd600435610383565b604051600160a060020a03909116815260200160405180910390f35b34156101f457600080fd5b61015d600160a060020a03600435166103ac565b341561021357600080fd5b6101cd6004356103c7565b341561022957600080fd5b61023d600160a060020a03600435166103e2565b60405160208082528190810183818151815260200191508051906020019060200280838360005b8381101561027c578082015183820152602001610264565b505050509050019250505060405180910390f35b341561029b57600080fd5b6100c46104c3565b34156102ae57600080fd5b6102c5600160a060020a03600435166024356104fa565b005b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b60026020528160005260406000208181548110151561031957fe5b6000918252602090912001549150829050565b6000545b90565b600061034360006201e24061034b565b506001905090565b60008030600160a060020a031684600160a060020a03161415151561036f57600080fd5b61037b60008486610554565b949350505050565b600081815260016020526040902054600160a060020a03168015156103a757600080fd5b919050565b600160a060020a031660009081526003602052604090205490565b600160205260009081526040902054600160a060020a031681565b6103ea610892565b60006103f4610892565b6000806000610402876103ac565b945084151561043257600060405180591061041a5750595b908082528060200260200182016040525095506104b9565b846040518059106104405750595b9080825280602002602001820160405250935061045b61032c565b925060009150600190505b8281116104b557600081815260016020526040902054600160a060020a03888116911614156104ad578084838151811061049c57fe5b602090810290910101526001909101905b600101610466565b8395505b5050505050919050565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b600160a060020a038216151561050f57600080fd5b30600160a060020a031682600160a060020a03161415151561053057600080fd5b61053a33826107a9565b151561054557600080fd5b6105503383836107c9565b5050565b600061055e6108a4565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff1681526020018681525091506001600080548060010182816105f391906108d9565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff8116811461072057600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a16107a0600085836107c9565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff1916909117905583161561083d57600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b81548183558181151161090557600302816003028360005260206000209182019101610905919061090a565b505050565b61033091905b80821115610931576000808255600182018190556002820155600301610910565b50905600a165627a7a72305820a8bc5e2bce638f8f275aee6e6e1be73ff27729cbf75deab89794309eb87390800029`
+const CardMintingBin = `0x6060604052341561000f57600080fd5b610aeb8061001e6000396000f300606060405236156100d85763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde0381146100dd57806312c2debf1461016757806318160ddd1461019b5780632109f89d146101ae57806330259720146101d857806345812958146101f05780635de038b1146102035780636352211e14610225578063685b7a5e1461025757806370a082311461026d57806378d0df501461028c5780638462151c146102a257806395d89b41146103145780639db0225714610327578063a9059cbb14610357575b600080fd5b34156100e857600080fd5b6100f0610379565b60405160208082528190810183818151815260200191508051906020019080838360005b8381101561012c578082015183820152602001610114565b50505050905090810190601f1680156101595780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561017257600080fd5b610189600160a060020a03600435166024356103b0565b60405190815260200160405180910390f35b34156101a657600080fd5b6101896103de565b34156101b957600080fd5b6101c46004356103e5565b604051901515815260200160405180910390f35b34156101e357600080fd5b6101ee600435610448565b005b34156101fb57600080fd5b61018961045e565b341561020e57600080fd5b610189600160a060020a0360043516602435610479565b341561023057600080fd5b61023b6004356104b1565b604051600160a060020a03909116815260200160405180910390f35b341561026257600080fd5b6101c46004356104d5565b341561027857600080fd5b610189600160a060020a0360043516610534565b341561029757600080fd5b61023b60043561054f565b34156102ad57600080fd5b6102c1600160a060020a036004351661056a565b60405160208082528190810183818151815260200191508051906020019060200280838360005b838110156103005780820151838201526020016102e8565b505050509050019250505060405180910390f35b341561031f57600080fd5b6100f061064b565b341561033257600080fd5b61033a610682565b60405167ffffffffffffffff909116815260200160405180910390f35b341561036257600080fd5b6101ee600160a060020a0360043516602435610688565b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b6002602052816000526040600020818154811015156103cb57fe5b6000918252602090912001549150829050565b6000545b90565b60006103f082610448565b4267ffffffffffffffff1660008381548110151561040a57fe5b600091825260209091206003909102015468010000000000000000900467ffffffffffffffff16111561043f57506000610443565b5060015b919050565b6104506103de565b811061045b57600080fd5b50565b60008061046f60006201e240610479565b90508091505b5090565b60008030600160a060020a031684600160a060020a03161415151561049d57600080fd5b6104a9600084866106e2565b949350505050565b600081815260016020526040902054600160a060020a031680151561044357600080fd5b60006104e082610448565b610e1042016000838154811015156104f457fe5b906000526020600020906003020160000160086101000a81548167ffffffffffffffff021916908367ffffffffffffffff16021790555060019050919050565b600160a060020a031660009081526003602052604090205490565b600160205260009081526040902054600160a060020a031681565b610572610a20565b600061057c610a20565b600080600061058a87610534565b94508415156105ba5760006040518059106105a25750595b90808252806020026020018201604052509550610641565b846040518059106105c85750595b908082528060200260200182016040525093506105e36103de565b925060009150600190505b82811161063d57600081815260016020526040902054600160a060020a0388811691161415610635578084838151811061062457fe5b602090810290910101526001909101905b6001016105ee565b8395505b5050505050919050565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b610e1081565b600160a060020a038216151561069d57600080fd5b30600160a060020a031682600160a060020a0316141515156106be57600080fd5b6106c83382610937565b15156106d357600080fd5b6106de338383610957565b5050565b60006106ec610a32565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff1681526020018681525091506001600080548060010182816107819190610a67565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff811681146108ae57600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a161092e60008583610957565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff191690911790558316156109cb57600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b815481835581811511610a9357600302816003028360005260206000209182019101610a939190610a98565b505050565b6103e291905b80821115610475576000808255600182018190556002820155600301610a9e5600a165627a7a723058205f910c4c5bec74f3132abfaf343655dd910a9e2ceb7197a7f2f52e0552023c6e0029`
 
 // DeployCardMinting deploys a new Ethereum contract, binding an instance of CardMinting to it.
 func DeployCardMinting(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *CardMinting, error) {
@@ -1328,6 +2184,32 @@ func (_CardMinting *CardMintingTransactorRaw) Transact(opts *bind.TransactOpts, 
 	return _CardMinting.Contract.contract.Transact(opts, method, params...)
 }
 
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CardMinting *CardMintingCaller) BATTLECOOLDOWNTIME(opts *bind.CallOpts) (uint64, error) {
+	var (
+		ret0 = new(uint64)
+	)
+	out := ret0
+	err := _CardMinting.contract.Call(opts, out, "BATTLE_COOLDOWN_TIME")
+	return *ret0, err
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CardMinting *CardMintingSession) BATTLECOOLDOWNTIME() (uint64, error) {
+	return _CardMinting.Contract.BATTLECOOLDOWNTIME(&_CardMinting.CallOpts)
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CardMinting *CardMintingCallerSession) BATTLECOOLDOWNTIME() (uint64, error) {
+	return _CardMinting.Contract.BATTLECOOLDOWNTIME(&_CardMinting.CallOpts)
+}
+
 // BalanceOf is a free data retrieval call binding the contract method 0x70a08231.
 //
 // Solidity: function balanceOf(_owner address) constant returns(count uint256)
@@ -1406,6 +2288,32 @@ func (_CardMinting *CardMintingCallerSession) CardsHeldByOwner(arg0 common.Addre
 	return _CardMinting.Contract.CardsHeldByOwner(&_CardMinting.CallOpts, arg0, arg1)
 }
 
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CardMinting *CardMintingCaller) IsReadyForBattle(opts *bind.CallOpts, _cardID *big.Int) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _CardMinting.contract.Call(opts, out, "isReadyForBattle", _cardID)
+	return *ret0, err
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CardMinting *CardMintingSession) IsReadyForBattle(_cardID *big.Int) (bool, error) {
+	return _CardMinting.Contract.IsReadyForBattle(&_CardMinting.CallOpts, _cardID)
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CardMinting *CardMintingCallerSession) IsReadyForBattle(_cardID *big.Int) (bool, error) {
+	return _CardMinting.Contract.IsReadyForBattle(&_CardMinting.CallOpts, _cardID)
+}
+
 // Name is a free data retrieval call binding the contract method 0x06fdde03.
 //
 // Solidity: function name() constant returns(string)
@@ -1456,6 +2364,30 @@ func (_CardMinting *CardMintingSession) OwnerOf(_tokenId *big.Int) (common.Addre
 // Solidity: function ownerOf(_tokenId uint256) constant returns(owner address)
 func (_CardMinting *CardMintingCallerSession) OwnerOf(_tokenId *big.Int) (common.Address, error) {
 	return _CardMinting.Contract.OwnerOf(&_CardMinting.CallOpts, _tokenId)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardMinting *CardMintingCaller) RequireCardExists(opts *bind.CallOpts, cardID *big.Int) error {
+	var ()
+	out := &[]interface{}{}
+	err := _CardMinting.contract.Call(opts, out, "requireCardExists", cardID)
+	return err
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardMinting *CardMintingSession) RequireCardExists(cardID *big.Int) error {
+	return _CardMinting.Contract.RequireCardExists(&_CardMinting.CallOpts, cardID)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardMinting *CardMintingCallerSession) RequireCardExists(cardID *big.Int) error {
+	return _CardMinting.Contract.RequireCardExists(&_CardMinting.CallOpts, cardID)
 }
 
 // Symbol is a free data retrieval call binding the contract method 0x95d89b41.
@@ -1559,23 +2491,44 @@ func (_CardMinting *CardMintingTransactorSession) CreateCard(_owner common.Addre
 
 // CreateGen0Card is a paid mutator transaction binding the contract method 0x45812958.
 //
-// Solidity: function createGen0Card() returns(isSuccess uint256)
+// Solidity: function createGen0Card() returns(newCardID uint256)
 func (_CardMinting *CardMintingTransactor) CreateGen0Card(opts *bind.TransactOpts) (*types.Transaction, error) {
 	return _CardMinting.contract.Transact(opts, "createGen0Card")
 }
 
 // CreateGen0Card is a paid mutator transaction binding the contract method 0x45812958.
 //
-// Solidity: function createGen0Card() returns(isSuccess uint256)
+// Solidity: function createGen0Card() returns(newCardID uint256)
 func (_CardMinting *CardMintingSession) CreateGen0Card() (*types.Transaction, error) {
 	return _CardMinting.Contract.CreateGen0Card(&_CardMinting.TransactOpts)
 }
 
 // CreateGen0Card is a paid mutator transaction binding the contract method 0x45812958.
 //
-// Solidity: function createGen0Card() returns(isSuccess uint256)
+// Solidity: function createGen0Card() returns(newCardID uint256)
 func (_CardMinting *CardMintingTransactorSession) CreateGen0Card() (*types.Transaction, error) {
 	return _CardMinting.Contract.CreateGen0Card(&_CardMinting.TransactOpts)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CardMinting *CardMintingTransactor) SetOnBattleCooldown(opts *bind.TransactOpts, _cardID *big.Int) (*types.Transaction, error) {
+	return _CardMinting.contract.Transact(opts, "setOnBattleCooldown", _cardID)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CardMinting *CardMintingSession) SetOnBattleCooldown(_cardID *big.Int) (*types.Transaction, error) {
+	return _CardMinting.Contract.SetOnBattleCooldown(&_CardMinting.TransactOpts, _cardID)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CardMinting *CardMintingTransactorSession) SetOnBattleCooldown(_cardID *big.Int) (*types.Transaction, error) {
+	return _CardMinting.Contract.SetOnBattleCooldown(&_CardMinting.TransactOpts, _cardID)
 }
 
 // Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.
@@ -1849,10 +2802,10 @@ func (_CardMinting *CardMintingFilterer) WatchTransfer(opts *bind.WatchOpts, sin
 }
 
 // CardOwnershipABI is the input ABI used to generate the binding from.
-const CardOwnershipABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
+const CardOwnershipABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"cardID\",\"type\":\"uint256\"}],\"name\":\"requireCardExists\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
 
 // CardOwnershipBin is the compiled bytecode used for deploying new contracts.
-const CardOwnershipBin = `0x6060604052341561000f57600080fd5b61092b8061001e6000396000f300606060405236156100a15763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde0381146100a657806312c2debf1461013057806318160ddd146101645780635de038b1146101775780636352211e1461019957806370a08231146101cb57806378d0df50146101ea5780638462151c1461020057806395d89b4114610272578063a9059cbb14610285575b600080fd5b34156100b157600080fd5b6100b96102a9565b60405160208082528190810183818151815260200191508051906020019080838360005b838110156100f55780820151838201526020016100dd565b50505050905090810190601f1680156101225780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561013b57600080fd5b610152600160a060020a03600435166024356102e0565b60405190815260200160405180910390f35b341561016f57600080fd5b61015261030e565b341561018257600080fd5b610152600160a060020a0360043516602435610315565b34156101a457600080fd5b6101af60043561034d565b604051600160a060020a03909116815260200160405180910390f35b34156101d657600080fd5b610152600160a060020a0360043516610376565b34156101f557600080fd5b6101af600435610391565b341561020b57600080fd5b61021f600160a060020a03600435166103ac565b60405160208082528190810183818151815260200191508051906020019060200280838360005b8381101561025e578082015183820152602001610246565b505050509050019250505060405180910390f35b341561027d57600080fd5b6100b961048d565b341561029057600080fd5b6102a7600160a060020a03600435166024356104c4565b005b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b6002602052816000526040600020818154811015156102fb57fe5b6000918252602090912001549150829050565b6000545b90565b60008030600160a060020a031684600160a060020a03161415151561033957600080fd5b6103456000848661051e565b949350505050565b600081815260016020526040902054600160a060020a031680151561037157600080fd5b919050565b600160a060020a031660009081526003602052604090205490565b600160205260009081526040902054600160a060020a031681565b6103b461085c565b60006103be61085c565b60008060006103cc87610376565b94508415156103fc5760006040518059106103e45750595b90808252806020026020018201604052509550610483565b8460405180591061040a5750595b9080825280602002602001820160405250935061042561030e565b925060009150600190505b82811161047f57600081815260016020526040902054600160a060020a0388811691161415610477578084838151811061046657fe5b602090810290910101526001909101905b600101610430565b8395505b5050505050919050565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b600160a060020a03821615156104d957600080fd5b30600160a060020a031682600160a060020a0316141515156104fa57600080fd5b6105043382610773565b151561050f57600080fd5b61051a338383610793565b5050565b600061052861086e565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff1681526020018681525091506001600080548060010182816105bd91906108a3565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff811681146106ea57600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a161076a60008583610793565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff1916909117905583161561080757600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b8154818355818115116108cf576003028160030283600052602060002091820191016108cf91906108d4565b505050565b61031291905b808211156108fb5760008082556001820181905560028201556003016108da565b50905600a165627a7a72305820afca59efa1db36e1e9739ac0783588731ab5b86cc174d50082129b7b7502ae190029`
+const CardOwnershipBin = `0x6060604052341561000f57600080fd5b6109628061001e6000396000f300606060405236156100ac5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde0381146100b157806312c2debf1461013b57806318160ddd1461016f57806330259720146101825780635de038b11461019a5780636352211e146101bc57806370a08231146101ee57806378d0df501461020d5780638462151c1461022357806395d89b4114610295578063a9059cbb146102a8575b600080fd5b34156100bc57600080fd5b6100c46102ca565b60405160208082528190810183818151815260200191508051906020019080838360005b838110156101005780820151838201526020016100e8565b50505050905090810190601f16801561012d5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561014657600080fd5b61015d600160a060020a0360043516602435610301565b60405190815260200160405180910390f35b341561017a57600080fd5b61015d61032f565b341561018d57600080fd5b610198600435610336565b005b34156101a557600080fd5b61015d600160a060020a036004351660243561034c565b34156101c757600080fd5b6101d2600435610384565b604051600160a060020a03909116815260200160405180910390f35b34156101f957600080fd5b61015d600160a060020a03600435166103ad565b341561021857600080fd5b6101d26004356103c8565b341561022e57600080fd5b610242600160a060020a03600435166103e3565b60405160208082528190810183818151815260200191508051906020019060200280838360005b83811015610281578082015183820152602001610269565b505050509050019250505060405180910390f35b34156102a057600080fd5b6100c46104c4565b34156102b357600080fd5b610198600160a060020a03600435166024356104fb565b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b60026020528160005260406000208181548110151561031c57fe5b6000918252602090912001549150829050565b6000545b90565b61033e61032f565b811061034957600080fd5b50565b60008030600160a060020a031684600160a060020a03161415151561037057600080fd5b61037c60008486610555565b949350505050565b600081815260016020526040902054600160a060020a03168015156103a857600080fd5b919050565b600160a060020a031660009081526003602052604090205490565b600160205260009081526040902054600160a060020a031681565b6103eb610893565b60006103f5610893565b6000806000610403876103ad565b945084151561043357600060405180591061041b5750595b908082528060200260200182016040525095506104ba565b846040518059106104415750595b9080825280602002602001820160405250935061045c61032f565b925060009150600190505b8281116104b657600081815260016020526040902054600160a060020a03888116911614156104ae578084838151811061049d57fe5b602090810290910101526001909101905b600101610467565b8395505b5050505050919050565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b600160a060020a038216151561051057600080fd5b30600160a060020a031682600160a060020a03161415151561053157600080fd5b61053b33826107aa565b151561054657600080fd5b6105513383836107ca565b5050565b600061055f6108a5565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff1681526020018681525091506001600080548060010182816105f491906108da565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff8116811461072157600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a16107a1600085836107ca565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff1916909117905583161561083e57600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b81548183558181151161090657600302816003028360005260206000209182019101610906919061090b565b505050565b61033391905b80821115610932576000808255600182018190556002820155600301610911565b50905600a165627a7a72305820c8ae21536a1beb81163c08be555905ff34f398b7c96a28cfefb061bcba67b97c0029`
 
 // DeployCardOwnership deploys a new Ethereum contract, binding an instance of CardOwnership to it.
 func DeployCardOwnership(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *CardOwnership, error) {
@@ -2137,6 +3090,30 @@ func (_CardOwnership *CardOwnershipSession) OwnerOf(_tokenId *big.Int) (common.A
 // Solidity: function ownerOf(_tokenId uint256) constant returns(owner address)
 func (_CardOwnership *CardOwnershipCallerSession) OwnerOf(_tokenId *big.Int) (common.Address, error) {
 	return _CardOwnership.Contract.OwnerOf(&_CardOwnership.CallOpts, _tokenId)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardOwnership *CardOwnershipCaller) RequireCardExists(opts *bind.CallOpts, cardID *big.Int) error {
+	var ()
+	out := &[]interface{}{}
+	err := _CardOwnership.contract.Call(opts, out, "requireCardExists", cardID)
+	return err
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardOwnership *CardOwnershipSession) RequireCardExists(cardID *big.Int) error {
+	return _CardOwnership.Contract.RequireCardExists(&_CardOwnership.CallOpts, cardID)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CardOwnership *CardOwnershipCallerSession) RequireCardExists(cardID *big.Int) error {
+	return _CardOwnership.Contract.RequireCardExists(&_CardOwnership.CallOpts, cardID)
 }
 
 // Symbol is a free data retrieval call binding the contract method 0x95d89b41.
@@ -2509,10 +3486,10 @@ func (_CardOwnership *CardOwnershipFilterer) WatchTransfer(opts *bind.WatchOpts,
 }
 
 // CryptoCardsCoreABI is the input ABI used to generate the binding from.
-const CryptoCardsCoreABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"createGen0Card\",\"outputs\":[{\"name\":\"isSuccess\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"newContractAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newAddress\",\"type\":\"address\"}],\"name\":\"setNewAddress\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"ownerAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BattleContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BattleGroupContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"newContract\",\"type\":\"address\"}],\"name\":\"ContractUpgrade\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
+const CryptoCardsCoreABI = "[{\"constant\":true,\"inputs\":[],\"name\":\"name\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"address\"},{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardsHeldByOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"totalSupply\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_cardID\",\"type\":\"uint256\"}],\"name\":\"isReadyForBattle\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"cardID\",\"type\":\"uint256\"}],\"name\":\"requireCardExists\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[],\"name\":\"createGen0Card\",\"outputs\":[{\"name\":\"newCardID\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"},{\"name\":\"_attributes\",\"type\":\"uint256\"}],\"name\":\"createCard\",\"outputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_tokenId\",\"type\":\"uint256\"}],\"name\":\"ownerOf\",\"outputs\":[{\"name\":\"owner\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_cardID\",\"type\":\"uint256\"}],\"name\":\"setOnBattleCooldown\",\"outputs\":[{\"name\":\"\",\"type\":\"bool\"}],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"newContractAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"balanceOf\",\"outputs\":[{\"name\":\"count\",\"type\":\"uint256\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_newAddress\",\"type\":\"address\"}],\"name\":\"setNewAddress\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"\",\"type\":\"uint256\"}],\"name\":\"cardIndexToOwner\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[{\"name\":\"_owner\",\"type\":\"address\"}],\"name\":\"tokensOfOwner\",\"outputs\":[{\"name\":\"ownerTokens\",\"type\":\"uint256[]\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"ownerAddress\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"symbol\",\"outputs\":[{\"name\":\"\",\"type\":\"string\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BATTLE_COOLDOWN_TIME\",\"outputs\":[{\"name\":\"\",\"type\":\"uint64\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":false,\"inputs\":[{\"name\":\"_to\",\"type\":\"address\"},{\"name\":\"_cardId\",\"type\":\"uint256\"}],\"name\":\"transfer\",\"outputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BattleContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"constant\":true,\"inputs\":[],\"name\":\"BattleGroupContract\",\"outputs\":[{\"name\":\"\",\"type\":\"address\"}],\"payable\":false,\"stateMutability\":\"view\",\"type\":\"function\"},{\"inputs\":[],\"payable\":false,\"stateMutability\":\"nonpayable\",\"type\":\"constructor\"},{\"payable\":true,\"stateMutability\":\"payable\",\"type\":\"fallback\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"newContract\",\"type\":\"address\"}],\"name\":\"ContractUpgrade\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"from\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"to\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"tokenID\",\"type\":\"uint256\"}],\"name\":\"Transfer\",\"type\":\"event\"},{\"anonymous\":false,\"inputs\":[{\"indexed\":false,\"name\":\"owner\",\"type\":\"address\"},{\"indexed\":false,\"name\":\"cardID\",\"type\":\"uint256\"},{\"indexed\":false,\"name\":\"creationBattleID\",\"type\":\"uint128\"},{\"indexed\":false,\"name\":\"attributes\",\"type\":\"uint256\"}],\"name\":\"NewCard\",\"type\":\"event\"}]"
 
 // CryptoCardsCoreBin is the compiled bytecode used for deploying new contracts.
-const CryptoCardsCoreBin = `0x6060604052341561000f57600080fd5b60048054600160a060020a03191633600160a060020a03161790556100326100ab565b604051809103906000f080151561004857600080fd5b60058054600160a060020a031916600160a060020a03929092169190911790556100706100bb565b604051809103906000f080151561008657600080fd5b60068054600160a060020a031916600160a060020a03929092169190911790556100cb565b60405161029880610b9783390190565b60405161040b80610e2f83390190565b610abd806100da6000396000f300606060405236156100e35763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde03811461010057806312c2debf1461018a57806318160ddd146101be57806345812958146101d15780635de038b1146101e45780636352211e146102065780636af04a571461023857806370a082311461024b578063715879881461026a57806378d0df50146102895780638462151c1461029f5780638f84aa091461031157806395d89b4114610324578063a9059cbb14610337578063e01196ef14610359578063e77dad5c1461036c575b60055433600160a060020a039081169116146100fe57600080fd5b005b341561010b57600080fd5b61011361037f565b60405160208082528190810183818151815260200191508051906020019080838360005b8381101561014f578082015183820152602001610137565b50505050905090810190601f16801561017c5780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b341561019557600080fd5b6101ac600160a060020a03600435166024356103b6565b60405190815260200160405180910390f35b34156101c957600080fd5b6101ac6103e4565b34156101dc57600080fd5b6101ac6103eb565b34156101ef57600080fd5b6101ac600160a060020a0360043516602435610403565b341561021157600080fd5b61021c60043561043b565b604051600160a060020a03909116815260200160405180910390f35b341561024357600080fd5b61021c610464565b341561025657600080fd5b6101ac600160a060020a0360043516610473565b341561027557600080fd5b6100fe600160a060020a036004351661048e565b341561029457600080fd5b61021c6004356104f6565b34156102aa57600080fd5b6102be600160a060020a0360043516610511565b60405160208082528190810183818151815260200191508051906020019060200280838360005b838110156102fd5780820151838201526020016102e5565b505050509050019250505060405180910390f35b341561031c57600080fd5b61021c6105f2565b341561032f57600080fd5b610113610601565b341561034257600080fd5b6100fe600160a060020a0360043516602435610638565b341561036457600080fd5b61021c610692565b341561037757600080fd5b61021c6106a1565b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b6002602052816000526040600020818154811015156103d157fe5b6000918252602090912001549150829050565b6000545b90565b60006103fb60006201e240610403565b506001905090565b60008030600160a060020a031684600160a060020a03161415151561042757600080fd5b610433600084866106b0565b949350505050565b600081815260016020526040902054600160a060020a031680151561045f57600080fd5b919050565b600754600160a060020a031681565b600160a060020a031660009081526003602052604090205490565b6007805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557f450db8da6efbe9c22f2347f7c2021231df1fc58d3ae9a2fa75d39fa44619930581604051600160a060020a03909116815260200160405180910390a150565b600160205260009081526040902054600160a060020a031681565b6105196109ee565b60006105236109ee565b600080600061053187610473565b94508415156105615760006040518059106105495750595b908082528060200260200182016040525095506105e8565b8460405180591061056f5750595b9080825280602002602001820160405250935061058a6103e4565b925060009150600190505b8281116105e457600081815260016020526040902054600160a060020a03888116911614156105dc57808483815181106105cb57fe5b602090810290910101526001909101905b600101610595565b8395505b5050505050919050565b600454600160a060020a031681565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b600160a060020a038216151561064d57600080fd5b30600160a060020a031682600160a060020a03161415151561066e57600080fd5b6106783382610905565b151561068357600080fd5b61068e338383610925565b5050565b600554600160a060020a031690565b600654600160a060020a031690565b60006106ba610a00565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200186815250915060016000805480600101828161074f9190610a35565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff8116811461087c57600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a16108fc60008583610925565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff1916909117905583161561099957600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b815481835581811511610a6157600302816003028360005260206000209182019101610a619190610a66565b505050565b6103e891905b80821115610a8d576000808255600182018190556002820155600301610a6c565b50905600a165627a7a72305820293eac7a63b802ba165a2d1df6c47880080c65a0d217e432ff22f7141949283a00296060604052341561000f57600080fd5b61027a8061001e6000396000f300606060405263ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166363c785aa8114610047578063df73c49f1461006c57600080fd5b341561005257600080fd5b61005a610085565b60405190815260200160405180910390f35b341561007757600080fd5b61005a60043560243561008c565b6000545b90565b60006100966101b0565b60006080604051908101604052804267ffffffffffffffff168152602001868152602001858152602001600063ffffffff1681525091506001600080548060010182816100e391906101d7565b600092835260209092208591600402018151815467ffffffffffffffff191667ffffffffffffffff9190911617815560208201518160010155604082015181600201556060820151600391909101805463ffffffff191663ffffffff928316179055929091039250508116811461015957600080fd5b7f17a28617c80116086701f1712a79248bbe6e8e30c63a1e4735995ec3b0170a8b818360200151846040015160405180848152602001838152602001828152602001935050505060405180910390a1949350505050565b60806040519081016040908152600080835260208301819052908201819052606082015290565b815481835581811511610203576004028160040283600052602060002091820191016102039190610208565b505050565b61008991905b8082111561024a57805467ffffffffffffffff19168155600060018201819055600282015560038101805463ffffffff1916905560040161020e565b50905600a165627a7a72305820cce188ef7fa62d34e1e0776202dbee41aa398af8f94daa9713794cd801d44ea500296060604052341561000f57600080fd5b6103ed8061001e6000396000f300606060405263ffffffff7c01000000000000000000000000000000000000000000000000000000006000350416637bf13d828114610052578063bfeea70814610077578063fa74efc11461008a57600080fd5b341561005d57600080fd5b6100656100b8565b60405190815260200160405180910390f35b341561008257600080fd5b6100656100bf565b341561009557600080fd5b61006573ffffffffffffffffffffffffffffffffffffffff6004351660246100c4565b6000545b90565b600581565b60006100ce61027c565b60006060604051908101604052804267ffffffffffffffff1681526020018673ffffffffffffffffffffffffffffffffffffffff168152602001856005806020026040519081016040529190828260a0808284375050509190925250506000805491935060019180830161014283826102a2565b600092835260209092208591600602018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815473ffffffffffffffffffffffffffffffffffffffff9190911668010000000000000000027fffffffff0000000000000000000000000000000000000000ffffffffffffffff90911617815560408201516101d890600183019060056102d3565b50505003905063ffffffff811681146101f057600080fd5b7ff7841da7904048ca49ded1df3a41ff46907a4db7880f86ebde13572a7154f59d8582846040015160405173ffffffffffffffffffffffffffffffffffffffff8416815260208101839052604081018260a080838360005b83811015610260578082015183820152602001610248565b50505050905001935050505060405180910390a1949350505050565b60e0604051908101604090815260008083526020830152810161029d610311565b905290565b8154818355818115116102ce576006028160060283600052602060002091820191016102ce9190610338565b505050565b8260058101928215610301579160200282015b828111156103015782518255916020019190600101906102e6565b5061030d929150610384565b5090565b60a06040519081016040526005815b60008152602001906001900390816103205790505090565b6100bc91905b8082111561030d5780547fffffffff00000000000000000000000000000000000000000000000000000000168155600061037b600183018261039e565b5060060161033e565b6100bc91905b8082111561030d576000815560010161038a565b5060008155600101600081556001016000815560010160008155600101600090555600a165627a7a72305820eef3b01b12bd3f266c2f504ccc7120c574c8718b546256a3989165c9605814120029`
+const CryptoCardsCoreBin = `0x6060604052341561000f57600080fd5b60048054600160a060020a03191633600160a060020a03161790556100326100ab565b604051809103906000f080151561004857600080fd5b60058054600160a060020a031916600160a060020a03929092169190911790556100706100bb565b604051809103906000f080151561008657600080fd5b60068054600160a060020a031916600160a060020a03929092169190911790556100cb565b6040516105d780610d2183390190565b604051610738806112f883390190565b610c47806100da6000396000f3006060604052361561010f5763ffffffff7c010000000000000000000000000000000000000000000000000000000060003504166306fdde03811461012c57806312c2debf146101b657806318160ddd146101ea5780632109f89d146101fd5780633025972014610227578063458129581461023d5780635de038b1146102505780636352211e14610272578063685b7a5e146102a45780636af04a57146102ba57806370a08231146102cd57806371587988146102ec57806378d0df501461030b5780638462151c146103215780638f84aa091461039357806395d89b41146103a65780639db02257146103b9578063a9059cbb146103e9578063e01196ef1461040b578063e77dad5c1461041e575b60055433600160a060020a0390811691161461012a57600080fd5b005b341561013757600080fd5b61013f610431565b60405160208082528190810183818151815260200191508051906020019080838360005b8381101561017b578082015183820152602001610163565b50505050905090810190601f1680156101a85780820380516001836020036101000a031916815260200191505b509250505060405180910390f35b34156101c157600080fd5b6101d8600160a060020a0360043516602435610468565b60405190815260200160405180910390f35b34156101f557600080fd5b6101d8610496565b341561020857600080fd5b61021360043561049d565b604051901515815260200160405180910390f35b341561023257600080fd5b61012a600435610500565b341561024857600080fd5b6101d8610516565b341561025b57600080fd5b6101d8600160a060020a0360043516602435610531565b341561027d57600080fd5b610288600435610569565b604051600160a060020a03909116815260200160405180910390f35b34156102af57600080fd5b61021360043561058d565b34156102c557600080fd5b6102886105ec565b34156102d857600080fd5b6101d8600160a060020a03600435166105fb565b34156102f757600080fd5b61012a600160a060020a0360043516610616565b341561031657600080fd5b61028860043561067e565b341561032c57600080fd5b610340600160a060020a0360043516610699565b60405160208082528190810183818151815260200191508051906020019060200280838360005b8381101561037f578082015183820152602001610367565b505050509050019250505060405180910390f35b341561039e57600080fd5b61028861077a565b34156103b157600080fd5b61013f610789565b34156103c457600080fd5b6103cc6107c0565b60405167ffffffffffffffff909116815260200160405180910390f35b34156103f457600080fd5b61012a600160a060020a03600435166024356107c6565b341561041657600080fd5b610288610820565b341561042957600080fd5b61028861082f565b60408051908101604052600b81527f43727970746f4361726473000000000000000000000000000000000000000000602082015281565b60026020528160005260406000208181548110151561048357fe5b6000918252602090912001549150829050565b6000545b90565b60006104a882610500565b4267ffffffffffffffff166000838154811015156104c257fe5b600091825260209091206003909102015468010000000000000000900467ffffffffffffffff1611156104f7575060006104fb565b5060015b919050565b610508610496565b811061051357600080fd5b50565b60008061052760006201e240610531565b90508091505b5090565b60008030600160a060020a031684600160a060020a03161415151561055557600080fd5b6105616000848661083e565b949350505050565b600081815260016020526040902054600160a060020a03168015156104fb57600080fd5b600061059882610500565b610e1042016000838154811015156105ac57fe5b906000526020600020906003020160000160086101000a81548167ffffffffffffffff021916908367ffffffffffffffff16021790555060019050919050565b600754600160a060020a031681565b600160a060020a031660009081526003602052604090205490565b6007805473ffffffffffffffffffffffffffffffffffffffff1916600160a060020a0383161790557f450db8da6efbe9c22f2347f7c2021231df1fc58d3ae9a2fa75d39fa44619930581604051600160a060020a03909116815260200160405180910390a150565b600160205260009081526040902054600160a060020a031681565b6106a1610b7c565b60006106ab610b7c565b60008060006106b9876105fb565b94508415156106e95760006040518059106106d15750595b90808252806020026020018201604052509550610770565b846040518059106106f75750595b90808252806020026020018201604052509350610712610496565b925060009150600190505b82811161076c57600081815260016020526040902054600160a060020a0388811691161415610764578084838151811061075357fe5b602090810290910101526001909101905b60010161071d565b8395505b5050505050919050565b600454600160a060020a031681565b60408051908101604052600381527f4343420000000000000000000000000000000000000000000000000000000000602082015281565b610e1081565b600160a060020a03821615156107db57600080fd5b30600160a060020a031682600160a060020a0316141515156107fc57600080fd5b6108063382610a93565b151561081157600080fd5b61081c338383610ab3565b5050565b600554600160a060020a031690565b600654600160a060020a031690565b6000610848610b8e565b600060c0604051908101604052804267ffffffffffffffff168152602001600067ffffffffffffffff168152602001876fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff16815260200160006fffffffffffffffffffffffffffffffff1681526020018681525091506001600080548060010182816108dd9190610bc3565b600092835260209092208591600302018151815467ffffffffffffffff191667ffffffffffffffff919091161781556020820151815467ffffffffffffffff9190911668010000000000000000026fffffffffffffffff000000000000000019909116178155604082015181546fffffffffffffffffffffffffffffffff91821670010000000000000000000000000000000002911617815560608201516001820180546fffffffffffffffffffffffffffffffff19166fffffffffffffffffffffffffffffffff9290921691909117905560808201516001820180546fffffffffffffffffffffffffffffffff92831670010000000000000000000000000000000002921691909117905560a08201516002909101555003905063ffffffff81168114610a0a57600080fd5b7fc56570397f0bcf235fc72dc30f5c4d9c77206bfce1443759a8ee3a19dcd196e4848284604001518560a00151604051600160a060020a03909416845260208401929092526fffffffffffffffffffffffffffffffff1660408084019190915260608301919091526080909101905180910390a1610a8a60008583610ab3565b95945050505050565b600090815260016020526040902054600160a060020a0391821691161490565b600160a060020a038083166000818152600360209081526040808320805460019081019091558684529091529020805473ffffffffffffffffffffffffffffffffffffffff19169091179055831615610b2757600160a060020a038316600090815260036020526040902080546000190190555b7fddf252ad1be2c89b69c2b068fc378daa952ba7f163c4a11628f55a4df523b3ef838383604051600160a060020a039384168152919092166020820152604080820192909252606001905180910390a1505050565b60206040519081016040526000815290565b60c06040519081016040908152600080835260208301819052908201819052606082018190526080820181905260a082015290565b815481835581811511610bef57600302816003028360005260206000209182019101610bef9190610bf4565b505050565b61049a91905b8082111561052d576000808255600182018190556002820155600301610bfa5600a165627a7a72305820e4d6917d9d8126970ed89f9896339b317e8419430b93a1397ec514a38bb3a43300296060604052341561000f57600080fd5b60018054600160a060020a03191633600160a060020a031617905561059e806100396000396000f300606060405263ffffffff60e060020a600035041663624fe81f811461003957806363c785aa14610068578063df73c49f1461008d57600080fd5b341561004457600080fd5b61004c6100a6565b604051600160a060020a03909116815260200160405180910390f35b341561007357600080fd5b61007b6100b5565b60405190815260200160405180910390f35b341561009857600080fd5b61007b6004356024356100bc565b600154600160a060020a031681565b6000545b90565b60006100c66104c2565b60008060006100d487610231565b15806100e657506100e486610231565b155b156100f45760009450610227565b60a0604051908101604052804267ffffffffffffffff168152602001888152602001878152602001600081526020016000815250935060016000805480600101828161014091906104fc565b600092835260209092208791600502018151815467ffffffffffffffff191667ffffffffffffffff9190911617815560208201518160010155604082015181600201556060820151816003015560808201516004909101555003925063ffffffff831683146101ae57600080fd5b6101b784610304565b606086018290526080860181905290925090506101d38461031a565b507f17a28617c80116086701f1712a79248bbe6e8e30c63a1e4735995ec3b0170a8b838560600151866080015160405180848152602001838152602001828152602001935050505060405180910390a18294505b5050505092915050565b600154600090600160a060020a031663e77dad5c82604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561027b57600080fd5b6102c65a03f1151561028c57600080fd5b50505060405180519050600160a060020a031663ecf9036b8360006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156102e457600080fd5b6102c65a03f115156102f557600080fd5b50505060405180519392505050565b6000808260400151836020015191509150915091565b600154600090600160a060020a031663e77dad5c82604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561036457600080fd5b6102c65a03f1151561037557600080fd5b50505060405180519050600160a060020a031663b42cb37d836020015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156103d157600080fd5b6102c65a03f115156103e257600080fd5b50505060405180515050600154600160a060020a031663e77dad5c6000604051602001526040518163ffffffff1660e060020a028152600401602060405180830381600087803b151561043457600080fd5b6102c65a03f1151561044557600080fd5b50505060405180519050600160a060020a031663b42cb37d836040015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156104a157600080fd5b6102c65a03f115156104b257600080fd5b5050506040518051905050919050565b60a060405190810160405280600067ffffffffffffffff168152602001600081526020016000815260200160008152602001600081525090565b81548183558181151161052857600502816005028360005260206000209182019101610528919061052d565b505050565b6100b991905b8082111561056e57805467ffffffffffffffff1916815560006001820181905560028201819055600382018190556004820155600501610533565b50905600a165627a7a723058202c6bf5e2d926e26e4e09f1017d5d7a54a739e051d5fa6943943b49e79759f9cb00296060604052341561000f57600080fd5b60018054600160a060020a03191633600160a060020a03161790556106ff806100396000396000f3006060604052361561005c5763ffffffff60e060020a600035041663624fe81f81146100615780637bf13d8214610090578063b42cb37d146100b5578063bfeea708146100df578063ecf9036b146100f2578063fa74efc114610108575b600080fd5b341561006c57600080fd5b610074610129565b604051600160a060020a03909116815260200160405180910390f35b341561009b57600080fd5b6100a3610138565b60405190815260200160405180910390f35b34156100c057600080fd5b6100cb60043561013f565b604051901515815260200160405180910390f35b34156100ea57600080fd5b6100a361029a565b34156100fd57600080fd5b6100cb60043561029f565b341561011357600080fd5b6100a3600160a060020a036004351660246103fd565b600154600160a060020a031681565b6000545b90565b600061014961058e565b6000610153610138565b841061015e57600080fd5b600080548590811061016c57fe5b906000526020600020906006020160606040519081016040908152825467ffffffffffffffff81168352680100000000000000009004600160a060020a0316602083015290919080830190600183019060059060a09051908101604052919060a0830182845b8154815260200190600101908083116101d25750505091909252509193506000925050505b816040015150600581101561028e57600154600160a060020a031663685b7a5e6040840151836005811061022757fe5b602002015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b151561026b57600080fd5b6102c65a03f1151561027c57600080fd5b505050604051805150506001016101f7565b600192505b5050919050565b600581565b60006102a961058e565b60006102b3610138565b84106102be57600080fd5b60008054859081106102cc57fe5b906000526020600020906006020160606040519081016040908152825467ffffffffffffffff81168352680100000000000000009004600160a060020a0316602083015290919080830190600183019060059060a09051908101604052919060a0830182845b8154815260200190600101908083116103325750505091909252509193506000925050505b816040015150600581101561028e57600154600160a060020a0316632109f89d6040840151836005811061038757fe5b602002015160006040516020015260405160e060020a63ffffffff84160281526004810191909152602401602060405180830381600087803b15156103cb57600080fd5b6102c65a03f115156103dc57600080fd5b5050506040518051905015156103f55760009250610293565b600101610357565b600061040761058e565b60006060604051908101604052804267ffffffffffffffff16815260200186600160a060020a03168152602001856005806020026040519081016040529190828260a0808284375050509190925250506000805491935060019180830161046e83826105b4565b600092835260209092208591600602018151815467ffffffffffffffff191667ffffffffffffffff9190911617815560208201518154600160a060020a039190911668010000000000000000027fffffffff0000000000000000000000000000000000000000ffffffffffffffff90911617815560408201516104f790600183019060056105e5565b50505003905063ffffffff8116811461050f57600080fd5b7ff7841da7904048ca49ded1df3a41ff46907a4db7880f86ebde13572a7154f59d85828460400151604051600160a060020a038416815260208101839052604081018260a080838360005b8381101561057257808201518382015260200161055a565b50505050905001935050505060405180910390a1949350505050565b60e060405190810160409081526000808352602083015281016105af610623565b905290565b8154818355818115116105e0576006028160060283600052602060002091820191016105e0919061064a565b505050565b8260058101928215610613579160200282015b828111156106135782518255916020019190600101906105f8565b5061061f929150610696565b5090565b60a06040519081016040526005815b60008152602001906001900390816106325790505090565b61013c91905b8082111561061f5780547fffffffff00000000000000000000000000000000000000000000000000000000168155600061068d60018301826106b0565b50600601610650565b61013c91905b8082111561061f576000815560010161069c565b5060008155600101600081556001016000815560010160008155600101600090555600a165627a7a72305820c9b094726ed2fd954eaf242b65f3032b152bd0459faea2141e672f0eb468c3f50029`
 
 // DeployCryptoCardsCore deploys a new Ethereum contract, binding an instance of CryptoCardsCore to it.
 func DeployCryptoCardsCore(auth *bind.TransactOpts, backend bind.ContractBackend) (common.Address, *types.Transaction, *CryptoCardsCore, error) {
@@ -2669,6 +3646,32 @@ func (_CryptoCardsCore *CryptoCardsCoreTransactorRaw) Transact(opts *bind.Transa
 	return _CryptoCardsCore.Contract.contract.Transact(opts, method, params...)
 }
 
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CryptoCardsCore *CryptoCardsCoreCaller) BATTLECOOLDOWNTIME(opts *bind.CallOpts) (uint64, error) {
+	var (
+		ret0 = new(uint64)
+	)
+	out := ret0
+	err := _CryptoCardsCore.contract.Call(opts, out, "BATTLE_COOLDOWN_TIME")
+	return *ret0, err
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CryptoCardsCore *CryptoCardsCoreSession) BATTLECOOLDOWNTIME() (uint64, error) {
+	return _CryptoCardsCore.Contract.BATTLECOOLDOWNTIME(&_CryptoCardsCore.CallOpts)
+}
+
+// BATTLECOOLDOWNTIME is a free data retrieval call binding the contract method 0x9db02257.
+//
+// Solidity: function BATTLE_COOLDOWN_TIME() constant returns(uint64)
+func (_CryptoCardsCore *CryptoCardsCoreCallerSession) BATTLECOOLDOWNTIME() (uint64, error) {
+	return _CryptoCardsCore.Contract.BATTLECOOLDOWNTIME(&_CryptoCardsCore.CallOpts)
+}
+
 // BattleContract is a free data retrieval call binding the contract method 0xe01196ef.
 //
 // Solidity: function BattleContract() constant returns(address)
@@ -2799,6 +3802,32 @@ func (_CryptoCardsCore *CryptoCardsCoreCallerSession) CardsHeldByOwner(arg0 comm
 	return _CryptoCardsCore.Contract.CardsHeldByOwner(&_CryptoCardsCore.CallOpts, arg0, arg1)
 }
 
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CryptoCardsCore *CryptoCardsCoreCaller) IsReadyForBattle(opts *bind.CallOpts, _cardID *big.Int) (bool, error) {
+	var (
+		ret0 = new(bool)
+	)
+	out := ret0
+	err := _CryptoCardsCore.contract.Call(opts, out, "isReadyForBattle", _cardID)
+	return *ret0, err
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CryptoCardsCore *CryptoCardsCoreSession) IsReadyForBattle(_cardID *big.Int) (bool, error) {
+	return _CryptoCardsCore.Contract.IsReadyForBattle(&_CryptoCardsCore.CallOpts, _cardID)
+}
+
+// IsReadyForBattle is a free data retrieval call binding the contract method 0x2109f89d.
+//
+// Solidity: function isReadyForBattle(_cardID uint256) constant returns(bool)
+func (_CryptoCardsCore *CryptoCardsCoreCallerSession) IsReadyForBattle(_cardID *big.Int) (bool, error) {
+	return _CryptoCardsCore.Contract.IsReadyForBattle(&_CryptoCardsCore.CallOpts, _cardID)
+}
+
 // Name is a free data retrieval call binding the contract method 0x06fdde03.
 //
 // Solidity: function name() constant returns(string)
@@ -2903,6 +3932,30 @@ func (_CryptoCardsCore *CryptoCardsCoreCallerSession) OwnerOf(_tokenId *big.Int)
 	return _CryptoCardsCore.Contract.OwnerOf(&_CryptoCardsCore.CallOpts, _tokenId)
 }
 
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CryptoCardsCore *CryptoCardsCoreCaller) RequireCardExists(opts *bind.CallOpts, cardID *big.Int) error {
+	var ()
+	out := &[]interface{}{}
+	err := _CryptoCardsCore.contract.Call(opts, out, "requireCardExists", cardID)
+	return err
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CryptoCardsCore *CryptoCardsCoreSession) RequireCardExists(cardID *big.Int) error {
+	return _CryptoCardsCore.Contract.RequireCardExists(&_CryptoCardsCore.CallOpts, cardID)
+}
+
+// RequireCardExists is a free data retrieval call binding the contract method 0x30259720.
+//
+// Solidity: function requireCardExists(cardID uint256) constant returns()
+func (_CryptoCardsCore *CryptoCardsCoreCallerSession) RequireCardExists(cardID *big.Int) error {
+	return _CryptoCardsCore.Contract.RequireCardExists(&_CryptoCardsCore.CallOpts, cardID)
+}
+
 // Symbol is a free data retrieval call binding the contract method 0x95d89b41.
 //
 // Solidity: function symbol() constant returns(string)
@@ -3004,21 +4057,21 @@ func (_CryptoCardsCore *CryptoCardsCoreTransactorSession) CreateCard(_owner comm
 
 // CreateGen0Card is a paid mutator transaction binding the contract method 0x45812958.
 //
-// Solidity: function createGen0Card() returns(isSuccess uint256)
+// Solidity: function createGen0Card() returns(newCardID uint256)
 func (_CryptoCardsCore *CryptoCardsCoreTransactor) CreateGen0Card(opts *bind.TransactOpts) (*types.Transaction, error) {
 	return _CryptoCardsCore.contract.Transact(opts, "createGen0Card")
 }
 
 // CreateGen0Card is a paid mutator transaction binding the contract method 0x45812958.
 //
-// Solidity: function createGen0Card() returns(isSuccess uint256)
+// Solidity: function createGen0Card() returns(newCardID uint256)
 func (_CryptoCardsCore *CryptoCardsCoreSession) CreateGen0Card() (*types.Transaction, error) {
 	return _CryptoCardsCore.Contract.CreateGen0Card(&_CryptoCardsCore.TransactOpts)
 }
 
 // CreateGen0Card is a paid mutator transaction binding the contract method 0x45812958.
 //
-// Solidity: function createGen0Card() returns(isSuccess uint256)
+// Solidity: function createGen0Card() returns(newCardID uint256)
 func (_CryptoCardsCore *CryptoCardsCoreTransactorSession) CreateGen0Card() (*types.Transaction, error) {
 	return _CryptoCardsCore.Contract.CreateGen0Card(&_CryptoCardsCore.TransactOpts)
 }
@@ -3042,6 +4095,27 @@ func (_CryptoCardsCore *CryptoCardsCoreSession) SetNewAddress(_newAddress common
 // Solidity: function setNewAddress(_newAddress address) returns()
 func (_CryptoCardsCore *CryptoCardsCoreTransactorSession) SetNewAddress(_newAddress common.Address) (*types.Transaction, error) {
 	return _CryptoCardsCore.Contract.SetNewAddress(&_CryptoCardsCore.TransactOpts, _newAddress)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CryptoCardsCore *CryptoCardsCoreTransactor) SetOnBattleCooldown(opts *bind.TransactOpts, _cardID *big.Int) (*types.Transaction, error) {
+	return _CryptoCardsCore.contract.Transact(opts, "setOnBattleCooldown", _cardID)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CryptoCardsCore *CryptoCardsCoreSession) SetOnBattleCooldown(_cardID *big.Int) (*types.Transaction, error) {
+	return _CryptoCardsCore.Contract.SetOnBattleCooldown(&_CryptoCardsCore.TransactOpts, _cardID)
+}
+
+// SetOnBattleCooldown is a paid mutator transaction binding the contract method 0x685b7a5e.
+//
+// Solidity: function setOnBattleCooldown(_cardID uint256) returns(bool)
+func (_CryptoCardsCore *CryptoCardsCoreTransactorSession) SetOnBattleCooldown(_cardID *big.Int) (*types.Transaction, error) {
+	return _CryptoCardsCore.Contract.SetOnBattleCooldown(&_CryptoCardsCore.TransactOpts, _cardID)
 }
 
 // Transfer is a paid mutator transaction binding the contract method 0xa9059cbb.

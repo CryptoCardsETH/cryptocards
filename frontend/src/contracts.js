@@ -3,8 +3,10 @@ import CompiledContracts from './compiled_contracts';
 export const ABIs = {};
 
 export const BattleGroupABI =
-  CompiledContracts['BattleGroups.sol:BattleGroups']['interface'];
-export const BattleABI = CompiledContracts['Battles.sol:Battles']['interface'];
+  CompiledContracts['battles/BattleGroups.sol:BattleGroups']['interface'];
+export const BattleABI =
+  CompiledContracts['battles/Battles.sol:Battles']['interface'];
+
 export const CoreABI =
   CompiledContracts['CryptoCardsCore.sol:CryptoCardsCore']['interface'];
 
