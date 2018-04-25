@@ -29,7 +29,6 @@ class ExampleTest extends TestCase
         $response = $this->json('POST', '/v1/auth', ['address'=>$address, 'signed'=>$signedMessage, 'plaintext'=>'CryptoCards'])
                   ->assertJsonStructure(['data'=>['token']])->assertStatus(200);
 
-
         $token = json_decode($response->getContent(), true)['data']['token'];
 
         $response = $this->authenticatedJSON('GET', '/v1/me', [], $token);

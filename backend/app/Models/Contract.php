@@ -29,6 +29,7 @@ class Contract extends Model
         $core = self::where('name', $name)->first();
         $ca = new CoreContractAddress();
         $ca->setAddress($core->address);
+
         return $ca;
     }
 }

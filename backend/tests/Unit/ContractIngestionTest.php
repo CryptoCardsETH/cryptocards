@@ -10,6 +10,7 @@ use Tests\TestCase;
 class ContractIngestionTest extends TestCase
 {
     const CONTRACT_NAME_CORE = 'CryptoCardsCoreTest';
+
     public function testIngestBattleGroupEvent()
     {
         $nextBattleGroupId = BattleGroup::max('token_id') + 1;
@@ -20,6 +21,7 @@ class ContractIngestionTest extends TestCase
             BattleGroup::FIELD_TOKEN_ID  => $nextBattleGroupId,
         ]);
     }
+
     public function testIngestCoreContractAddress()
     {
         $faker = \Faker\Factory::create();
@@ -28,25 +30,27 @@ class ContractIngestionTest extends TestCase
         $response = $this->json('PUT', '/v1/contracts/ingest', [
             self::CONTRACT_NAME_CORE => [
                 CONTRACT::FIELD_ADDRESS => $address,
-                'transactionHash' => "asdf"
-                ]
-            
+                'transactionHash'       => 'asdf',
+                ],
+
         ])->assertStatus(200);
+
         return;
 
         //ensure the API returns the proper core address
-        $response = $this->get('/v1/contracts')->assertStatus(200); 
+        $response = $this->get('/v1/contracts')->assertStatus(200);
         $data = json_decode($response->getContent(), true)['data'];
         $this->assertEquals($data[self::CONTRACT_NAME_CORE]['address'], $address);
 
         //test that this address shows up in the protobuf msg
         $rpcMessage = Contract::getRpcCoreContractAddressMessage(self::CONTRACT_NAME_CORE);
-        $this->assertEquals($rpcMessage->getAddress(),$address);
+        $this->assertEquals($rpcMessage->getAddress(), $address);
     }
+
     public function testIngestCoreContractAddressAuth()
     {
         putenv('APP_DEBUG=false');
-        $response = $this->put('/v1/contracts/ingest')->assertStatus(401); 
+        $response = $this->put('/v1/contracts/ingest')->assertStatus(401);
         putenv('APP_DEBUG=true');
     }
 }
