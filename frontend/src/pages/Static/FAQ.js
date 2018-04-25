@@ -25,12 +25,16 @@ export default class FAQ extends Component {
       }
     ];
     return (
-      <div>
-        <h1>FAQ</h1>
+      <div className="container-fluid faq">
+        <h1 className="text-center">FAQ</h1>
+        <span className="divider" />
+        <br />
+        <br />
         {items.map(i => (
           <div>
             <h4>{i.title}</h4>
             <div dangerouslySetInnerHTML={{ __html: i.body }} />
+            <br />
           </div>
         ))}
       </div>

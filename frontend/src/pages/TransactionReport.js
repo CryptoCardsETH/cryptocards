@@ -13,7 +13,7 @@ class TransactionReportPage extends Component {
     let report = this.props.stats.transaction_report;
     let intervalLength = 1000 * 60 * 60 * 24; // one day in milliseconds
     return (
-      <div className="transaction-report">
+      <div className="container-fluid transaction-report">
         <h1>Transaction Report</h1>
         <hr />
         <CardDeck>

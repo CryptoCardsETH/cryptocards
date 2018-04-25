@@ -26,11 +26,11 @@ class Nav extends React.Component {
       this.props.user.me &&
       this.props.user.me.admin;
     return (
-      <div>
-        <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div className="navigation">
+        <nav className="navbar navbar-expand-md fixed-top gradient">
           <div className="navbar-brand">{APP_NAME}</div>
           <div className="collapse navbar-collapse" id="navbarCollapse">
-            <ul className="navbar-nav mr-auto">
+            <ul className="navbar-nav ml-auto">
               <NavbarItem to="/" text="Home" />
               <NavbarItem to="/marketplace" text="Marketplace" />
               {authenticated ? (

@@ -74,11 +74,11 @@ const AdminRoute = withRouter(
 
 const App = () => (
   <Router>
-    <div>
+    <div className="min-height">
       <Web3Initialization />
       <ToastContainer />
       <Nav />
-      <main role="main" className="container" style={{ paddingTop: '80px' }}>
+      <main role="main">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/faq" component={FAQ} />

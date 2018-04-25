@@ -26,7 +26,7 @@ class DebugPage extends Component {
   render() {
     let { user, contract } = this.props;
     return (
-      <div>
+      <div className="container">
         <h1>Debug</h1>
         <BooleanStatus bool={user.isWeb3Available} /> web3 available
         <br />
