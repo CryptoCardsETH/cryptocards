@@ -26,10 +26,9 @@ class BattleGroupCreator extends React.Component {
   };
 
   render() {
-    let { cardIds } = this.props;
-    let truncated = cardIds.slice(0, 5);
-    let { ready, contractInstance } = this.props;
+    let { ready, contractInstance, cardIds } = this.props;
 
+    let truncated = cardIds.slice(0, 5);
     while (truncated.length !== 5) {
       truncated.push(0);
     }

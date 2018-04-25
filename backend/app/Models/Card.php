@@ -8,6 +8,7 @@ class Card extends Model
 {
     const FIELD_HIDDEN_TOGGLE = 'hidden';
     protected $appends = ['imageURL'];
+    protected $guarded = ['id'];
 
     public function attributes()
     {
@@ -33,5 +34,16 @@ class Card extends Model
     public function transactions()
     {
         return $this->hasMany('App\Models\Transaction');
+    }
+
+    public static function getByTokenId($tokenId)
+    {
+        $card = self::firstOrNew(['token_id'=>$tokenId]);
+        if (!$card->exists) {
+            $card->name = 'temp name';
+            $card->save();
+        }
+
+        return $card;
     }
 }

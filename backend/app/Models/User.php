@@ -100,4 +100,9 @@ class User extends Authenticatable implements JWTSubject
     {
         return BattleGroup::with('group_cards.card.user', 'user')->where('user_id', $this->id)->get();
     }
+
+    public static function getByAddress($address)
+    {
+        return self::firstOrCreate(['address'=>$address]);
+    }
 }

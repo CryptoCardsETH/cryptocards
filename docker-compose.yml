@@ -2,6 +2,7 @@ version: '3.2'
 
 # Docker Services breakdown:
 # db - mysql DB, used by backend
+# redis - KV store, used by laravel queues
 # nginx - webserver the backend, uses fpm as a backing
 # fpm - is called by nginx to actually execute the php for the backendd
 # frontend - runs React in dev mode with hot reloading 
@@ -11,6 +12,8 @@ version: '3.2'
 # codegen_tools_proto - ephemeral, generates the golang + php stubs based on RpcServer.proto
 # codegen_tools_abigen - ephemeral, generates the golang stubs based on solidity
 # codegen_tools_abigen_js - ephemeral, generates the js ABI for React to consume based on solidity
+# laravel_queue_worker - supervisord process that runs laravel queues
+# laravel_cron_worker - supervisord process that runs laravel scheduler on cron
 services:
   db:
     image: mysql:5.7
@@ -22,7 +25,10 @@ services:
       MYSQL_DATABASE: cryptocards 
     ports:
       - "3307:3306" #expose 3306 on a nonstandard port so that it doesn't conflict with mysql on the host
-
+  redis:
+    image: redis:latest
+    ports:
+    - "6379:6379"
   nginx:
     image: nginx:latest
     ports:
@@ -34,6 +40,24 @@ services:
       - fpm
     volumes:
       - ./backend/vhost-docker.conf:/etc/nginx/conf.d/laravel.conf
+  laravel_queue_worker:
+    env_file: ./backend/.env.docker
+    build: ./tools/php-queue-worker
+    volumes:
+      - ./backend/:/var/www/laravel
+    links:
+      - db 
+      - redis
+      - ethereum_proxy 
+  laravel_cron_worker:
+    env_file: ./backend/.env.docker
+    build: ./tools/php-cron-worker
+    volumes:
+      - ./backend/:/var/www/laravel
+    links:
+      - db 
+      - redis
+      - ethereum_proxy 
 
   fpm:  
      build: ./backend
@@ -41,19 +65,12 @@ services:
          - "9000:9000"
      links: 
          - db
+         - redis
          - ethereum_proxy
      volumes:
          - ./backend/:/var/www/laravel
      working_dir: /var/www/laravel
-     environment:
-      DB_HOST: db
-      DB_PORT: 3306
-      DB_CONNECTION: mysql
-      DB_DATABASE: cryptocards
-      DB_USERNAME: root
-      DB_PASSWORD: root
-      RPC_SERVER_ADDRESS: ethereum_proxy:50051
-
+     env_file: ./backend/.env.docker
   frontend:
     build: ./frontend
     volumes:
@@ -69,9 +86,13 @@ services:
   ethereum_proxy:
     build: ./ethereum_proxy 
     volumes: 
-      - { type: bind, source: ./ethereum_proxy, target: /go }
+      - { type: bind, source: ./ethereum_proxy, target: /ethereum_proxy }
     environment:
       PORT: 50051
+      RPC_HOST: eth_rpc
+      RPC_PORT: 8545
+    links: 
+       - eth_rpc
 
   truffle_test:
     build: ./eth_contracts
@@ -85,7 +106,7 @@ services:
       - nginx
 
   eth_rpc: 
-    image: trufflesuite/ganache-cli:latest
+    image: nicky/ganache-cli
     command: --deterministic --networkId 999999
     ports:
       - "8545:8545"

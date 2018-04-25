@@ -11,8 +11,8 @@ const BattleGroup = ({ group }) => {
       Group ID: {group.id} <br />
       <BattleCreator battleGroupId={group.id} />
       <div className="row">
-        {group_cards.map(gc => (
-          <Card key={gc.id} card={gc.card} type={CARD_TYPE_COLLECTION} />
+        {group_cards.map((gc, x) => (
+          <Card key={x} card={gc} type={CARD_TYPE_COLLECTION} />
         ))}
       </div>
     </div>

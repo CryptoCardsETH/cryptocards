@@ -1,6 +1,7 @@
 <?php
 
 use App\Helpers\EthereumConverter;
+use App\Models\Card;
 use Faker\Generator as Faker;
 
 /*
@@ -17,14 +18,14 @@ use Faker\Generator as Faker;
 $factory->define(App\Models\User::class, function (Faker $faker) {
     return [
 
-        'nickname' => $faker->unique()->firstName,
-//        'email' => $faker->unique()->safeEmail,
-        'address' => '0xfakex'.$faker->unique()->sha1,
+        'nickname' => $faker->unique()->word.'-'.$faker->unique()->md5,
+        'address'  => '0xfakex'.$faker->unique()->sha1,
     ];
 });
 
-$factory->define(App\Models\Card::class, function (Faker $faker) {
+$factory->define(Card::class, function (Faker $faker) {
     return [
+        'token_id'   => Card::max('token_id') + 1,
         'name'       => $faker->word,
         'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
     ];
