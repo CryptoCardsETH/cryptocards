@@ -3,6 +3,7 @@ package main
 import (
 	conts "GoRpc/contracts"
 	pb "GoRpc/rpcServer"
+	"crypto/ecdsa"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -52,9 +53,14 @@ func getCoreContractInstance(a *pb.CoreContractAddress) *conts.CryptoCardsCore {
 
 }
 
-func getKeypairForTransactions() (string, string) {
-	pub, _ := os.LookupEnv("ADMIN_PUBKEY")
-	priv, _ := os.LookupEnv("ADMIN_PRIVKEY")
+//Returns public + private keypair, based on environment vars
+func getKeypairForTransactions() (common.Address, *ecdsa.PrivateKey) {
+	pubStr, _ := os.LookupEnv("ADMIN_PUBKEY")
+	privStr, _ := os.LookupEnv("ADMIN_PRIVKEY")
+
+	pub := common.HexToAddress(pubStr)
+	priv, _ := crypto.HexToECDSA(privStr)
+
 	return pub, priv
 }
 
@@ -66,14 +72,13 @@ func (s *server) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*pb.
 	ganachePublicKey, ganachePrivateKey := getKeypairForTransactions()
 
 	signer := func(signer types.Signer, address common.Address, txn *types.Transaction) (*types.Transaction, error) {
-		pk, _ := crypto.HexToECDSA(ganachePrivateKey)
-		return types.SignTx(txn, signer, pk)
+		return types.SignTx(txn, signer, ganachePrivateKey)
 	}
 
 	sesh := &conts.CryptoCardsCoreSession{
 		Contract: getCoreContractInstance(in.CoreAddress),
 		TransactOpts: bind.TransactOpts{
-			From:   common.HexToAddress(ganachePublicKey),
+			From:   ganachePublicKey,
 			Signer: signer,
 		},
 	}
