@@ -53,3 +53,30 @@ function receiveTransactionReport(report) {
     report
   };
 }
+
+export const REQUEST_ENTRANCE_FEE_REPORT = 'REQUEST_ENTRANCE_FEE_REPORT';
+export const RECEIVE_ENTRANCE_FEE_REPORT = 'RECEIVE_ENTRANCE_FEE_REPORT';
+
+export function fetchEntranceFeeReport() {
+  return dispatch => {
+    dispatch(requestEntranceFeeReport());
+    return apiFetch('stats/entranceFeeReport')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveEntranceFeeReport(json.data));
+      });
+  };
+}
+
+function requestEntranceFeeReport() {
+  return {
+    type: REQUEST_ENTRANCE_FEE_REPORT
+  };
+}
+
+function receiveEntranceFeeReport(report) {
+  return {
+    type: RECEIVE_ENTRANCE_FEE_REPORT,
+    report
+  };
+}

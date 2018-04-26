@@ -27,6 +27,7 @@ import FAQ from './pages/Static/FAQ';
 import UserDetail from './pages/UserDetail';
 import AdminPage from './pages/Admin';
 import TransactionReportPage from './pages/TransactionReport';
+import EntranceFeeReportPage from './pages/EntranceFeeReport';
 
 const PrivateRoute = ({
   component: Component,
@@ -102,6 +103,10 @@ const App = () => (
           <AdminRoute
             path="/report/transactions"
             component={TransactionReportPage}
+          />
+          <AdminRoute
+            path="/report/entranceFees"
+            component={EntranceFeeReportPage}
           />
         </Switch>
       </main>
