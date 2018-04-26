@@ -88,7 +88,7 @@ class MarketplaceController extends Controller
         $user = auth()->user();
         $data = json_decode(Request::getContent(), true);
         foreach ($data as $cardId) {
-            $card = Card::find($cardId);;
+            $card = Card::find($cardId);
 
             $listing = new Listing();
             $listing->card_id = $cardId;
@@ -97,7 +97,7 @@ class MarketplaceController extends Controller
             $listing->save();
 
             //remove selling card from user's cards
-            $card->user_id = NULL;
+            $card->user_id = null;
             $card->save();
         }
 
