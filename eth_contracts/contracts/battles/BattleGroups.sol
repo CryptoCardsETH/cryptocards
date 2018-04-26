@@ -23,6 +23,12 @@ contract BattleGroups {
 		cryptoCardsContract = candidateContract;
 	}
 
+	function ownerOf(uint256 _groupID) external view returns (address owner) {
+		require (_groupID < countBattleGroups());
+		owner = battlegroups[_groupID].owner;
+		require (owner != address(0));
+	}
+
 	function createBattleGroup(address _owner, uint256[5] _cards) external returns (uint256) {
 		BattleGroup memory _group = BattleGroup({
 			creationTime: uint64(now),
@@ -44,9 +50,9 @@ contract BattleGroups {
 		return newID;
 	}
 
-	function isGroupReadyForBattle(uint256 groupID) public view returns (bool) {
-		require (groupID < countBattleGroups());
-		BattleGroup memory _group = battlegroups[groupID];
+	function isGroupReadyForBattle(uint256 _groupID) public view returns (bool) {
+		require (_groupID < countBattleGroups());
+		BattleGroup memory _group = battlegroups[_groupID];
 
 		uint i = 0;
 		for (i = 0; i < _group.cards.length; i++) {
@@ -57,9 +63,9 @@ contract BattleGroups {
 		return true;
 	}
 
-	function setGroupOnBattleCooldown(uint256 groupID) public returns (bool) {
-		require (groupID < countBattleGroups());
-		BattleGroup memory _group = battlegroups[groupID];
+	function setGroupOnBattleCooldown(uint256 _groupID) public returns (bool) {
+		require (_groupID < countBattleGroups());
+		BattleGroup memory _group = battlegroups[_groupID];
 
 		uint i = 0;
 		for (i = 0; i < _group.cards.length; i++) {
