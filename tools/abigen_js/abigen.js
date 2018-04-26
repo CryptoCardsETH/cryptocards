@@ -16,6 +16,7 @@ glob(BASE + "**/*.sol", function(er, files) {
             "cards/CardOwnership.sol": BASE+"cards/CardOwnership.sol",
             "battles/Battles.sol": BASE+"battles/Battles.sol",
             "battles/BattleGroups.sol": BASE+"battles/BattleGroups.sol",
+            "battles/BattleQueue.sol": BASE+"battles/BattleQueue.sol",
             "cards/CardBattles.sol": BASE+"cards/CardBattles.sol",
             "cards/CardBase.sol": BASE+"cards/CardBase.sol"
         };
