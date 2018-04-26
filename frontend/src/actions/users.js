@@ -152,6 +152,10 @@ export function initializeAuthFlow(address, signed) {
 
 export const REQUEST_USER_DETAIL = 'REQUEST_USER_DETAIL';
 export const RECEIVE_USER_DETAIL = 'RECEIVE_USER_DETAIL';
+export const REQUEST_MY_FOLLOWINGS = 'REQUEST_MY_FOLLOWINGS';
+export const RECEIVE_MY_FOLLOWINGS = 'RECEIVE_MY_FOLLOWINGS';
+export const REQUEST_MY_FOLLOWERS = 'REQUEST_MY_FOLLOWERS';
+export const RECEIVE_MY_FOLLOWERS = 'RECEIVE_MY_FOLLOWERS';
 
 export function fetchUserDetail(userId) {
   return dispatch => {
@@ -244,6 +248,17 @@ export function follow(userId) {
       });
   };
 }
+
+export function fetchMyFollowers() {
+  return dispatch => {
+    dispatch(requestMyFollowers());
+    return apiFetch('me/followers')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveMyFollowers(json.data));
+      });
+  };
+}
 export const RECEIVE_ALL_USERS = 'RECEIVE_ALL_USERS';
 
 export function fetchAllUsers() {
@@ -253,6 +268,43 @@ export function fetchAllUsers() {
       .then(json => {
         dispatch(receiveAllUsers(json.data));
       });
+  };
+}
+
+function requestMyFollowers() {
+  return {
+    type: REQUEST_MY_FOLLOWERS
+  };
+}
+
+function receiveMyFollowers(followers) {
+  return {
+    type: RECEIVE_MY_FOLLOWERS,
+    followers
+  };
+}
+
+export function fetchMyFollowings() {
+  return dispatch => {
+    dispatch(requestMyFollowings());
+    return apiFetch('me/followings')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveMyFollowings(json.data));
+      });
+  };
+}
+
+function requestMyFollowings() {
+  return {
+    type: REQUEST_MY_FOLLOWINGS
+  };
+}
+
+function receiveMyFollowings(followings) {
+  return {
+    type: RECEIVE_MY_FOLLOWINGS,
+    followings
   };
 }
 

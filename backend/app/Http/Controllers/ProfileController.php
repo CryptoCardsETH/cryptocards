@@ -92,7 +92,7 @@ class ProfileController extends Controller
         if (!$isRequestingMe) {
             //requesting another user, so hide their hidden cards and calculate if we are following them
             $cards = $cards->where(Card::FIELD_HIDDEN_TOGGLE, false);
-            $isFollowing = $requestorUser && $requestorUser->following->contains($user);
+            $isFollowing = $requestorUser && $requestorUser->followings->contains($user);
         }
         $cards = $cards->where('user_id', $user->id)->get();
 
@@ -117,6 +117,32 @@ class ProfileController extends Controller
         } else {
             return response()->build(self::RESPONSE_MESSAGE_ALREADY_FOLLOWING);
         }
+    }
+
+    /**
+     * authorized user follows user_id.
+     * Get all followers for the user.
+     *
+     * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
+     */
+    public function getFollowers()
+    {
+        $user_id = auth()->user()->id;
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followers);
+    }
+
+    /**
+     * authorized user follows user_id.
+     * Get all followings of the user.
+     *
+     * @return const RESPONSE_MESSAGE_SUCCESS or RESPONSE_MESSAGE_ALREADY_FOLLOWING
+     */
+    public function getFollowings()
+    {
+        $user_id = auth()->user()->id;
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, User::find($user_id)->followings);
     }
 
     /**
