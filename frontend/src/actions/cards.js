@@ -57,6 +57,7 @@ export function putTransaction(cardId) {
 }
 
 export function removeCard(cardId) {
+  console.log(cardId);
   return dispatch => {
     return apiFetch('cards/' + cardId + '/delete', {
       method: 'PUT'

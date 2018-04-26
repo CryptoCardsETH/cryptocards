@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { removeCard } from '../actions/cards';
 import '../styles/App.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
@@ -101,7 +103,13 @@ class Card extends Component {
                   collection?
                 </ModalBody>
                 <ModalFooter>
-                  <button color="primary" onClick={removeCard(card.id)}>
+                  <button
+                    color="primary"
+                    onClick={() => {
+                      this.props.removeCard(card.id);
+                      this.toggle();
+                    }}
+                  >
                     Yes
                   </button>{' '}
                   <button color="secondary" onClick={this.toggle}>
@@ -137,4 +145,12 @@ Card.defaultProps = {
 export const CARD_TYPE_MARKETPLACE = 'marketplace';
 export const CARD_TYPE_COLLECTION = 'collection';
 
-export default Card;
+function mapStateToProps(state) {
+  return { cardId: state.card };
+}
+const mapDispatchToProps = dispatch => {
+  return bindActionCreators({ removeCard }, dispatch);
+};
+
+export default connect(mapStateToProps, mapDispatchToProps)(Card);
+//export default Card;

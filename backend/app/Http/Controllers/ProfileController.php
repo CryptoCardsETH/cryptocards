@@ -130,6 +130,7 @@ class ProfileController extends Controller
 
         //user doesn't own card
         $card->user_id = null;
+        $card->removed = 1;
         $card->save();
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $card_id);
