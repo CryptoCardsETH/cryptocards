@@ -121,6 +121,7 @@ export function toggleCardSelection(cardId) {
     cardId
   };
 }
+
 export const REQUEST_CARD_TRANSACTIONS = 'REQUEST_CARD_TRANSACTIONS';
 export const RECEIVE_CARD_TRANSACTIONS = 'RECEIVE_CARD_TRANSACTIONS';
 

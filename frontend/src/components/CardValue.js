@@ -12,7 +12,7 @@ class CardValue extends Component {
   render() {
     return (
       <span>
-        Recomended Price:{' '}
+        Card Id {this.props.cardId} Price:{' '}
         {!this.props.card.card_value_loading ? (
           <EtherPrice price={this.props.card.card_value} />
         ) : null}

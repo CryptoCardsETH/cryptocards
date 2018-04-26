@@ -16,7 +16,7 @@ class MarketplaceController extends Controller
 {
     public function __construct()
     {
-        $this->middleware('jwt.auth', ['except' => ['getAllCards', 'getCardDetail', 'getAllListings', 'estimateValue']]);
+        $this->middleware('jwt.auth', ['except' => ['getAllCards', 'getCardDetail', 'getAllListings', 'estimateValue', 'getValue']]);
     }
 
     /**
@@ -82,6 +82,28 @@ class MarketplaceController extends Controller
         return $this->getCardDetail($card_id);
     }
 
+    public function sellCards()
+    {
+        //add selling car to listing
+        $user = auth()->user();
+        $data = json_decode(Request::getContent(), true);
+        foreach ($data as $cardId) {
+            $card = Card::find($cardId);;
+
+            $listing = new Listing();
+            $listing->card_id = $cardId;
+            $listing->user_id = $user->id;
+            $listing->price = $this->estimateValue($cardId);
+            $listing->save();
+
+            //remove selling card from user's cards
+            $card->user_id = NULL;
+            $card->save();
+        }
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $data);
+    }
+
     public function getCardTransactions($card_id)
     {
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, Card::find($card_id)->transactions);
@@ -103,6 +125,13 @@ class MarketplaceController extends Controller
         } else {
             $value = EthereumConverter::convertETHPriceToFloat(rand(250000000, 1250000000) * pow(10, 4));
         }
+
+        return $value;
+    }
+
+    public function getValue($card_id)
+    {
+        $value = $this->estimateValue($card_id);
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $value);
     }

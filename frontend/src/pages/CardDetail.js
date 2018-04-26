@@ -54,29 +54,31 @@ class CardDetail extends Component {
               <div>
                 {doesCurrentUserOwnCard ? (
                   <div>
-                    You own this card!
-                    <br />
-                    Hide card from public lists and your profile?
-                    <input
-                      name="isHidden"
-                      type="checkbox"
-                      checked={cardDetail.hidden}
-                      onChange={e => {
-                        this.props.editCardDetail(
-                          this.state.cardId,
-                          'hidden',
-                          e.target.checked
-                        );
-                      }}
-                    />
-                    <br />
-                    <Button
-                      onClick={() => {
-                        this.props.saveCardDetail(this.state.cardId);
-                      }}
-                    >
-                      Save Card Preferences
-                    </Button>
+                    <div>
+                      You own this card!
+                      <br />
+                      Hide card from public lists and your profile?
+                      <input
+                        name="isHidden"
+                        type="checkbox"
+                        checked={cardDetail.hidden}
+                        onChange={e => {
+                          this.props.editCardDetail(
+                            this.state.cardId,
+                            'hidden',
+                            e.target.checked
+                          );
+                        }}
+                      />
+                      <br />
+                      <Button
+                        onClick={() => {
+                          this.props.saveCardDetail(this.state.cardId);
+                        }}
+                      >
+                        Save Card Preferences
+                      </Button>
+                    </div>
                   </div>
                 ) : (
                   <div>

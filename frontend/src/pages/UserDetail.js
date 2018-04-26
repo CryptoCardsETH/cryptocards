@@ -14,6 +14,7 @@ import CardFilterSort, {
   FILTER_SORT_PRESET_FULL
 } from '../components/CardFilterSort';
 import BattleGroupCreator from '../components/BattleGroupCreator';
+import SellCards from '../components/SellCards';
 import UserDetailFollowing from '../components/UserDetailFollowing';
 import CopyToClipboardButton from '../components/CopyToClipboardButton';
 class UserDetail extends Component {
@@ -71,8 +72,15 @@ class UserDetail extends Component {
           </div>
         ) : (
           <div>
-            <h4>make a battle group!</h4>
-            <BattleGroupCreator cardIds={card.selectedCardIDs} />
+            <div>
+              <h4>make a battle group!</h4>
+              <BattleGroupCreator cardIds={card.selectedCardIDs} />
+            </div>
+            <br />
+            <div>
+              <h4>Sell your cards in the marketPlace!</h4>
+              <SellCards cardIds={card.selectedCardIDs} />
+            </div>
           </div>
         )}
         <hr />
