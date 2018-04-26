@@ -411,7 +411,8 @@ contract CardBase {
 		};
 
 		// "weak seeding" pseudorandom from Apple's FreeBSD 'do_rand' func
-		uint32 hashval = 16807 * (123459876 % 127773) - (2836 * (123459876 / 127773));
+		// cardID (seed) cannot be 0, so use cardID + 1
+		uint32 hashval = 16807 * ((cardID+1) % 127773) - (2836 * ((cardID+1)) / 127773));
 		bytes32 cardName = firtname[hashVal % firstname.length] + adjectives[hashVal % adjectives.length] + lastname[hashVal % lastname.length];
 
 		return cardName;
