@@ -13,13 +13,17 @@ contract Battles {
 	Battle[] battles; // Array of all existing Battles
 
 	// New Battle Event: Emitted every time a new BattleGroup is created
-	event BattleResult(uint256 battleID, uint256 winnerBattleGroup, uint256 loserBattleGroup);
+	event BattleResult(uint256 battleID, uint256 winnerBattleGroup, uint256 loserBattleGroup, uint256 rewardCardID);
 
 	CryptoCardsCore public cryptoCardsContract; // Pointer to Card Contract
 	function Battles() public {
 		CryptoCardsCore candidateContract = CryptoCardsCore(msg.sender);
 		//require(candidateContract.supportsInterface(InterfaceSignature_ERC721));
 		cryptoCardsContract = candidateContract;
+	}
+
+	function countBattles() public view returns (uint) { // Return total count of all battles
+		return battles.length;
 	}
 
 	function createBattle(uint256 _op1, uint256 _op2) public returns (uint256) {
@@ -36,34 +40,34 @@ contract Battles {
 			winnerBattleGroup: 0,
 			loserBattleGroup: 0
 		});
-		uint256 newID = battles.push(_battle) - 1;
+		uint256 newBattleID = battles.push(_battle) - 1;
 
 		// Make sure we never overflow the battle max (4 billion battles)
-		require(newID == uint256(uint32(newID)));
+		require(newBattleID == uint256(uint32(newBattleID)));
+
+		activateBattleCooldown(_battle); 	// Activate Battle Cooldown
 
 		// Determine Winner / Loser
 		var (winnerID, loserID) = determineWinner(_battle);
 		_battle.winnerBattleGroup = winnerID;
 		_battle.loserBattleGroup = loserID;
 
-		activateBattleCooldown(_battle); 	// Activate Battle Cooldown
+		// Send Reward
+		uint256 newCardID = rewardWinner(_battle.winnerBattleGroup);
 
 		// Emit Battle Result Event
 		BattleResult(
-			newID,						// Battle ID
+			newBattleID,				// Battle ID
 			_battle.winnerBattleGroup,	// Winner Battle Group ID
-			_battle.loserBattleGroup	// Loser Battle Group ID
+			_battle.loserBattleGroup,	// Loser Battle Group ID
+			newCardID					// Winner Reward Card ID
 		);
 
-		return newID;
+		return newBattleID;
 	}
 
 	function isReadyForBattle(uint256 _op) private view returns (bool) {
 		return cryptoCardsContract.BattleGroupContract().isGroupReadyForBattle(_op);
-	}
-
-	function determineWinner(Battle _battle) private pure returns (uint256 winner, uint256 loser) {
-		return (_battle.op2BattleGroup, _battle.op1BattleGroup);
 	}
 
 	function activateBattleCooldown(Battle _battle) private returns (bool) {
@@ -71,7 +75,12 @@ contract Battles {
 		cryptoCardsContract.BattleGroupContract().setGroupOnBattleCooldown(_battle.op2BattleGroup);
 	}
 
-	function countBattles() public view returns (uint) { // Return total count of all battles
-		return battles.length;
+	function determineWinner(Battle _battle) private pure returns (uint256 winner, uint256 loser) {
+		return (_battle.op2BattleGroup, _battle.op1BattleGroup);
+	}
+
+	function rewardWinner(uint256 _winnerGroup) private returns (uint256 cardID) {
+		address winner = cryptoCardsContract.BattleGroupContract().ownerOf(_winnerGroup);
+		cardID = cryptoCardsContract.createCard(winner, 111111);
 	}
 }

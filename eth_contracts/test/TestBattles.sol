@@ -44,12 +44,16 @@ contract TestBattles {
 	// Testing the createBattle() function
 	function testCreateBattle() public returns (uint256) {
 		uint expected = cryptoCards.BattleContract().countBattles();
+		uint256 expectedCardBalance = cryptoCards.balanceOf(this) + 1;
 
 		uint256 group1 = testCreateBattleGroup();
 		uint256 group2 = testCreateBattleGroup();
 
 		uint returnedID = cryptoCards.BattleContract().createBattle(group1, group2);
 		Assert.equal(returnedID, expected, "New battle should have next sequential battleID");
+
+		uint256 newCardBalance = cryptoCards.balanceOf(this);
+		Assert.equal(expectedCardBalance, newCardBalance, "Battle should have rewarded one card to the battlegroup owner (this test)");
 
 		// Send the same groups to battle again - should fail as on cooldown
 		uint returnedID2 = cryptoCards.BattleContract().createBattle(group1, group2);
