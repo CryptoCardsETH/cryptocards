@@ -37,6 +37,7 @@ Route::get('/card/{id}/value', 'MarketplaceController@estimateValue');
 
 Route::get('/stats/counts', 'StatsController@getCounts');
 Route::get('/stats/transactionReport', 'StatsController@getTransactionReport');
+Route::get('/stats/entranceFeeReport', 'StatsController@getEntranceFeeReport');
 
 Route::get('/contracts', 'ContractController@getContractAddresses');
 Route::put('/contracts/ingest', 'ContractController@contractAddressIngest');

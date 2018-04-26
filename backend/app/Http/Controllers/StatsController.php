@@ -7,6 +7,7 @@ use App\Models\Card;
 use App\Models\Listing;
 use App\Models\Transaction;
 use App\Models\User;
+use App\Models\Battle;
 
 class StatsController extends Controller
 {
@@ -52,6 +53,30 @@ class StatsController extends Controller
             'transactions' => $transactions,
             'volume'       => $volume,
             'cards'        => $cards,
+        ];
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $report);
+    }
+
+    public function getEntranceFeeReport()
+    {
+        $avg_fee = EthereumConverter::convertETHPriceToFloat(Battle::avg('entrance_fee'));
+        $max_fee = EthereumConverter::convertETHPriceToFloat(Battle::max('entrance_fee'));
+        $min_fee = EthereumConverter::convertETHPriceToFloat(Battle::min('entrance_fee'));
+        $volume = EthereumConverter::convertEthPriceToFloat(Battle::sum('entrance_fee'));
+    
+        $entrance_fees = Battle::select(
+            \DB::raw('DATE(`created_at`) AS day'),
+            \DB::raw('SUM(`entrance_fee`) AS fee_sum')
+        )->groupBy('day')
+          ->get();
+
+          $report = [
+            'avg_entrance_fee'    => $avg_fee,
+            'max_entrance_fee'    => $max_fee,
+            'min_entrance_fee'    => $min_fee,
+            'entrance_fees' => $entrance_fees,
+            'volume'       => $volume,
         ];
 
         return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $report);
