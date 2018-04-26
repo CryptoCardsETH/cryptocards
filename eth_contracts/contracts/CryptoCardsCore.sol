@@ -15,6 +15,10 @@ contract CryptoCardsCore is CardMinting {
 		_battleContract = new Battles();
 		_battleGroupContract = new BattleGroups();
 		_battleQueueContract = new BattleQueue();
+
+		// Create Imaginary (Reference) Entries
+		uint256 c = createCard(0, 34433);
+		_battleGroupContract.createBattleGroup(this, [c,c,c,c,c]);
 	}
 
 	function BattleContract() public view returns (Battles) {

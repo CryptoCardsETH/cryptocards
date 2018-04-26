@@ -15,6 +15,9 @@ contract TestBattles {
 
 		BattleGroups _battleGroupContract = cryptoCards.BattleGroupContract();
 		Assert.notEqual(address(_battleGroupContract), 0, "Battle Group Contract Should Exist");
+
+		BattleQueue _battleQueueContract = cryptoCards.BattleQueueContract();
+		Assert.notEqual(address(_battleQueueContract), 0, "Battle Queue Contract Should Exist");
 	}
 
 	//////////////////// Battle Groups ////////////////////
