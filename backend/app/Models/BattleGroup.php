@@ -18,4 +18,13 @@ class BattleGroup extends Model
     {
         return $this->hasOne(User::class, 'id', 'user_id');
     }
+
+    public static function getByTokenId($tokenId)
+    {
+        return self::firstOrCreate(['token_id' => $tokenId]);
+    }
+    public static function getNextTokenId()
+    {
+        return self::max('token_id') + 1;
+    }
 }

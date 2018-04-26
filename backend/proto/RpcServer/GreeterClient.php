@@ -82,6 +82,19 @@ class GreeterClient extends \Grpc\BaseStub {
     }
 
     /**
+     * @param \RpcServer\BattleInfoRequest $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     */
+    public function RequestBattleInfo(\RpcServer\BattleInfoRequest $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/rpcServer.Greeter/RequestBattleInfo',
+        $argument,
+        ['\RpcServer\BattleInfoReply', 'decode'],
+        $metadata, $options);
+    }
+
+    /**
      * @param \RpcServer\ECRecoverRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options

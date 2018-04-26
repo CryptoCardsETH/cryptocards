@@ -92,6 +92,35 @@ func (s *server) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*pb.
 	return &pb.BlankReply{Message: a.Hash().Hex()}, nil
 }
 
+// Get `BattleCompletionEvents`
+// TODO: make sure this works
+func (s *server) RequestBattleInfo(ctx context.Context, in *pb.BattleInfoRequest) (*pb.BattleInfoReply, error) {
+	core := getCoreContractInstance(in.CoreAddress)
+	battleContractAddr, err := core.BattleContract(&bind.CallOpts{})
+
+	client := getEthClientConnection()
+	battlesContract, err := conts.NewBattles(battleContractAddr, client)
+
+	it, err := battlesContract.FilterBattleResult(&bind.FilterOpts{})
+	if err != nil {
+
+		log.Fatalf("error filtering events: %v", err)
+	}
+
+	var battles []*pb.BattleInfo
+	for it.Next() {
+		log.Print("NewBattle Event log:")
+		battle := it.Event
+		battles = append(battles, &pb.BattleInfo{
+			Id:            battle.BattleID.Uint64(),
+			LoserGroupId:  battle.LoserBattleGroup.Uint64(),
+			WinnerGroupId: battle.WinnerBattleGroup.Uint64(),
+		})
+	}
+
+	return &pb.BattleInfoReply{Battles: battles}, nil
+}
+
 // Get `NewCard` events
 func (s *server) RequestCardInfo(ctx context.Context, in *pb.CardInfoRequest) (*pb.CardInfoReply, error) {
 	core := getCoreContractInstance(in.Contract)
