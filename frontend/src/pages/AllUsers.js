@@ -11,7 +11,7 @@ class AllUsers extends Component {
   render() {
     // fake user data
     return (
-      <div>
+      <div className="container">
         <h1>All Users</h1>
         {this.props.user.all_users.map(u => {
           let { cards, nickname, email, address } = u;

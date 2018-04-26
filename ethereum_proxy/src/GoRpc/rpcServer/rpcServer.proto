@@ -6,8 +6,12 @@ service Greeter {
 
   rpc GetBlank(BlankRequest) returns (BlankReply) {}
 
+  rpc CreateCard(CreateCardRequest) returns (BlankReply) {}
   rpc GetCardsByOwner(CardsRequest) returns (CardsReply) {}
 
+  rpc RequestBattleGroupInfo(BattleGroupInfoRequest) returns (BattleGroupInfoReply) {}
+  rpc RequestCardInfo(CardInfoRequest) returns (CardInfoReply) {}
+  rpc PerformECRecover(ECRecoverRequest) returns (ECRecoverReply) {}
 }
 
 message BlankRequest {
@@ -30,3 +34,52 @@ message CardsReply {
   string attributes = 5;
 }
 
+message CoreContractAddress {
+  string address = 1;
+}
+
+
+message BattleGroupInfo {
+  string ownerAddress = 1;
+  uint64 id = 2;
+  repeated uint64 cards = 3;
+ }
+
+message BattleGroupInfoReply {
+ repeated BattleGroupInfo items = 1;
+}
+
+message BattleGroupInfoRequest {
+  CoreContractAddress contract = 1;
+}                 
+
+message CreateCardRequest {
+  string ownerAddress = 1;
+  CoreContractAddress coreAddress = 2;
+}
+
+message CardInfo {
+  string ownerAddress = 1;
+  uint64 id = 2;
+  uint64 creationBattleId = 3;
+  uint64 attributes = 4;
+ }
+
+message CardInfoReply {
+ repeated CardInfo items = 1;
+}
+
+message CardInfoRequest {
+  CoreContractAddress contract = 1;
+}    
+
+
+message ECRecoverRequest {
+  string address = 1;
+  string signed = 2;
+  string plaintext = 3;
+}
+
+message ECRecoverReply {
+  bool success = 1;
+}

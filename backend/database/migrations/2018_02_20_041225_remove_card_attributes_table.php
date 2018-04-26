@@ -22,7 +22,7 @@ class RemoveCardAttributesTable extends Migration
      */
     public function down()
     {
-        Schema::table('card_attributes', function (Blueprint $table) {
+        Schema::create('card_attributes', function (Blueprint $table) {
             $table->increments('id');
             $table->integer('card_id')->unsigned();
             $table->foreign('card_id')->references('id')->on('cards');

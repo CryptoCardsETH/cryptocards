@@ -28,6 +28,7 @@ Route::get('/test', function () {
     return Route::list();
 });
 Route::get('/me/transactions', 'ProfileController@getMyTransactions');
+Route::get('/me/notifications', 'ProfileController@getMyNotifications');
 
 Route::get('/battles', 'BattlegroundController@getAllBattles');
 
@@ -37,13 +38,13 @@ Route::put('/cards/{id}', 'MarketplaceController@updateCard');
 Route::get('/listings', 'MarketplaceController@getAllListings');
 Route::put('/cards/{id}/transaction', 'MarketplaceController@putTransaction');
 Route::get('/cards/{id}/transactions', 'MarketplaceController@getCardTransactions');
+Route::get('/card/{id}/value', 'MarketplaceController@estimateValue');
 
 Route::get('/stats/counts', 'StatsController@getCounts');
 Route::get('/stats/transactionReport', 'StatsController@getTransactionReport');
 
 Route::get('/contracts', 'ContractController@getContractAddresses');
 Route::put('/contracts/ingest', 'ContractController@contractAddressIngest');
-
 Route::get('/', function () {
     return Response::build(\App\Http\Controllers\Controller::RESPONSE_MESSAGE_SUCCESS, 'hi');
 });

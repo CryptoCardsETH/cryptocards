@@ -12,6 +12,16 @@ It has these top-level messages:
 	BlankReply
 	CardsRequest
 	CardsReply
+	CoreContractAddress
+	BattleGroupInfo
+	BattleGroupInfoReply
+	BattleGroupInfoRequest
+	CreateCardRequest
+	CardInfo
+	CardInfoReply
+	CardInfoRequest
+	ECRecoverRequest
+	ECRecoverReply
 */
 package rpcServer
 
@@ -131,11 +141,245 @@ func (m *CardsReply) GetAttributes() string {
 	return ""
 }
 
+type CoreContractAddress struct {
+	Address string `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+}
+
+func (m *CoreContractAddress) Reset()                    { *m = CoreContractAddress{} }
+func (m *CoreContractAddress) String() string            { return proto.CompactTextString(m) }
+func (*CoreContractAddress) ProtoMessage()               {}
+func (*CoreContractAddress) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{4} }
+
+func (m *CoreContractAddress) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+type BattleGroupInfo struct {
+	OwnerAddress string   `protobuf:"bytes,1,opt,name=ownerAddress" json:"ownerAddress,omitempty"`
+	Id           uint64   `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
+	Cards        []uint64 `protobuf:"varint,3,rep,packed,name=cards" json:"cards,omitempty"`
+}
+
+func (m *BattleGroupInfo) Reset()                    { *m = BattleGroupInfo{} }
+func (m *BattleGroupInfo) String() string            { return proto.CompactTextString(m) }
+func (*BattleGroupInfo) ProtoMessage()               {}
+func (*BattleGroupInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{5} }
+
+func (m *BattleGroupInfo) GetOwnerAddress() string {
+	if m != nil {
+		return m.OwnerAddress
+	}
+	return ""
+}
+
+func (m *BattleGroupInfo) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *BattleGroupInfo) GetCards() []uint64 {
+	if m != nil {
+		return m.Cards
+	}
+	return nil
+}
+
+type BattleGroupInfoReply struct {
+	Items []*BattleGroupInfo `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+}
+
+func (m *BattleGroupInfoReply) Reset()                    { *m = BattleGroupInfoReply{} }
+func (m *BattleGroupInfoReply) String() string            { return proto.CompactTextString(m) }
+func (*BattleGroupInfoReply) ProtoMessage()               {}
+func (*BattleGroupInfoReply) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{6} }
+
+func (m *BattleGroupInfoReply) GetItems() []*BattleGroupInfo {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+type BattleGroupInfoRequest struct {
+	Contract *CoreContractAddress `protobuf:"bytes,1,opt,name=contract" json:"contract,omitempty"`
+}
+
+func (m *BattleGroupInfoRequest) Reset()                    { *m = BattleGroupInfoRequest{} }
+func (m *BattleGroupInfoRequest) String() string            { return proto.CompactTextString(m) }
+func (*BattleGroupInfoRequest) ProtoMessage()               {}
+func (*BattleGroupInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{7} }
+
+func (m *BattleGroupInfoRequest) GetContract() *CoreContractAddress {
+	if m != nil {
+		return m.Contract
+	}
+	return nil
+}
+
+type CreateCardRequest struct {
+	OwnerAddress string               `protobuf:"bytes,1,opt,name=ownerAddress" json:"ownerAddress,omitempty"`
+	CoreAddress  *CoreContractAddress `protobuf:"bytes,2,opt,name=coreAddress" json:"coreAddress,omitempty"`
+}
+
+func (m *CreateCardRequest) Reset()                    { *m = CreateCardRequest{} }
+func (m *CreateCardRequest) String() string            { return proto.CompactTextString(m) }
+func (*CreateCardRequest) ProtoMessage()               {}
+func (*CreateCardRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{8} }
+
+func (m *CreateCardRequest) GetOwnerAddress() string {
+	if m != nil {
+		return m.OwnerAddress
+	}
+	return ""
+}
+
+func (m *CreateCardRequest) GetCoreAddress() *CoreContractAddress {
+	if m != nil {
+		return m.CoreAddress
+	}
+	return nil
+}
+
+type CardInfo struct {
+	OwnerAddress     string `protobuf:"bytes,1,opt,name=ownerAddress" json:"ownerAddress,omitempty"`
+	Id               uint64 `protobuf:"varint,2,opt,name=id" json:"id,omitempty"`
+	CreationBattleId uint64 `protobuf:"varint,3,opt,name=creationBattleId" json:"creationBattleId,omitempty"`
+	Attributes       uint64 `protobuf:"varint,4,opt,name=attributes" json:"attributes,omitempty"`
+}
+
+func (m *CardInfo) Reset()                    { *m = CardInfo{} }
+func (m *CardInfo) String() string            { return proto.CompactTextString(m) }
+func (*CardInfo) ProtoMessage()               {}
+func (*CardInfo) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{9} }
+
+func (m *CardInfo) GetOwnerAddress() string {
+	if m != nil {
+		return m.OwnerAddress
+	}
+	return ""
+}
+
+func (m *CardInfo) GetId() uint64 {
+	if m != nil {
+		return m.Id
+	}
+	return 0
+}
+
+func (m *CardInfo) GetCreationBattleId() uint64 {
+	if m != nil {
+		return m.CreationBattleId
+	}
+	return 0
+}
+
+func (m *CardInfo) GetAttributes() uint64 {
+	if m != nil {
+		return m.Attributes
+	}
+	return 0
+}
+
+type CardInfoReply struct {
+	Items []*CardInfo `protobuf:"bytes,1,rep,name=items" json:"items,omitempty"`
+}
+
+func (m *CardInfoReply) Reset()                    { *m = CardInfoReply{} }
+func (m *CardInfoReply) String() string            { return proto.CompactTextString(m) }
+func (*CardInfoReply) ProtoMessage()               {}
+func (*CardInfoReply) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{10} }
+
+func (m *CardInfoReply) GetItems() []*CardInfo {
+	if m != nil {
+		return m.Items
+	}
+	return nil
+}
+
+type CardInfoRequest struct {
+	Contract *CoreContractAddress `protobuf:"bytes,1,opt,name=contract" json:"contract,omitempty"`
+}
+
+func (m *CardInfoRequest) Reset()                    { *m = CardInfoRequest{} }
+func (m *CardInfoRequest) String() string            { return proto.CompactTextString(m) }
+func (*CardInfoRequest) ProtoMessage()               {}
+func (*CardInfoRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{11} }
+
+func (m *CardInfoRequest) GetContract() *CoreContractAddress {
+	if m != nil {
+		return m.Contract
+	}
+	return nil
+}
+
+type ECRecoverRequest struct {
+	Address   string `protobuf:"bytes,1,opt,name=address" json:"address,omitempty"`
+	Signed    string `protobuf:"bytes,2,opt,name=signed" json:"signed,omitempty"`
+	Plaintext string `protobuf:"bytes,3,opt,name=plaintext" json:"plaintext,omitempty"`
+}
+
+func (m *ECRecoverRequest) Reset()                    { *m = ECRecoverRequest{} }
+func (m *ECRecoverRequest) String() string            { return proto.CompactTextString(m) }
+func (*ECRecoverRequest) ProtoMessage()               {}
+func (*ECRecoverRequest) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{12} }
+
+func (m *ECRecoverRequest) GetAddress() string {
+	if m != nil {
+		return m.Address
+	}
+	return ""
+}
+
+func (m *ECRecoverRequest) GetSigned() string {
+	if m != nil {
+		return m.Signed
+	}
+	return ""
+}
+
+func (m *ECRecoverRequest) GetPlaintext() string {
+	if m != nil {
+		return m.Plaintext
+	}
+	return ""
+}
+
+type ECRecoverReply struct {
+	Success bool `protobuf:"varint,1,opt,name=success" json:"success,omitempty"`
+}
+
+func (m *ECRecoverReply) Reset()                    { *m = ECRecoverReply{} }
+func (m *ECRecoverReply) String() string            { return proto.CompactTextString(m) }
+func (*ECRecoverReply) ProtoMessage()               {}
+func (*ECRecoverReply) Descriptor() ([]byte, []int) { return fileDescriptor0, []int{13} }
+
+func (m *ECRecoverReply) GetSuccess() bool {
+	if m != nil {
+		return m.Success
+	}
+	return false
+}
+
 func init() {
 	proto.RegisterType((*BlankRequest)(nil), "rpcServer.BlankRequest")
 	proto.RegisterType((*BlankReply)(nil), "rpcServer.BlankReply")
 	proto.RegisterType((*CardsRequest)(nil), "rpcServer.CardsRequest")
 	proto.RegisterType((*CardsReply)(nil), "rpcServer.CardsReply")
+	proto.RegisterType((*CoreContractAddress)(nil), "rpcServer.CoreContractAddress")
+	proto.RegisterType((*BattleGroupInfo)(nil), "rpcServer.BattleGroupInfo")
+	proto.RegisterType((*BattleGroupInfoReply)(nil), "rpcServer.BattleGroupInfoReply")
+	proto.RegisterType((*BattleGroupInfoRequest)(nil), "rpcServer.BattleGroupInfoRequest")
+	proto.RegisterType((*CreateCardRequest)(nil), "rpcServer.CreateCardRequest")
+	proto.RegisterType((*CardInfo)(nil), "rpcServer.CardInfo")
+	proto.RegisterType((*CardInfoReply)(nil), "rpcServer.CardInfoReply")
+	proto.RegisterType((*CardInfoRequest)(nil), "rpcServer.CardInfoRequest")
+	proto.RegisterType((*ECRecoverRequest)(nil), "rpcServer.ECRecoverRequest")
+	proto.RegisterType((*ECRecoverReply)(nil), "rpcServer.ECRecoverReply")
 }
 
 // Reference imports to suppress errors if they are not otherwise used.
@@ -150,7 +394,11 @@ const _ = grpc.SupportPackageIsVersion4
 
 type GreeterClient interface {
 	GetBlank(ctx context.Context, in *BlankRequest, opts ...grpc.CallOption) (*BlankReply, error)
+	CreateCard(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*BlankReply, error)
 	GetCardsByOwner(ctx context.Context, in *CardsRequest, opts ...grpc.CallOption) (*CardsReply, error)
+	RequestBattleGroupInfo(ctx context.Context, in *BattleGroupInfoRequest, opts ...grpc.CallOption) (*BattleGroupInfoReply, error)
+	RequestCardInfo(ctx context.Context, in *CardInfoRequest, opts ...grpc.CallOption) (*CardInfoReply, error)
+	PerformECRecover(ctx context.Context, in *ECRecoverRequest, opts ...grpc.CallOption) (*ECRecoverReply, error)
 }
 
 type greeterClient struct {
@@ -170,9 +418,45 @@ func (c *greeterClient) GetBlank(ctx context.Context, in *BlankRequest, opts ...
 	return out, nil
 }
 
+func (c *greeterClient) CreateCard(ctx context.Context, in *CreateCardRequest, opts ...grpc.CallOption) (*BlankReply, error) {
+	out := new(BlankReply)
+	err := grpc.Invoke(ctx, "/rpcServer.Greeter/CreateCard", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
 func (c *greeterClient) GetCardsByOwner(ctx context.Context, in *CardsRequest, opts ...grpc.CallOption) (*CardsReply, error) {
 	out := new(CardsReply)
 	err := grpc.Invoke(ctx, "/rpcServer.Greeter/GetCardsByOwner", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *greeterClient) RequestBattleGroupInfo(ctx context.Context, in *BattleGroupInfoRequest, opts ...grpc.CallOption) (*BattleGroupInfoReply, error) {
+	out := new(BattleGroupInfoReply)
+	err := grpc.Invoke(ctx, "/rpcServer.Greeter/RequestBattleGroupInfo", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *greeterClient) RequestCardInfo(ctx context.Context, in *CardInfoRequest, opts ...grpc.CallOption) (*CardInfoReply, error) {
+	out := new(CardInfoReply)
+	err := grpc.Invoke(ctx, "/rpcServer.Greeter/RequestCardInfo", in, out, c.cc, opts...)
+	if err != nil {
+		return nil, err
+	}
+	return out, nil
+}
+
+func (c *greeterClient) PerformECRecover(ctx context.Context, in *ECRecoverRequest, opts ...grpc.CallOption) (*ECRecoverReply, error) {
+	out := new(ECRecoverReply)
+	err := grpc.Invoke(ctx, "/rpcServer.Greeter/PerformECRecover", in, out, c.cc, opts...)
 	if err != nil {
 		return nil, err
 	}
@@ -183,7 +467,11 @@ func (c *greeterClient) GetCardsByOwner(ctx context.Context, in *CardsRequest, o
 
 type GreeterServer interface {
 	GetBlank(context.Context, *BlankRequest) (*BlankReply, error)
+	CreateCard(context.Context, *CreateCardRequest) (*BlankReply, error)
 	GetCardsByOwner(context.Context, *CardsRequest) (*CardsReply, error)
+	RequestBattleGroupInfo(context.Context, *BattleGroupInfoRequest) (*BattleGroupInfoReply, error)
+	RequestCardInfo(context.Context, *CardInfoRequest) (*CardInfoReply, error)
+	PerformECRecover(context.Context, *ECRecoverRequest) (*ECRecoverReply, error)
 }
 
 func RegisterGreeterServer(s *grpc.Server, srv GreeterServer) {
@@ -208,6 +496,24 @@ func _Greeter_GetBlank_Handler(srv interface{}, ctx context.Context, dec func(in
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Greeter_CreateCard_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CreateCardRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).CreateCard(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpcServer.Greeter/CreateCard",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).CreateCard(ctx, req.(*CreateCardRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 func _Greeter_GetCardsByOwner_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
 	in := new(CardsRequest)
 	if err := dec(in); err != nil {
@@ -226,6 +532,60 @@ func _Greeter_GetCardsByOwner_Handler(srv interface{}, ctx context.Context, dec 
 	return interceptor(ctx, in, info, handler)
 }
 
+func _Greeter_RequestBattleGroupInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(BattleGroupInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).RequestBattleGroupInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpcServer.Greeter/RequestBattleGroupInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).RequestBattleGroupInfo(ctx, req.(*BattleGroupInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Greeter_RequestCardInfo_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(CardInfoRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).RequestCardInfo(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpcServer.Greeter/RequestCardInfo",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).RequestCardInfo(ctx, req.(*CardInfoRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
+func _Greeter_PerformECRecover_Handler(srv interface{}, ctx context.Context, dec func(interface{}) error, interceptor grpc.UnaryServerInterceptor) (interface{}, error) {
+	in := new(ECRecoverRequest)
+	if err := dec(in); err != nil {
+		return nil, err
+	}
+	if interceptor == nil {
+		return srv.(GreeterServer).PerformECRecover(ctx, in)
+	}
+	info := &grpc.UnaryServerInfo{
+		Server:     srv,
+		FullMethod: "/rpcServer.Greeter/PerformECRecover",
+	}
+	handler := func(ctx context.Context, req interface{}) (interface{}, error) {
+		return srv.(GreeterServer).PerformECRecover(ctx, req.(*ECRecoverRequest))
+	}
+	return interceptor(ctx, in, info, handler)
+}
+
 var _Greeter_serviceDesc = grpc.ServiceDesc{
 	ServiceName: "rpcServer.Greeter",
 	HandlerType: (*GreeterServer)(nil),
@@ -235,8 +595,24 @@ var _Greeter_serviceDesc = grpc.ServiceDesc{
 			Handler:    _Greeter_GetBlank_Handler,
 		},
 		{
+			MethodName: "CreateCard",
+			Handler:    _Greeter_CreateCard_Handler,
+		},
+		{
 			MethodName: "GetCardsByOwner",
 			Handler:    _Greeter_GetCardsByOwner_Handler,
+		},
+		{
+			MethodName: "RequestBattleGroupInfo",
+			Handler:    _Greeter_RequestBattleGroupInfo_Handler,
+		},
+		{
+			MethodName: "RequestCardInfo",
+			Handler:    _Greeter_RequestCardInfo_Handler,
+		},
+		{
+			MethodName: "PerformECRecover",
+			Handler:    _Greeter_PerformECRecover_Handler,
 		},
 	},
 	Streams:  []grpc.StreamDesc{},
@@ -246,24 +622,44 @@ var _Greeter_serviceDesc = grpc.ServiceDesc{
 func init() { proto.RegisterFile("rpcServer.proto", fileDescriptor0) }
 
 var fileDescriptor0 = []byte{
-	// 293 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0x64, 0x91, 0xc1, 0x4a, 0xf3, 0x40,
-	0x14, 0x85, 0x9b, 0xff, 0xaf, 0xd6, 0x5e, 0x2a, 0xd5, 0x01, 0x71, 0x70, 0x21, 0x65, 0x16, 0x12,
-	0x44, 0xba, 0xd0, 0xad, 0xab, 0x56, 0x09, 0xae, 0x84, 0xe8, 0x0b, 0x4c, 0x92, 0x8b, 0x04, 0xd3,
-	0x99, 0x78, 0xe7, 0xc6, 0x92, 0x77, 0xf0, 0xf1, 0x7c, 0x20, 0x71, 0x48, 0xda, 0xc4, 0xec, 0xe6,
-	0x9e, 0xf3, 0xcd, 0x19, 0xe6, 0x5c, 0x98, 0x53, 0x99, 0xbe, 0x20, 0x7d, 0x22, 0x2d, 0x4b, 0xb2,
-	0x6c, 0xc5, 0x74, 0x27, 0x28, 0x05, 0xb3, 0x55, 0xa1, 0xcd, 0x7b, 0x8c, 0x1f, 0x15, 0x3a, 0x16,
-	0x02, 0xc6, 0x46, 0x6f, 0x50, 0x06, 0x8b, 0x20, 0x9c, 0xc6, 0xfe, 0xac, 0xae, 0x00, 0x1a, 0xa6,
-	0x2c, 0x6a, 0x21, 0x61, 0xb2, 0x41, 0xe7, 0xf4, 0x5b, 0x0b, 0xb5, 0xa3, 0x0a, 0x61, 0xb6, 0xd6,
-	0x94, 0xb9, 0x36, 0x4b, 0xc2, 0x44, 0x67, 0x19, 0xa1, 0x73, 0x2d, 0xd9, 0x8c, 0xea, 0x3b, 0x00,
-	0x68, 0xd0, 0xdf, 0x48, 0x05, 0xb3, 0x94, 0x50, 0x73, 0x6e, 0xcd, 0x6b, 0xde, 0x3c, 0x3e, 0x8e,
-	0x7b, 0x9a, 0xb8, 0x81, 0xd3, 0x44, 0x33, 0x17, 0xb8, 0xb6, 0xb6, 0xc8, 0xec, 0xd6, 0x3c, 0x9a,
-	0x4c, 0xfe, 0xf3, 0xe0, 0xd0, 0x10, 0xd7, 0x70, 0xd2, 0xde, 0x5e, 0x79, 0xf3, 0xe9, 0x41, 0xfe,
-	0x5f, 0x04, 0xe1, 0x71, 0x3c, 0xd0, 0x45, 0x08, 0xf3, 0xb4, 0x22, 0x42, 0xc3, 0x3b, 0x74, 0xec,
-	0xd1, 0xbf, 0xb2, 0xb8, 0x04, 0xd0, 0xcc, 0x94, 0x27, 0x15, 0xa3, 0x93, 0x07, 0xfe, 0x4f, 0x1d,
-	0xe5, 0xf6, 0x2b, 0x80, 0x49, 0x44, 0x88, 0x8c, 0x24, 0xee, 0xe1, 0x28, 0x42, 0xf6, 0xbd, 0x89,
-	0xf3, 0xe5, 0x7e, 0x03, 0xdd, 0xb6, 0x2f, 0xce, 0x86, 0x46, 0x59, 0xd4, 0x6a, 0x24, 0xd6, 0x30,
-	0x8f, 0x90, 0x7d, 0x45, 0xab, 0xfa, 0x79, 0x6b, 0x90, 0x7a, 0x21, 0xdd, 0x9a, 0x7b, 0x21, 0xfb,
-	0x52, 0xd5, 0x28, 0x39, 0xf4, 0xdb, 0xbe, 0xfb, 0x09, 0x00, 0x00, 0xff, 0xff, 0x89, 0xca, 0x3e,
-	0x36, 0x00, 0x02, 0x00, 0x00,
+	// 618 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xa4, 0x55, 0x4d, 0x6f, 0xd3, 0x4c,
+	0x10, 0x6e, 0x12, 0xb7, 0x4d, 0xa6, 0x1f, 0x6e, 0xb7, 0x7d, 0xfb, 0x9a, 0x50, 0x95, 0xb0, 0x07,
+	0x64, 0x2a, 0x54, 0x50, 0xb8, 0x55, 0x1c, 0x68, 0x4c, 0x15, 0x22, 0x81, 0x40, 0xa6, 0x37, 0x24,
+	0x24, 0xc7, 0x9e, 0x56, 0x16, 0x8e, 0xd7, 0xac, 0x37, 0x2d, 0xf9, 0x0b, 0xfc, 0x34, 0xce, 0xfc,
+	0x20, 0xe4, 0xf5, 0x6e, 0xe2, 0x8f, 0x28, 0x54, 0x70, 0xf3, 0xcc, 0x3c, 0xfb, 0xcc, 0xce, 0xcc,
+	0xb3, 0x63, 0x30, 0x79, 0xe2, 0x7f, 0x42, 0x7e, 0x8b, 0xfc, 0x2c, 0xe1, 0x4c, 0x30, 0xd2, 0x99,
+	0x3b, 0x28, 0x85, 0xed, 0x41, 0xe4, 0xc5, 0x5f, 0x5d, 0xfc, 0x36, 0xc5, 0x54, 0x10, 0x02, 0x46,
+	0xec, 0x4d, 0xd0, 0x6a, 0xf4, 0x1a, 0x76, 0xc7, 0x95, 0xdf, 0xf4, 0x09, 0x80, 0xc2, 0x24, 0xd1,
+	0x8c, 0x58, 0xb0, 0x39, 0xc1, 0x34, 0xf5, 0x6e, 0x34, 0x48, 0x9b, 0xd4, 0x86, 0x6d, 0xc7, 0xe3,
+	0x41, 0xaa, 0xb9, 0x2c, 0xd8, 0xf4, 0x82, 0x80, 0x63, 0x9a, 0x6a, 0xa4, 0x32, 0xe9, 0xaf, 0x06,
+	0x80, 0x82, 0x66, 0x94, 0x14, 0xb6, 0x7d, 0x8e, 0x9e, 0x08, 0x59, 0x7c, 0x15, 0xaa, 0xe4, 0x86,
+	0x5b, 0xf2, 0x91, 0x67, 0xb0, 0x3f, 0xf6, 0x84, 0x88, 0xd0, 0x61, 0x2c, 0x0a, 0xd8, 0x5d, 0x7c,
+	0x19, 0x07, 0x56, 0x53, 0x02, 0xeb, 0x01, 0x72, 0x0a, 0x7b, 0xfa, 0xf4, 0x40, 0x06, 0x47, 0x6f,
+	0xac, 0x56, 0xaf, 0x61, 0xef, 0xb8, 0x35, 0x3f, 0xb1, 0xc1, 0xf4, 0xa7, 0x9c, 0x63, 0x2c, 0xe6,
+	0x50, 0x43, 0x42, 0xab, 0x6e, 0x72, 0x02, 0xe0, 0x09, 0xc1, 0xc3, 0xf1, 0x54, 0x60, 0x6a, 0xad,
+	0xcb, 0x9a, 0x0a, 0x1e, 0xfa, 0x1c, 0x0e, 0x1c, 0xc6, 0xd1, 0x61, 0xb1, 0xe0, 0x9e, 0x2f, 0x2e,
+	0xf2, 0x6a, 0x57, 0xf4, 0xe1, 0x33, 0x98, 0x39, 0xf9, 0x90, 0xb3, 0x69, 0x32, 0x8a, 0xaf, 0x59,
+	0xd6, 0x0b, 0x76, 0x17, 0x23, 0xbf, 0x28, 0x9d, 0x28, 0xf9, 0xc8, 0x2e, 0x34, 0x43, 0x5d, 0x7c,
+	0x33, 0x0c, 0xc8, 0x21, 0xac, 0xfb, 0x59, 0x37, 0xad, 0x56, 0xaf, 0x65, 0x1b, 0x6e, 0x6e, 0xd0,
+	0xb7, 0x70, 0x58, 0x21, 0xcf, 0xbb, 0xfd, 0x02, 0xd6, 0x43, 0x81, 0x93, 0x8c, 0xba, 0x65, 0x6f,
+	0xf5, 0xbb, 0x67, 0x0b, 0x79, 0x54, 0xf1, 0x39, 0x90, 0x5e, 0xc1, 0x51, 0x8d, 0x29, 0x1f, 0xf1,
+	0x39, 0xb4, 0x7d, 0x55, 0xad, 0xbc, 0xe9, 0x56, 0xff, 0xa4, 0x40, 0xb7, 0xa4, 0x19, 0xee, 0x1c,
+	0x4f, 0x67, 0xb0, 0xef, 0x64, 0xb3, 0xc0, 0x4c, 0x09, 0x9a, 0xf0, 0x3e, 0xe5, 0xbf, 0x86, 0x2d,
+	0x9f, 0x71, 0xd4, 0x90, 0xe6, 0xbd, 0xf2, 0x16, 0x8f, 0xd0, 0x1f, 0x0d, 0x68, 0x67, 0x59, 0xff,
+	0xba, 0xe3, 0x75, 0x7d, 0x05, 0x52, 0x5f, 0x46, 0x4d, 0x5f, 0x41, 0x45, 0x35, 0x86, 0x44, 0x15,
+	0x55, 0x73, 0x0e, 0x3b, 0xfa, 0x2e, 0xf9, 0x80, 0x9e, 0x96, 0x07, 0x74, 0x50, 0xac, 0x4c, 0x03,
+	0xd5, 0x64, 0xde, 0x83, 0xb9, 0x38, 0xfb, 0xef, 0x23, 0x19, 0xc3, 0xde, 0xa5, 0xe3, 0xa2, 0xcf,
+	0x6e, 0x91, 0xff, 0xf1, 0x15, 0x93, 0x23, 0xd8, 0x48, 0xc3, 0x9b, 0x18, 0xf3, 0xc6, 0x74, 0x5c,
+	0x65, 0x91, 0x63, 0xe8, 0x24, 0x91, 0x17, 0xc6, 0x02, 0xbf, 0x0b, 0xd9, 0x95, 0x8e, 0xbb, 0x70,
+	0xd0, 0x53, 0xd8, 0x2d, 0xe4, 0x50, 0x1b, 0x25, 0x9d, 0xfa, 0xbe, 0xce, 0xd0, 0x76, 0xb5, 0xd9,
+	0xff, 0xd9, 0x82, 0xcd, 0x21, 0x47, 0x14, 0xc8, 0xc9, 0x2b, 0x68, 0x0f, 0x51, 0xc8, 0x45, 0x44,
+	0xfe, 0x2f, 0x6a, 0xb6, 0xb0, 0xbe, 0xba, 0xff, 0xd5, 0x03, 0x49, 0x34, 0xa3, 0x6b, 0xc4, 0x01,
+	0x58, 0x88, 0x8d, 0x1c, 0x17, 0x3b, 0x52, 0xd5, 0xe0, 0x2a, 0x12, 0x73, 0x88, 0x42, 0x2e, 0xae,
+	0xc1, 0xec, 0x43, 0xa6, 0x8f, 0xd2, 0x4d, 0x8a, 0xcb, 0xaf, 0x44, 0xb2, 0x58, 0x75, 0x74, 0x8d,
+	0x7c, 0x81, 0x23, 0x85, 0xa9, 0x3e, 0xfd, 0xc7, 0x2b, 0x5e, 0xa2, 0x62, 0x7d, 0xb4, 0x0a, 0x92,
+	0xf3, 0x8f, 0xc0, 0x54, 0xe8, 0xb9, 0xc2, 0xbb, 0xcb, 0x14, 0xa4, 0x18, 0xad, 0xa5, 0xb1, 0x9c,
+	0xea, 0x1d, 0xec, 0x7d, 0x44, 0x7e, 0xcd, 0xf8, 0x64, 0x3e, 0x31, 0xf2, 0xb0, 0x80, 0xaf, 0x6a,
+	0xa5, 0xfb, 0x60, 0x79, 0x50, 0xb2, 0x8d, 0x37, 0xe4, 0xcf, 0xe7, 0xe5, 0xef, 0x00, 0x00, 0x00,
+	0xff, 0xff, 0xf6, 0xe7, 0x59, 0xc9, 0x8f, 0x06, 0x00, 0x00,
 }

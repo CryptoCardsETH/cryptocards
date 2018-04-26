@@ -1,5 +1,5 @@
 import { createSelector } from 'reselect';
-import { ABIs } from '../contracts';
+import { ABIs, CONTRACT_NAME_CORE } from '../contracts';
 
 import Eth from 'ethjs-query';
 import EthContract from 'ethjs-contract';
@@ -15,21 +15,31 @@ export const isReadyForContract = createSelector(
   }
 );
 
-export const getContractAddress = (state, contractName) => {
+export const getContractAddress = async (state, contractName) => {
   let ready = isReadyForContract(state);
+  if (!ready) return null;
+
   let contract = getContractsState(state);
-  return ready ? contract.addresses[contractName].address : null;
+  if (contractName === CONTRACT_NAME_CORE)
+    return contract.addresses[contractName].address;
+  else {
+    //grab the address from core
+    let core = await getContractInstanceByName(state, CONTRACT_NAME_CORE);
+    let res = await core['BattleGroupContract'].call();
+    return res[0];
+  }
 };
 
-export const getContractByName = (state, contractName) => {
+export const getContractByName = async (state, contractName) => {
+  let address = await getContractAddress(state, contractName);
   return {
     abi: ABIs[contractName],
-    address: getContractAddress(state, contractName)
+    address
   };
 };
 
-export const getContractInstanceByName = (state, contractName) => {
-  const info = getContractByName(state, contractName);
+export const getContractInstanceByName = async (state, contractName) => {
+  const info = await getContractByName(state, contractName);
   return getContractInstance(info.abi, info.address);
 };
 
@@ -43,7 +53,7 @@ export function getContractInstance(ABI, contractAddress) {
 
 export const waitForTxToBeMined = async txHash => {
   const eth = new Eth(window.web3.currentProvider);
-
+  console.log('Transaction Sent!', txHash);
   let txReceipt;
   while (!txReceipt) {
     try {

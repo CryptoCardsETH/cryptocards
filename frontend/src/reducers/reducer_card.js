@@ -7,7 +7,9 @@ import {
   EDIT_CARD_DETAIL,
   TOGGLE_CARD_SELECTION,
   REQUEST_CARD_TRANSACTIONS,
-  RECEIVE_CARD_TRANSACTIONS
+  RECEIVE_CARD_TRANSACTIONS,
+  REQUEST_CARD_VALUE,
+  RECEIVE_CARD_VALUE
 } from '../actions/cards';
 import update from 'immutability-helper';
 const INITIAL_STATE = {
@@ -18,7 +20,9 @@ const INITIAL_STATE = {
   filters: {},
   selectedCardIDs: [],
   card_transactions: [],
-  card_transactions_loading: false
+  card_transactions_loading: false,
+  card_value: 0,
+  card_value_loading: false
 };
 
 update.extend('$auto', function(value, object) {
@@ -87,6 +91,17 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         card_transactions: action.transactions,
         card_transactions_loading: false
+      };
+    case REQUEST_CARD_VALUE:
+      return {
+        ...state,
+        card_value_loading: true
+      };
+    case RECEIVE_CARD_VALUE:
+      return {
+        ...state,
+        card_value: action.value,
+        card_value_loading: false
       };
     default:
       return state;

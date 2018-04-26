@@ -20,73 +20,37 @@ class Nav extends React.Component {
     });
   }
   render() {
+    let { authenticated } = this.props.user;
     let isAdmin =
       this.props.user.authenticated &&
       this.props.user.me &&
       this.props.user.me.admin;
     return (
-      <div>
-        <nav className="navbar navbar-expand-md navbar-dark fixed-top bg-dark">
+      <div className="navigation">
+        <nav className="navbar navbar-expand-md fixed-top gradient">
           <div className="navbar-brand">{APP_NAME}</div>
           <div className="collapse navbar-collapse" id="navbarCollapse">
-            <ul className="navbar-nav mr-auto">
-              <li className="nav-item active">
-                <NavLink exact to="/" className="nav-link">
-                  Home
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink exact to="/marketplace" className="nav-link">
-                  Marketplace
-                </NavLink>
-              </li>
-              {this.props.user.authenticated ? (
-                <li className="nav-item">
-                  <NavLink to="/account" className="nav-link">
-                    Account
-                  </NavLink>
-                </li>
+            <ul className="navbar-nav ml-auto">
+              <NavbarItem to="/" text="Home" />
+              <NavbarItem to="/marketplace" text="Marketplace" />
+              {authenticated ? (
+                <NavbarItem to="/account" text="Account" />
               ) : null}
-              {this.props.user.authenticated ? (
-                <li className="nav-item">
-                  <NavLink
-                    to={
-                      '/user/' + (this.props.user.me && this.props.user.me.id)
-                    }
-                    className="nav-link"
-                  >
-                    My Collection
-                  </NavLink>
-                </li>
+              {authenticated ? (
+                <NavbarItem
+                  to={'/user/' + (this.props.user.me && this.props.user.me.id)}
+                  text="My Collection"
+                />
               ) : null}
-              <li className="nav-item">
-                <NavLink to="/users" className="nav-link">
-                  All Users
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/cards" className="nav-link">
-                  All Cards
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/debug" className="nav-link">
-                  Debug
-                </NavLink>
-              </li>
-              <li className="nav-item">
-                <NavLink to="/faq" className="nav-link">
-                  FAQ
-                </NavLink>
-              </li>
-              {isAdmin ? (
-                <li className="nav-item">
-                  <NavLink to="/admin" className="nav-link">
-                    Admin
-                  </NavLink>
-                </li>
+              <NavbarItem to="/users" text="All Users" />
+              <NavbarItem to="/cards" text="All Cards" />
+              <NavbarItem to="/debug" text="Debug" />
+              <NavbarItem to="/faq" text="FAQ" />
+              {authenticated ? (
+                <NavbarItem to="/notifications" text="Notifications" />
               ) : null}
-              {this.props.user.authenticated ? (
+              {isAdmin ? <NavbarItem to="/admin" text="Admin" /> : null}
+              {authenticated ? (
                 <li className="nav-item">
                   <div onClick={() => this.props.logout()} className="nav-link">
                     Logout
@@ -116,3 +80,11 @@ const mapDispatchToProps = dispatch => {
 };
 
 export default connect(mapStateToProps, mapDispatchToProps)(Nav);
+
+const NavbarItem = ({ to, text }) => (
+  <li className="nav-item">
+    <NavLink to={to} className="nav-link">
+      {text}
+    </NavLink>
+  </li>
+);

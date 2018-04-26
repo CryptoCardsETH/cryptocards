@@ -11,7 +11,7 @@ ENV PATH=$PATH:/$GOPATH/.bin
 WORKDIR /ethereum_proxy/src
 
 
-RUN go get -v ./...
+#RUN go get -v ./...
 # run the rpc server
 
 ENTRYPOINT ["/bin/bash","/ethereum_proxy/docker_run.sh"] 

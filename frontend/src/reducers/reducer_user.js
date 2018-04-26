@@ -4,6 +4,7 @@ import {
   REMOVE_TOKEN,
   REQUEST_MY_TRANSACTIONS,
   RECEIVE_MY_TRANSACTIONS,
+  RECEIVE_MY_NOTIFICATIONS,
   EDIT_ME_DETAILS,
   SET_ACCOUNTS_LIST,
   SET_NETWORK_ID,
@@ -40,6 +41,7 @@ const INITIAL_STATE = {
 
   followings: [],
   followings_loading: false,
+  notifications: [],
 
   transactions: [],
   transactions_loading: false,
@@ -119,6 +121,11 @@ export default function(state = INITIAL_STATE, action) {
         ...state,
         transactions: action.transactions,
         transactions_loading: false
+      };
+    case RECEIVE_MY_NOTIFICATIONS:
+      return {
+        ...state,
+        notifications: action.notifications
       };
     case EDIT_ME_DETAILS:
       return update(state, {

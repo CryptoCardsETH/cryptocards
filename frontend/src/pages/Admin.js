@@ -12,7 +12,7 @@ class AdminPage extends Component {
   }
   render() {
     return (
-      <div>
+      <div className="container">
         <h1>Admin</h1>
 
         {this.props.stats.count_stats_loading ? (

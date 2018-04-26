@@ -17,6 +17,7 @@ import LoginPage from './pages/Login';
 import MarketplacePage from './pages/Marketplace';
 import AccountPage from './pages/Account';
 import TransactionPage from './pages/AllTransactions';
+import Notifications from './pages/Notifications';
 import Nav from './components/Nav';
 import Web3Initialization from './components/Web3Initialization';
 import { connect } from 'react-redux';
@@ -73,11 +74,11 @@ const AdminRoute = withRouter(
 
 const App = () => (
   <Router>
-    <div>
+    <div className="min-height">
       <Web3Initialization />
       <ToastContainer />
       <Nav />
-      <main role="main" className="container" style={{ paddingTop: '80px' }}>
+      <main role="main">
         <Switch>
           <Route exact path="/" component={Home} />
           <Route path="/faq" component={FAQ} />
@@ -95,7 +96,7 @@ const App = () => (
           <UserRoute path="/useronly" component={Debug} />
           <UserRoute path="/account" component={AccountPage} />
           <UserRoute path="/transactions" component={TransactionPage} />
-
+          <UserRoute path="/notifications" component={Notifications} />
           {/*Routes that only admins can access*/}
           <AdminRoute path="/admin" component={AdminPage} />
           <AdminRoute

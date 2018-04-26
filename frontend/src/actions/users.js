@@ -157,9 +157,6 @@ export const RECEIVE_MY_FOLLOWINGS = 'RECEIVE_MY_FOLLOWINGS';
 export const REQUEST_MY_FOLLOWERS = 'REQUEST_MY_FOLLOWERS';
 export const RECEIVE_MY_FOLLOWERS = 'RECEIVE_MY_FOLLOWERS';
 
-export const REQUEST_MY_TRANSACTIONS = 'REQUEST_MY_TRANSACTIONS';
-export const RECEIVE_MY_TRANSACTIONS = 'RECEIVE_MY_TRANSACTIONS';
-
 export function fetchUserDetail(userId) {
   return dispatch => {
     dispatch(requestUserDetail());
@@ -170,6 +167,24 @@ export function fetchUserDetail(userId) {
       });
   };
 }
+
+function requestUserDetail(userId) {
+  return {
+    type: REQUEST_USER_DETAIL,
+    userId
+  };
+}
+
+function receiveUserDetail(userId, user) {
+  return {
+    type: RECEIVE_USER_DETAIL,
+    userId,
+    user
+  };
+}
+
+export const REQUEST_MY_TRANSACTIONS = 'REQUEST_MY_TRANSACTIONS';
+export const RECEIVE_MY_TRANSACTIONS = 'RECEIVE_MY_TRANSACTIONS';
 
 export function fetchMyTransactions() {
   return dispatch => {
@@ -195,18 +210,30 @@ function receiveMyTransactions(transactions) {
   };
 }
 
-function requestUserDetail(userId) {
-  return {
-    type: REQUEST_USER_DETAIL,
-    userId
+export const REQUEST_MY_NOTIFICATIONS = 'REQUEST_MY_NOTIFICATIONS';
+export const RECEIVE_MY_NOTIFICATIONS = 'RECEIVE_MY_NOTIFICATIONS';
+
+export function fetchMyNotifications() {
+  return dispatch => {
+    dispatch(requestMyNotifications());
+    return apiFetch('me/notifications')
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveMyNotifications(json.data));
+      });
   };
 }
 
-function receiveUserDetail(userId, user) {
+function requestMyNotifications() {
   return {
-    type: RECEIVE_USER_DETAIL,
-    userId,
-    user
+    type: REQUEST_MY_NOTIFICATIONS
+  };
+}
+
+function receiveMyNotifications(notifications) {
+  return {
+    type: RECEIVE_MY_NOTIFICATIONS,
+    notifications
   };
 }
 

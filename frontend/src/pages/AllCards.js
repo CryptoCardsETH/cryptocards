@@ -13,8 +13,10 @@ class CollectionPage extends Component {
   render() {
     // fake card data
     return (
-      <div>
-        <h1>All Cards</h1>
+      <div className="container">
+        <br />
+        <h3>All Cards</h3>
+        <br />
         <CardFilterSort filterSortKey="allcards" />
         <CardGrid
           cards={this.props.card.all_cards}

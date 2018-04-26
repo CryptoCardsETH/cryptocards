@@ -6,7 +6,12 @@ import 'animate.css';
 import EtherPrice from './EtherPrice.js';
 import { Link } from 'react-router-dom';
 import classNames from 'classnames';
-import { Button } from 'reactstrap';
+import {
+  Card as BootstrapCard,
+  CardBody,
+  CardTitle,
+  CardText
+} from 'reactstrap';
 class Card extends Component {
   render() {
     let { card, index, type, toggleCardSelection } = this.props;
@@ -20,12 +25,12 @@ class Card extends Component {
     let style = {
       animationDelay: (index % 3) / 10 + 's'
     };
-    let cardClass = classNames('card col-lg-3 col-md-5 m-2 animated fadeInUp', {
+    let cardClass = classNames('col-lg-3 col-md-5 m-2 animated fadeInUp', {
       'bg-secondary': isSelected
     });
 
     return (
-      <div key={index} className={cardClass} style={style}>
+      <BootstrapCard key={index} className={cardClass} style={style}>
         <div className="overlay-container">
           <img
             className="card-img-top"
@@ -47,25 +52,30 @@ class Card extends Component {
             </Link>
           </div>
         </div>
-        <div className="card-body">
-          <h5 className="card-title text-center">{card.name}</h5>
+        <CardBody>
+          <CardTitle className="text-center">{card.name}</CardTitle>
           {type === CARD_TYPE_COLLECTION ? (
-            <div>
-              <p className="card-text">
-                <Button onClick={() => toggleCardSelection(card.id)}>
+            <CardText>
+              <p>owner: {card.user ? card.user.nickname : 'n/a'}</p>
+              <p>hidden: {card.hidden ? 'yes' : 'no'}</p>
+              <div className="text-center">
+                <button
+                  onClick={() => toggleCardSelection(card.id)}
+                  className="btn-blue m-*-auto"
+                >
                   {isSelected ? 'deselect' : 'select'}
-                </Button>
-                <br />
-                owner: {card.user ? card.user.nickname : 'n/a'}
-              </p>
-              <p className="card-text">hidden: {card.hidden ? 'yes' : 'no'}</p>
-            </div>
+                </button>
+              </div>
+            </CardText>
           ) : null}
-        </div>
-      </div>
+        </CardBody>
+      </BootstrapCard>
     );
   }
 }
+Card.defaultProps = {
+  toggleCardSelection: null
+};
 
 export const CARD_TYPE_MARKETPLACE = 'marketplace';
 export const CARD_TYPE_COLLECTION = 'collection';
