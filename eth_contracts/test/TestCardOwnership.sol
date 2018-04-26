@@ -12,11 +12,9 @@ contract TestCardOwnership {
 		uint expected = cryptoCards.totalSupply();
 
 		uint returnedID = cryptoCards.createCard(this, 0);
-
 		Assert.equal(returnedID, expected, "Created card should have next sequential cardID");
 
 		address cardOwner = cryptoCards.ownerOf(returnedID);
-
 		Assert.equal(cardOwner, this, "Created card should be owned by this address");
 	}
 

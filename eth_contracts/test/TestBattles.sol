@@ -7,6 +7,8 @@ import "../contracts/CryptoCardsCore.sol";
 contract TestBattles {
 	CryptoCardsCore cryptoCards = CryptoCardsCore(DeployedAddresses.CryptoCardsCore());
 
+	//////////////////// Contract Tests ////////////////////
+
 	function testBattlesContract() public {
 		Battles _battleContract = cryptoCards.BattleContract();
 		Assert.notEqual(address(_battleContract), 0, "Battle Contract Should Exist");
@@ -14,6 +16,8 @@ contract TestBattles {
 		BattleGroups _battleGroupContract = cryptoCards.BattleGroupContract();
 		Assert.notEqual(address(_battleGroupContract), 0, "Battle Group Contract Should Exist");
 	}
+
+	//////////////////// Battle Groups ////////////////////
 
 	// Testing the createBattleGroup() function
 	function testCreateBattleGroup() public returns (uint256) {
@@ -31,6 +35,8 @@ contract TestBattles {
 
 		return returnedID;
 	}
+
+	//////////////////// Battles ////////////////////
 
 	// Testing the createBattle() function
 	function testCreateBattle() public returns (uint256) {
@@ -58,6 +64,24 @@ contract TestBattles {
 		for (i = 0; i < numBattles; i++) {
 			testCreateBattle();
 		}
+
+		uint256 totalBattles = cryptoCards.BattleContract().countBattles();
+		Assert.equal(totalBattles, expected, "Count of battles should increase by numBattles");
+	}
+
+	//////////////////// Battle Queue ////////////////////
+
+	function testBattleQueue() public returns (bool) {
+		uint expected = cryptoCards.BattleContract().countBattles() + 1;
+
+		uint256 group1 = testCreateBattleGroup();
+		uint256 group2 = testCreateBattleGroup();
+
+		bool joinSuccess = cryptoCards.BattleQueueContract().joinQueue(group1);
+		Assert.equal(joinSuccess, true, "First Battle Group Joining Queue Failed");
+
+		bool joinSuccess2 = cryptoCards.BattleQueueContract().joinQueue(group2);
+		Assert.equal(joinSuccess2, true, "Second Battle Group Joining Queue Failed");
 
 		uint256 totalBattles = cryptoCards.BattleContract().countBattles();
 		Assert.equal(totalBattles, expected, "Count of battles should increase by numBattles");
