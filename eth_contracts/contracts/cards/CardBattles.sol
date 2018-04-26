@@ -4,7 +4,7 @@ import "./CardOwnership.sol";
 contract CardBattles is CardOwnership {
 	uint64 public constant BATTLE_COOLDOWN_TIME = 60*60;
 
-	function isReadyForBattle(uint256 _cardID) public view returns (bool) {
+	function isReadyForBattle(uint256 _cardID) public view whenNotPaused returns (bool) {
 		requireCardExists(_cardID);
 		if (cards[_cardID].battleCooldownEnd > uint64(now)) {
 			return false;

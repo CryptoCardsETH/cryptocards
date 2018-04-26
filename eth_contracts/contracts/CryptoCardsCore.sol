@@ -5,13 +5,12 @@ import "./battles/BattleGroups.sol";
 import "./battles/BattleQueue.sol";
 
 contract CryptoCardsCore is CardMinting {
-	address _ownerAddress;
 	Battles _battleContract;
 	BattleGroups _battleGroupContract;
 	BattleQueue _battleQueueContract;
 
 	function CryptoCardsCore() public {
-		_ownerAddress = msg.sender;
+		ownerAddress = msg.sender;
 		_battleContract = new Battles();
 		_battleGroupContract = new BattleGroups();
 		_battleQueueContract = new BattleQueue();
@@ -31,13 +30,6 @@ contract CryptoCardsCore is CardMinting {
 
 	function BattleQueueContract() public view returns (BattleQueue) {
 		return _battleQueueContract;
-	}
-
-	address public newContractAddress;
-	event ContractUpgrade(address newContract);
-	function setNewAddress(address _newAddress) external {
-		newContractAddress = _newAddress;
-		ContractUpgrade(_newAddress); // Emit event announcing update to new contract
 	}
 
 	function() external payable { // Only accept payments from our contracts
