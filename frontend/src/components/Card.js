@@ -32,11 +32,7 @@ class Card extends Component {
     return (
       <BootstrapCard key={index} className={cardClass} style={style}>
         <div className="overlay-container">
-          <img
-            className="card-img-top"
-            src={`http://via.placeholder.com/350?text=card+id+${card.id}`}
-            alt={card.name}
-          />
+          <img className="card-img-top" src={card.imageURL} alt={card.name} />
           <div className="overlay overlay-price">
             {type === CARD_TYPE_MARKETPLACE ? (
               <EtherPrice price={listing.price} />

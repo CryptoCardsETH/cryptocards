@@ -23,7 +23,7 @@ class Card extends Model
     public function getImageURLAttribute()
     {
         //TODO: real url
-        return 'http://via.placeholder.com/350?text=card+id'.$this->id;
+        return 'https://picsum.photos/400/400?image='.$this->id;
     }
 
     public function isUserOwner(User $user)

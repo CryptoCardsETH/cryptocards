@@ -12,7 +12,7 @@ use App\Notifications\BattleGroupCreationNotification;
 use Illuminate\Support\Facades\Request;
 use Log;
 use Notification;
-use RpcSerer\BattleInfo;
+use RpcServer\BattleInfo;
 use RpcServer\CardInfo;
 
 class ContractController extends Controller

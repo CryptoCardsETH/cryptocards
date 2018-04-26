@@ -49,7 +49,7 @@ class UserDetail extends Component {
     if (parseInt(userIdOrNickname, 10) === userId && userDetail.user.nickname)
       return <Redirect to={buildProfileURL(userDetail.user)} />;
     return (
-      <div>
+      <div className="container">
         <h1>
           {isViewingMyProfile ? 'My Collection' : `Viewing User #${userId}`}{' '}
           &nbsp;
