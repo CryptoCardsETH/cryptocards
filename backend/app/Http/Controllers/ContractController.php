@@ -12,8 +12,9 @@ use App\Notifications\BattleGroupCreationNotification;
 use Illuminate\Support\Facades\Request;
 use Log;
 use Notification;
-use RpcServer\CardInfo;
 use RpcSerer\BattleInfo;
+use RpcServer\CardInfo;
+
 class ContractController extends Controller
 {
     public function contractAddressIngest()
@@ -66,6 +67,7 @@ class ContractController extends Controller
     {
         self::processNewBattleCompletionEvent($bi->getId(), $bi->getWinnerGroupId(), $bi->getLoserGroupId());
     }
+
     public static function processNewBattleCompletionEvent($battleTokenId, $battleGroupWinnerTokenId, $battleGroupLoserTokenId)
     {
         $battle = Battle::firstOrNew(['token_id' => $battleTokenId]);
@@ -76,13 +78,12 @@ class ContractController extends Controller
             Log::info("ingesting new Battle: $battleTokenId");
         }
 
-
         $battle->group_1 = $winner->id;
         $battle->group_winner = $winner->id;
         $battle->group_2 = $loser->id;
         $battle->save();
-
     }
+
     public static function processCardInfoRpc(CardInfo $ci)
     {
         self::processNewCardEvent($ci->getOwnerAddress(), $ci->getId(), $ci->getCreationBattleID(), $ci->getOwnerAddress());

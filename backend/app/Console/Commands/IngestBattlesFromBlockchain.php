@@ -47,10 +47,9 @@ class IngestBattlesFromBlockchain extends Command
         $msg = new BattleInfoRequest();
         $msg->setCoreAddress($ca);
 
-
         list($reply, $status) = $client->RequestBattleInfo($msg)->wait();
         foreach ($reply->getBattles() as $item) {
-             ContractController::processBattleInfoRpc($item);
+            ContractController::processBattleInfoRpc($item);
         }
     }
 }

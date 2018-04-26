@@ -23,6 +23,7 @@ class BattleGroup extends Model
     {
         return self::firstOrCreate(['token_id' => $tokenId]);
     }
+
     public static function getNextTokenId()
     {
         return self::max('token_id') + 1;
