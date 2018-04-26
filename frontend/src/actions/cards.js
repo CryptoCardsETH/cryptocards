@@ -59,8 +59,7 @@ export function putTransaction(cardId) {
 export function removeCard(cardId) {
   return dispatch => {
     return apiFetch('cards/' + cardId + '/delete', {
-      method: 'PUT',
-      body: JSON.stringify(cardId)
+      method: 'PUT'
     })
       .then(response => response.json())
       .then(json => {

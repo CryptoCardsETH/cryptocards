@@ -119,11 +119,11 @@ class ProfileController extends Controller
         }
     }
 
-    public function removeCard()
+    public function removeCard($card_id)
     {
         $user = auth()->user();
-        $data = json_decode(Request::getContent(), true);
-        $card = Card::find($data);
+        //$data = json_decode(Request::getContent(), true);
+        $card = Card::find($card_id);
         if (!$card->isUserOwner($user)) {
             return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User is not owner');
         }
@@ -132,7 +132,7 @@ class ProfileController extends Controller
         $card->user_id = null;
         $card->save();
 
-        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $data);
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $card_id);
     }
 
     /**
