@@ -3,9 +3,8 @@
 namespace App\Console\Commands;
 
 use App\Helpers\EthereumHelper;
-use Illuminate\Console\Command;
 use App\Models\Contract;
-use RpcServer\BattleGroupInfoRequest;
+use Illuminate\Console\Command;
 
 class BlockchainPlayground extends Command
 {
@@ -43,6 +42,5 @@ class BlockchainPlayground extends Command
         $ca = Contract::getRpcCoreContractAddressMessage();
         $client = EthereumHelper::getRpcClient();
         list($reply, $status) = $client->TestThings($ca)->wait();
-        
     }
 }
