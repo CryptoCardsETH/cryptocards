@@ -147,3 +147,30 @@ export function fetchCardTransactions(cardId) {
       });
   };
 }
+
+export const REQUEST_CARD_VALUE = 'REQUEST_CARD_VALUE';
+export const RECEIVE_CARD_VALUE = 'RECEIVE_CARD_VALUE';
+
+function requestCardValue() {
+  return {
+    type: REQUEST_CARD_VALUE
+  };
+}
+
+function receiveCardValue(value) {
+  return {
+    type: RECEIVE_CARD_VALUE,
+    value
+  };
+}
+
+export function fetchCardValue(cardId) {
+  return dispatch => {
+    dispatch(requestCardValue());
+    return apiFetch(`card/${cardId}/value`)
+      .then(response => response.json())
+      .then(json => {
+        dispatch(receiveCardValue(json.data));
+      });
+  };
+}
