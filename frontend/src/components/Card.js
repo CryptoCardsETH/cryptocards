@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { removeCard } from '../actions/cards';
 import '../styles/App.css';
 import FontAwesomeIcon from '@fortawesome/react-fontawesome';
 import faExternalLinkAlt from '@fortawesome/fontawesome-free-solid/faExternalLinkAlt';
@@ -10,9 +11,30 @@ import {
   Card as BootstrapCard,
   CardBody,
   CardTitle,
-  CardText
+  CardText,
+  UncontrolledTooltip,
+  Modal,
+  ModalHeader,
+  ModalBody,
+  ModalFooter
 } from 'reactstrap';
 class Card extends Component {
+  constructor(props) {
+    super(props);
+    this.state = {
+      modal: false,
+      cardId: null
+    };
+
+    this.toggle = this.toggle.bind(this);
+  }
+
+  toggle() {
+    this.setState({
+      modal: !this.state.modal
+    });
+  }
+
   render() {
     let { card, index, type, toggleCardSelection } = this.props;
     let listing;
@@ -53,7 +75,42 @@ class Card extends Component {
           </div>
         </div>
         <CardBody>
-          <CardTitle className="text-center">{card.name}</CardTitle>
+          <CardTitle className="text-center">
+            {card.name}
+            <div className="float-right">
+              <button
+                type="button"
+                class="close"
+                aria-label="Close"
+                id={`popover_${index}`}
+                onClick={this.toggle}
+              >
+                <span aria-hidden="true">&times;</span>
+              </button>
+              <UncontrolledTooltip placement="top" target={`popover_${index}`}>
+                Delete Card
+              </UncontrolledTooltip>
+              <Modal
+                isOpen={this.state.modal}
+                toggle={this.toggle}
+                className={this.props.className}
+              >
+                <ModalHeader toggle={this.toggle}>My Collection</ModalHeader>
+                <ModalBody>
+                  Are you sure you want to remove card {card.id} from your
+                  collection?
+                </ModalBody>
+                <ModalFooter>
+                  <button color="primary" onClick={removeCard(card.id)}>
+                    Yes
+                  </button>{' '}
+                  <button color="secondary" onClick={this.toggle}>
+                    Cancel
+                  </button>
+                </ModalFooter>
+              </Modal>
+            </div>
+          </CardTitle>
           {type === CARD_TYPE_COLLECTION ? (
             <CardText>
               <p>owner: {card.user ? card.user.nickname : 'n/a'}</p>

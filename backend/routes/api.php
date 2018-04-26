@@ -19,6 +19,7 @@ Route::post('/auth', 'AuthController@auth');
 Route::get('/me', 'ProfileController@me');
 Route::put('/me', 'ProfileController@updateMe');
 
+Route::put('/cards/{id}/delete', 'ProfileController@removeCard');
 Route::put('/follow/{id}', 'ProfileController@follow');
 Route::get('/users', 'ProfileController@getAllUsers');
 Route::get('/users/{id}', 'ProfileController@getUserDetail');

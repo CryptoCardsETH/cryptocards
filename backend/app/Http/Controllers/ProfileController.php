@@ -119,6 +119,22 @@ class ProfileController extends Controller
         }
     }
 
+    public function removeCard()
+    {
+        $user = auth()->user();
+        $data = json_decode(Request::getContent(), true);
+        $card = Card::find($data);
+        if (!$card->isUserOwner($user)) {
+            return response()->build(self::RESPONSE_MESSAGE_ERROR_UNAUTHORIZED, 'User is not owner');
+        }
+
+        //user doesn't own card
+        $card->user_id = null;
+        $card->save();
+
+        return response()->build(self::RESPONSE_MESSAGE_SUCCESS, $data);
+    }
+
     /**
      * Gets all the transactions of the user's purchases.
      *

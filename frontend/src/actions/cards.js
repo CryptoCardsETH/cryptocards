@@ -56,6 +56,21 @@ export function putTransaction(cardId) {
   };
 }
 
+export function removeCard(cardId) {
+  return dispatch => {
+    return apiFetch('cards/' + cardId + '/delete', {
+      method: 'PUT',
+      body: JSON.stringify(cardId)
+    })
+      .then(response => response.json())
+      .then(json => {
+        if (json.success) {
+          toast.success('Card successfully deleted!');
+        } else toast.error('Failure deleting card');
+      });
+  };
+}
+
 function requestCardDetail(cardId) {
   return {
     type: REQUEST_CARD_DETAIL,
