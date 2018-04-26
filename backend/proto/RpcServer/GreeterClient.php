@@ -95,6 +95,19 @@ class GreeterClient extends \Grpc\BaseStub {
     }
 
     /**
+     * @param \RpcServer\CoreContractAddress $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     */
+    public function TestThings(\RpcServer\CoreContractAddress $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/rpcServer.Greeter/TestThings',
+        $argument,
+        ['\RpcServer\BlankReply', 'decode'],
+        $metadata, $options);
+    }
+
+    /**
      * @param \RpcServer\ECRecoverRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options

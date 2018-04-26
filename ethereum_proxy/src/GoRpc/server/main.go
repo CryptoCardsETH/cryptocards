@@ -64,6 +64,72 @@ func getKeypairForTransactions() (common.Address, *ecdsa.PrivateKey) {
 	return pub, priv
 }
 
+func (s *server) TestThings(ctx context.Context, in *pb.CoreContractAddress) (*pb.BlankReply, error) {
+	log.Printf("FUCKKKK")
+
+	core := getCoreContractInstance(in)
+	ownerAddressHex := "0x90f8bf6a479f320ead074411a4b0e7944ea8c9c1"
+	ownerAddress := common.HexToAddress(ownerAddressHex)
+
+	ganachePublicKey, ganachePrivateKey := getKeypairForTransactions()
+
+	signer := func(signer types.Signer, address common.Address, txn *types.Transaction) (*types.Transaction, error) {
+		return types.SignTx(txn, signer, ganachePrivateKey)
+	}
+
+	opts := bind.TransactOpts{
+		From:   ganachePublicKey,
+		Signer: signer,
+	}
+
+	sesh := &conts.CryptoCardsCoreSession{
+		Contract:     getCoreContractInstance(in),
+		TransactOpts: opts,
+	}
+
+	sesh.CreateCard(ownerAddress, big.NewInt(3))
+	sesh.CreateCard(ownerAddress, big.NewInt(3))
+	sesh.CreateCard(ownerAddress, big.NewInt(3))
+	sesh.CreateCard(ownerAddress, big.NewInt(3))
+	sesh.CreateCard(ownerAddress, big.NewInt(3))
+	sesh.CreateCard(ownerAddress, big.NewInt(3))
+
+	//OK NOW MAKE BATTLE GROUPS
+	battleGroupsContractAddr, _ := core.BattleGroupContract(&bind.CallOpts{})
+
+	client := getEthClientConnection()
+	battleGroupsContract, _ := conts.NewBattleGroups(battleGroupsContractAddr, client)
+
+	sesh2 := &conts.BattleGroupsSession{
+		Contract:     battleGroupsContract,
+		TransactOpts: opts,
+	}
+
+	ids := [5]*big.Int{big.NewInt(1), big.NewInt(2), big.NewInt(3), big.NewInt(4), big.NewInt(5)}
+	sesh2.CreateBattleGroup(ownerAddress, ids)
+	sesh2.CreateBattleGroup(ownerAddress, ids)
+	sesh2.CreateBattleGroup(ownerAddress, ids)
+
+	//OK NOW MAKE QUEUE SHIT
+
+	battleQueueContractAddr, _ := core.BattleQueueContract(&bind.CallOpts{})
+	battleQeueueContract, _ := conts.NewBattleQueue(battleQueueContractAddr, client)
+
+	log.Printf("QUEUE CONTRAFT ADDRESS IS %v", battleQueueContractAddr.Hex())
+	sesh3 := &conts.BattleQueueSession{
+		Contract:     battleQeueueContract,
+		TransactOpts: opts,
+	}
+
+	a, err := sesh3.JoinQueue(big.NewInt(2))
+	if err != nil {
+		log.Fatalf("Error queueue %v", err)
+	}
+	log.Printf("JoinQueuetxn: %v", a.Hash().Hex())
+
+	return &pb.BlankReply{Message: "aa"}, nil
+}
+
 // Creates a Card (next incremental CardID) on the blockchain, with the owner set as specified
 func (s *server) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*pb.BlankReply, error) {
 	ownerAddress := in.OwnerAddress

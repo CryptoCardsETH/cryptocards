@@ -13,6 +13,7 @@ service Greeter {
   rpc RequestCardInfo(CardInfoRequest) returns (CardInfoReply) {}
   rpc RequestBattleInfo(BattleInfoRequest) returns (BattleInfoReply) {}
 
+  rpc TestThings(CoreContractAddress) returns (BlankReply) {}
   rpc PerformECRecover(ECRecoverRequest) returns (ECRecoverReply) {}
 }
 
