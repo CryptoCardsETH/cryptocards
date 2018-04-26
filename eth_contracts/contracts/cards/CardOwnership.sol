@@ -26,7 +26,7 @@ contract CardOwnership is CardBase {
 		return ownershipTokenCount[_owner];
 	}
 
-	function transfer(address _to, uint256 _cardId) external {
+	function transfer(address _to, uint256 _cardId) external whenNotPaused {
 		// Prevent transfer to 0x00 address
 		require(_to != address(0));
 
@@ -40,7 +40,7 @@ contract CardOwnership is CardBase {
 		_transfer(msg.sender, _to, _cardId);
 	}
 
-	function createCard(address _owner, uint256 _attributes) public returns (uint256) {
+	function createCard(address _owner, uint256 _attributes) public whenNotPaused returns (uint256) {
 		// Prevent ownership by CryptoCards contracts
 		require(_owner != address(this));
 

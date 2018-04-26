@@ -1,6 +1,7 @@
 pragma solidity ^0.4.17;
+import "./ContractAccessControl.sol";
 
-contract CardBase {
+contract CardBase is ContractAccessControl {
 	struct GameCard {
 		// The timestamp from the block when the card was created
 		uint64 creationTime;
