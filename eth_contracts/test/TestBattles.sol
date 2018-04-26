@@ -86,4 +86,18 @@ contract TestBattles {
 		uint256 totalBattles = cryptoCards.BattleContract().countBattles();
 		Assert.equal(totalBattles, expected, "Count of battles should increase by numBattles");
 	}
+
+	// Test creating many additional battles
+	function testCreateManyQueues() public {
+		uint numQueues = 3;
+		uint expected = cryptoCards.BattleContract().countBattles() + numQueues;
+
+		uint i = 0;
+		for (i = 0; i < numQueues; i++) {
+			testBattleQueue();
+		}
+
+		uint256 totalBattles = cryptoCards.BattleContract().countBattles();
+		Assert.equal(totalBattles, expected, "Count of battles should increase by numQueues");
+	}
 }
