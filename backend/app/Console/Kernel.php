@@ -2,7 +2,9 @@
 
 namespace App\Console;
 
+use App\Console\Commands\CreateCard;
 use App\Console\Commands\IngestBattleGroupsFromBlockchain;
+use App\Console\Commands\IngestCardsFromBlockchain;
 use App\Console\Commands\ProtoTest;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
@@ -17,6 +19,8 @@ class Kernel extends ConsoleKernel
     protected $commands = [
         ProtoTest::class,
         IngestBattleGroupsFromBlockchain::class,
+        IngestCardsFromBlockchain::class,
+        CreateCard::class,
     ];
 
     /**
@@ -31,6 +35,7 @@ class Kernel extends ConsoleKernel
         // $schedule->command('inspire')
         //          ->hourly();
         $schedule->command(IngestBattleGroupsFromBlockchain::class)->everyMinute();
+        $schedule->command(IngestCardsFromBlockchain::class)->everyMinute();
     }
 
     /**

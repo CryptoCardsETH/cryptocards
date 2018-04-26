@@ -3,13 +3,17 @@ package main
 import (
 	conts "GoRpc/contracts"
 	pb "GoRpc/rpcServer"
+	"crypto/ecdsa"
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/crypto"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"golang.org/x/net/context"
 	"google.golang.org/grpc"
 	"google.golang.org/grpc/reflection"
 	"log"
+	"math/big"
 	"net"
 	"os"
 )
@@ -41,13 +45,71 @@ func (s *server) PerformECRecover(ctx context.Context, in *pb.ECRecoverRequest) 
 func getCoreContractInstance(a *pb.CoreContractAddress) *conts.CryptoCardsCore {
 	client := getEthClientConnection()
 	coreContractAddr := common.HexToAddress(a.Address)
-	log.Printf("info: core addr, %v\n", coreContractAddr.Hex())
 	core, err := conts.NewCryptoCardsCore(coreContractAddr, client)
 	if err != nil {
 		log.Fatalf("Error getting Core Contract instance %v", err)
 	}
 	return core
 
+}
+
+//Returns public + private keypair, based on environment vars
+func getKeypairForTransactions() (common.Address, *ecdsa.PrivateKey) {
+	pubStr, _ := os.LookupEnv("ADMIN_PUBKEY")
+	privStr, _ := os.LookupEnv("ADMIN_PRIVKEY")
+
+	pub := common.HexToAddress(pubStr)
+	priv, _ := crypto.HexToECDSA(privStr)
+
+	return pub, priv
+}
+
+// Creates a Card (next incremental CardID) on the blockchain, with the owner set as specified
+func (s *server) CreateCard(ctx context.Context, in *pb.CreateCardRequest) (*pb.BlankReply, error) {
+	ownerAddress := in.OwnerAddress
+	log.Printf("Creating a card for owner: %v\n", ownerAddress)
+
+	ganachePublicKey, ganachePrivateKey := getKeypairForTransactions()
+
+	signer := func(signer types.Signer, address common.Address, txn *types.Transaction) (*types.Transaction, error) {
+		return types.SignTx(txn, signer, ganachePrivateKey)
+	}
+
+	sesh := &conts.CryptoCardsCoreSession{
+		Contract: getCoreContractInstance(in.CoreAddress),
+		TransactOpts: bind.TransactOpts{
+			From:   ganachePublicKey,
+			Signer: signer,
+		},
+	}
+
+	a, err := sesh.CreateCard(common.HexToAddress(ownerAddress), big.NewInt(3))
+	if err != nil {
+		log.Fatalf("Error creating card %v", err)
+	}
+	log.Printf("CreateCard txn: %v", a.Hash().Hex())
+
+	return &pb.BlankReply{Message: a.Hash().Hex()}, nil
+}
+
+// Get `NewCard` events
+func (s *server) RequestCardInfo(ctx context.Context, in *pb.CardInfoRequest) (*pb.CardInfoReply, error) {
+	core := getCoreContractInstance(in.Contract)
+	it, err := core.CryptoCardsCoreFilterer.FilterNewCard(&bind.FilterOpts{})
+	if err != nil {
+		log.Fatalf("error filtering events: %v", err)
+	}
+	var cards []*pb.CardInfo
+	for it.Next() {
+		newCard := it.Event
+		cards = append(cards, &pb.CardInfo{
+			OwnerAddress:     newCard.Owner.Hex(),
+			Id:               newCard.CardID.Uint64(),
+			CreationBattleId: newCard.CreationBattleID.Uint64(),
+			Attributes:       newCard.Attributes.Uint64(),
+		})
+	}
+	return &pb.CardInfoReply{Items: cards}, nil
 }
 func (s *server) RequestBattleGroupInfo(ctx context.Context, in *pb.BattleGroupInfoRequest) (*pb.BattleGroupInfoReply, error) {
 

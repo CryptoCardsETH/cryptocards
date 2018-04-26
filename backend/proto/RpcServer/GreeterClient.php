@@ -30,6 +30,19 @@ class GreeterClient extends \Grpc\BaseStub {
     }
 
     /**
+     * @param \RpcServer\CreateCardRequest $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     */
+    public function CreateCard(\RpcServer\CreateCardRequest $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/rpcServer.Greeter/CreateCard',
+        $argument,
+        ['\RpcServer\BlankReply', 'decode'],
+        $metadata, $options);
+    }
+
+    /**
      * @param \RpcServer\CardsRequest $argument input argument
      * @param array $metadata metadata
      * @param array $options call options
@@ -52,6 +65,19 @@ class GreeterClient extends \Grpc\BaseStub {
         return $this->_simpleRequest('/rpcServer.Greeter/RequestBattleGroupInfo',
         $argument,
         ['\RpcServer\BattleGroupInfoReply', 'decode'],
+        $metadata, $options);
+    }
+
+    /**
+     * @param \RpcServer\CardInfoRequest $argument input argument
+     * @param array $metadata metadata
+     * @param array $options call options
+     */
+    public function RequestCardInfo(\RpcServer\CardInfoRequest $argument,
+      $metadata = [], $options = []) {
+        return $this->_simpleRequest('/rpcServer.Greeter/RequestCardInfo',
+        $argument,
+        ['\RpcServer\CardInfoReply', 'decode'],
         $metadata, $options);
     }
 

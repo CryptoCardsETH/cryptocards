@@ -4,7 +4,9 @@ namespace Tests\Unit;
 
 use App\Http\Controllers\ContractController;
 use App\Models\BattleGroup;
+use App\Models\Card;
 use App\Models\Contract;
+use RpcServer\CardInfo;
 use Tests\TestCase;
 
 class ContractIngestionTest extends TestCase
@@ -19,6 +21,23 @@ class ContractIngestionTest extends TestCase
 
         $this->assertDatabaseHas('battle_groups', [
             BattleGroup::FIELD_TOKEN_ID  => $nextBattleGroupId,
+        ]);
+    }
+
+    public function testIngestNewCardEvent()
+    {
+        $faker = \Faker\Factory::create();
+        $address = '0xfakex'.$faker->sha1;
+        $tokenId = Card::max('token_id') + 100;
+        $ci = new CardInfo();
+        $ci->setOwnerAddress($address);
+        $ci->setId($tokenId);
+        $ci->setAttributes(12345);
+
+        ContractController::processCardInfoRpc($ci);
+
+        $this->assertDatabaseHas('cards', [
+            'token_id' => $tokenId,
         ]);
     }
 
