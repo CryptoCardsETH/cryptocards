@@ -46,8 +46,11 @@ class AdminPage extends Component {
               </Card>
             </div>
             <div className="row">
-              <Link to="/report/transactions">
+              <Link to="/report/transactions" className="col-lg-3 col-md-5 m-2">
                 <Button>View Transaction Report</Button>
+              </Link>
+              <Link to="/report/entranceFees" className="col-lg-3 col-md-5 m-2">
+                <Button>View Entrance Fee Report</Button>
               </Link>
             </div>
           </div>

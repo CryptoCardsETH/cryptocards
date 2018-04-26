@@ -14,7 +14,7 @@ class TimeGraph extends Component {
    * @memberof TimeGraph
    */
   addMissingIntervals(data, intervalLength, xAxisKey, yAxisKey) {
-    if (!data) return [];
+    if (!data || data.length < 2) return [];
 
     // get all intervals between first and last date in data
     let allIntervals = this.getAllIntervals(
