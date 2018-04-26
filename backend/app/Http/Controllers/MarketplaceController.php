@@ -71,6 +71,7 @@ class MarketplaceController extends Controller
 
         $card->save();
 
+        //add transaction
         $transaction = new Transaction();
         $transaction->card_id = $card_id;
         $transaction->user_id = $user->id;
@@ -78,6 +79,9 @@ class MarketplaceController extends Controller
         $transaction->price = $price;
 
         $transaction->save();
+
+        //remove card from listings table
+        Listing::where('card_id', $card_id)->delete();
 
         return $this->getCardDetail($card_id);
     }
