@@ -11,6 +11,13 @@ class BattleTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(App\Models\Battle::class, 10)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
+        factory(App\Models\Battle::class, 1)->create();
     }
 }

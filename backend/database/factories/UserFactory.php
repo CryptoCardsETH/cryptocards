@@ -2,6 +2,7 @@
 
 use App\Helpers\EthereumConverter;
 use App\Models\Card;
+use App\Models\Battle;
 use Faker\Generator as Faker;
 
 /*
@@ -25,7 +26,7 @@ $factory->define(App\Models\User::class, function (Faker $faker) {
 
 $factory->define(Card::class, function (Faker $faker) {
     return [
-        'token_id'   => Card::max('token_id') + 1,
+        'token_id'   => Card::max('token_id') + 100,
         'name'       => $faker->word,
         'created_at' => $faker->dateTimeThisMonth($max = 'now', $timezone = null),
     ];
@@ -58,6 +59,7 @@ $factory->define(App\Models\Battle::class, function (Faker $faker) {
     $winner_id = factory(App\Models\BattleGroup::class)->create()->id;
 
     return [
+        'token_id'       => Battle::max('token_id') + 100,
         'group_1'        => $winner_id,
         'group_2'        => factory(App\Models\BattleGroup::class)->create()->id,
         'group_winner'   => $winner_id,
