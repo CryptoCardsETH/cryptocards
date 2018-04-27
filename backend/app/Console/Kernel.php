@@ -8,6 +8,7 @@ use App\Console\Commands\IngestBattleGroupsFromBlockchain;
 use App\Console\Commands\IngestBattlesFromBlockchain;
 use App\Console\Commands\IngestCardsFromBlockchain;
 use App\Console\Commands\ProtoTest;
+use App\Console\Commands\SeedAttributesRandomly;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 
@@ -25,6 +26,7 @@ class Kernel extends ConsoleKernel
         IngestBattlesFromBlockchain::class,
         CreateCard::class,
         BlockchainPlayground::class,
+        SeedAttributesRandomly::class,
     ];
 
     /**

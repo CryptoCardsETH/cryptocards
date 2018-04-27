@@ -2,6 +2,17 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { fetchMyNotifications } from '../actions/users';
+import {
+  Card,
+  CardImg,
+  CardText,
+  CardBody,
+  Row,
+  Col,
+  CardTitle,
+  CardSubtitle,
+  Button
+} from 'reactstrap';
 class Notifications extends Component {
   componentDidMount() {
     this.props.fetchMyNotifications();
@@ -9,15 +20,23 @@ class Notifications extends Component {
   render() {
     // fake user data
     return (
-      <div>
+      <div className="container">
         <h1>All Notifications</h1>
-        {this.props.user.notifications.map(n => {
-          return (
-            <div>
-              <pre>{JSON.stringify({ n }, true, 2)}</pre>
-            </div>
-          );
-        })}
+        <Row>
+          {this.props.user.notifications.map(n => {
+            return (
+              <Card>
+                <CardBody>
+                  <CardTitle>{n.type}</CardTitle>
+                  <CardSubtitle>{n.created_at}</CardSubtitle>
+                  <CardText>
+                    <pre>{JSON.stringify(n.data, true, 2)}</pre>
+                  </CardText>
+                </CardBody>
+              </Card>
+            );
+          })}
+        </Row>
       </div>
     );
   }
