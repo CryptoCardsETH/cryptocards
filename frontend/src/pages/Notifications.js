@@ -4,14 +4,11 @@ import { bindActionCreators } from 'redux';
 import { fetchMyNotifications } from '../actions/users';
 import {
   Card,
-  CardImg,
   CardText,
   CardBody,
   Row,
-  Col,
   CardTitle,
-  CardSubtitle,
-  Button
+  CardSubtitle
 } from 'reactstrap';
 class Notifications extends Component {
   componentDidMount() {
