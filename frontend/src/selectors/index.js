@@ -27,8 +27,8 @@ export const getContractAddress = async (state, contractName) => {
     //grab the address from core
     let core = await getContractInstanceByName(state, CONTRACT_NAME_CORE);
     let fullName;
-    if (contractName == 'BattleGroups') fullName = 'BattleGroupContract';
-    if (contractName == 'BattleQueue') fullName = 'BattleQueueContract';
+    if (contractName === 'BattleGroups') fullName = 'BattleGroupContract';
+    if (contractName === 'BattleQueue') fullName = 'BattleQueueContract';
     let res = await core[fullName].call();
     return res[0];
   }
