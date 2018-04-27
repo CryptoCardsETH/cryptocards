@@ -48,7 +48,7 @@ contract Battles {
 		activateBattleCooldown(_battle); 	// Activate Battle Cooldown
 
 		// Determine Winner / Loser
-		var (winnerID, loserID) = determineWinner(_battle);
+		var (winnerID, loserID) = determineWinner(newBattleID, _battle);
 		_battle.winnerBattleGroup = winnerID;
 		_battle.loserBattleGroup = loserID;
 
@@ -75,7 +75,11 @@ contract Battles {
 		cryptoCardsContract.BattleGroupContract().setGroupOnBattleCooldown(_battle.op2BattleGroup);
 	}
 
-	function determineWinner(Battle _battle) private pure returns (uint256 winner, uint256 loser) {
+	function determineWinner(uint256 battleID, Battle _battle) private pure returns (uint256 winner, uint256 loser) {
+		uint whoShouldWin = (battleID+_battle.op2BattleGroup+_battle.op1BattleGroup)%2;
+		if (whoShouldWin == 0) {
+			return (_battle.op1BattleGroup, _battle.op2BattleGroup);
+		}
 		return (_battle.op2BattleGroup, _battle.op1BattleGroup);
 	}
 
