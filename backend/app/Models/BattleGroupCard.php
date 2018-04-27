@@ -10,6 +10,6 @@ class BattleGroupCard extends Model
 
     public function card()
     {
-        return $this->hasOne(Card::class, 'id');
+        return $this->belongsTo(Card::class);
     }
 }

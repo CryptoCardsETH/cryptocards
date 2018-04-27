@@ -3,6 +3,7 @@
 namespace Tests\Unit;
 
 use App\Http\Controllers\ContractController;
+use App\Models\Battle;
 use App\Models\BattleGroup;
 use App\Models\Card;
 use App\Models\Contract;
@@ -22,6 +23,24 @@ class ContractIngestionTest extends TestCase
         $this->assertDatabaseHas('battle_groups', [
             BattleGroup::FIELD_TOKEN_ID  => $nextBattleGroupId,
         ]);
+    }
+
+    public function testProcessBattleCompletionEvent()
+    {
+        $winnerTokenId = BattleGroup::getNextTokenId();
+        ContractController::processNewBattleGroupEvent('aa', $winnerTokenId, [1, 2, 3]);
+
+        $loserTokenId = BattleGroup::getNextTokenId();
+        ContractController::processNewBattleGroupEvent('bb', $loserTokenId, [1, 2, 3]);
+
+        $this->assertDatabaseHas('battle_groups', [
+            BattleGroup::FIELD_TOKEN_ID  => $winnerTokenId,
+        ]);
+
+        $battleTokenId = Battle::max('token_id') + 1;
+        ContractController::processNewBattleCompletionEvent($battleTokenId, $winnerTokenId, $loserTokenId);
+
+        $this->assertDatabaseHas('battles', [Battle::FIELD_TOKEN_ID => $battleTokenId]);
     }
 
     public function testIngestNewCardEvent()

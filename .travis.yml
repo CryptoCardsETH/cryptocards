@@ -31,9 +31,8 @@ script:
 - yarn test --coverage
 - yarn run build
 - cd ..
+- ./docker-tooling.sh generate
 - docker-compose run truffle_test
-- docker-compose up codegen_tools_abigen
-- docker-compose up codegen_tools_abigen_js
 # - docker-compose exec fpm php artisan test:proto
 after_success:
 - cd backend/

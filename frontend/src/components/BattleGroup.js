@@ -9,11 +9,12 @@ const BattleGroup = ({ group }) => {
       USER: {user.nickname || user.id}
       <br />
       Group ID: {group.id} <br />
-      <BattleCreator battleGroupId={group.id} />
+      <BattleCreator battleGroupId={group.token_id} />
       <div className="row">
-        {group_cards.map((gc, x) => (
-          <Card key={x} card={gc} type={CARD_TYPE_COLLECTION} />
-        ))}
+        {group_cards.map((gc, x) => {
+          let { card } = gc;
+          return <Card key={x} card={card || gc} type={CARD_TYPE_COLLECTION} />;
+        })}
       </div>
     </div>
   );

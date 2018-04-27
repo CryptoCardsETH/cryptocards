@@ -38,7 +38,7 @@ class CardDetail extends Component {
       cardDetail.user &&
       user.me.id === cardDetail.user.id;
     return (
-      <div>
+      <div className="container">
         <div>
           <div className="row">
             <div className="col-md-6">

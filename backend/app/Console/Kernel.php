@@ -2,8 +2,10 @@
 
 namespace App\Console;
 
+use App\Console\Commands\BlockchainPlayground;
 use App\Console\Commands\CreateCard;
 use App\Console\Commands\IngestBattleGroupsFromBlockchain;
+use App\Console\Commands\IngestBattlesFromBlockchain;
 use App\Console\Commands\IngestCardsFromBlockchain;
 use App\Console\Commands\ProtoTest;
 use Illuminate\Console\Scheduling\Schedule;
@@ -20,7 +22,9 @@ class Kernel extends ConsoleKernel
         ProtoTest::class,
         IngestBattleGroupsFromBlockchain::class,
         IngestCardsFromBlockchain::class,
+        IngestBattlesFromBlockchain::class,
         CreateCard::class,
+        BlockchainPlayground::class,
     ];
 
     /**

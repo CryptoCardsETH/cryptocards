@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { setCardFilterText, setCardSortOption } from '../actions/cards';
 import PropTypes from 'prop-types';
-import { CONTRACT_NAME_BATTLES } from './../contracts';
+import { CONTRACT_NAME_BATTLEQUEUE } from './../contracts';
 import {
   isReadyForContract,
   waitForTxToBeMined,
@@ -11,12 +11,11 @@ import {
 } from '../selectors';
 import { Button } from 'reactstrap';
 class BattleCreator extends React.Component {
-  doContract = async (senderAddress, ci, test1, test2) => {
+  doContract = async (senderAddress, ci, battleGroupId) => {
     //todo: web3 check
-    //TODO: this needs to be rewritten when the Battles.sol contract is finished, right now it just sends the specified group as both sides for the battle.
     let contractInstance = await ci;
     contractInstance
-      .createBattle(test1, test2, {
+      .joinQueue(battleGroupId, {
         from: senderAddress
       })
       .then(txHash => {
@@ -35,12 +34,11 @@ class BattleCreator extends React.Component {
             this.doContract(
               this.props.user.main_address,
               contractInstance,
-              battleGroupId,
               battleGroupId
             )
           }
         >
-          {ready ? 'send battle to contract!' : 'loading...'}
+          {ready ? 'send battle group to queue!' : 'loading...'} {battleGroupId}
         </Button>
       </div>
     );
@@ -57,7 +55,10 @@ function mapStateToProps(state) {
     card,
     user,
     ready: isReadyForContract(state),
-    contractInstance: getContractInstanceByName(state, CONTRACT_NAME_BATTLES)
+    contractInstance: getContractInstanceByName(
+      state,
+      CONTRACT_NAME_BATTLEQUEUE
+    )
   };
 }
 

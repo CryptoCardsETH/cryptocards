@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Battle;
 use App\Models\BattleGroup;
 use App\Models\BattleGroupCard;
 use App\Models\Card;
@@ -11,6 +12,7 @@ use App\Notifications\BattleGroupCreationNotification;
 use Illuminate\Support\Facades\Request;
 use Log;
 use Notification;
+use RpcServer\BattleInfo;
 use RpcServer\CardInfo;
 
 class ContractController extends Controller
@@ -59,6 +61,27 @@ class ContractController extends Controller
         }
 
         Notification::send($user, new BattleGroupCreationNotification($bg->fresh()));
+    }
+
+    public static function processBattleInfoRpc(BattleInfo $bi)
+    {
+        self::processNewBattleCompletionEvent($bi->getId(), $bi->getWinnerGroupId(), $bi->getLoserGroupId());
+    }
+
+    public static function processNewBattleCompletionEvent($battleTokenId, $battleGroupWinnerTokenId, $battleGroupLoserTokenId)
+    {
+        $battle = Battle::firstOrNew(['token_id' => $battleTokenId]);
+        $winner = BattleGroup::getByTokenId($battleGroupWinnerTokenId);
+        $loser = BattleGroup::getByTokenId($battleGroupLoserTokenId);
+
+        if ($battle->wasRecentlyCreated) {
+            Log::info("ingesting new Battle: $battleTokenId");
+        }
+
+        $battle->group_1 = $winner->id;
+        $battle->group_winner = $winner->id;
+        $battle->group_2 = $loser->id;
+        $battle->save();
     }
 
     public static function processCardInfoRpc(CardInfo $ci)
